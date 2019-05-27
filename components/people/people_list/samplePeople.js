@@ -29,6 +29,7 @@ const list = [
         subtitle: 'Mobile App Developer'
     },
 ]
+const list2 = [...list, ...list, ...list, ...list, ...list, ...list];
 
 
 export default class PeopleList extends React.Component {
@@ -56,7 +57,7 @@ export default class PeopleList extends React.Component {
                 />
                 <FlatList
                     keyExtractor={this.keyExtractor}
-                    data={list}
+                    data={list2}
                     renderItem={this.renderItem}
                 />
             </View>
@@ -64,8 +65,8 @@ export default class PeopleList extends React.Component {
     }
 }
 PeopleList.navigationOptions = {
-    drawerLabel: 'People',
-    drawerIcon: () => (
-        <Image source={PeopleIcon} />
-    ),
+    drawerLabel: 'SamplePeople',
+    // drawerIcon: () => (
+    //     <Image source={PeopleIcon} />
+    // ),
 };

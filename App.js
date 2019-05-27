@@ -1,26 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import PeopleList from './components/people/people_list/PeopleList'
-import { Divider } from 'react-native-elements';
+import AppDrawer from './navigators/Drawer';
+import { createAppContainer } from 'react-navigation';
+
+const AppContainer = createAppContainer(AppDrawer);
+
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        < PeopleList />
-      </View>
-
-
+      <AppContainer />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    // marginTop: "10%",
-    backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  },
-});
