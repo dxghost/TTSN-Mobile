@@ -1,21 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import PeopleList from './components/people/people_list/PeopleList'
+import { Divider } from 'react-native-elements';
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        < PeopleList />
       </View>
+
+
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    // marginTop: "10%",
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
 });
