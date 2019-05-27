@@ -7,10 +7,10 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Divider style={styles.people_list}>
-          <PeopleList />
-        </Divider>
+        < PeopleList />
       </View>
+
+
     );
   }
 }
@@ -18,11 +18,9 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
+    // marginTop: "10%",
     backgroundColor: '#fff',
     // alignItems: 'center',
     // justifyContent: 'center',
   },
-  people_list:{
-    // marginTop:"10%",
-  }
 });
