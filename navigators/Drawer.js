@@ -1,6 +1,7 @@
 import { createDrawerNavigator } from 'react-navigation';
 import PeopleScreen from '../components/people/people_list/PeopleList';
 import SamplePeople from '../components/people/people_list/samplePeople';
+import BacklogScreen from '../components/backlogs/backlog_screen/BacklogScreen';
 
 const Drawer = createDrawerNavigator(
   {
@@ -10,6 +11,9 @@ const Drawer = createDrawerNavigator(
     Drawer2: {
       screen: SamplePeople,
     },
+    Drawer3: {
+      screen: BacklogScreen,
+    }
   },
   {
     initialRouteName: 'Drawer1',
