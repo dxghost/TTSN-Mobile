@@ -9,10 +9,10 @@ export default class BoardsScrollView extends React.Component{
         return (
             <ScrollView horizontal = {true} pagingEnabled = {true}>
                 
-                <TaskBoard />
-                <TaskBoard />
-                <TaskBoard />
-                <TaskBoard />
+                <TaskBoard buttonTitle='Pick'/>
+                <TaskBoard buttonTitle='For Review'/>
+                <TaskBoard buttonTitle='Done'/>
+                <TaskBoard buttonTitle=''/>
 
             </ScrollView>
         );

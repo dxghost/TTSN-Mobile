@@ -34,6 +34,13 @@ export default class TaskBoard extends React.Component{
         key={item.index}
         title={item.name}
         subtitle={item.description}
+        rightElement={
+            () => {
+            if (this.props.buttonTitle != '')
+            return (<Button 
+            title = {this.props.buttonTitle}/>);
+        }
+        }
         />
     );
     render(){
@@ -52,7 +59,7 @@ export default class TaskBoard extends React.Component{
 const styles = StyleSheet.create({
     container:{
         //flex: 1,
-        //marginTop: 20,
+        marginTop: 25,
         //justifyContent: 'center',
         //backgroundColor: '#faf',
         //alignItems: 'center',
