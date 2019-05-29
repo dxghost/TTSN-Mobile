@@ -1,7 +1,7 @@
 import { createDrawerNavigator } from 'react-navigation';
 import PeopleScreen from '../components/people/people_list/PeopleList';
 import SamplePeople from '../components/people/people_list/samplePeople';
-import BacklogScreen from '../components/backlogs/backlog_screen/BacklogScreen';
+import BacklogScreen from '../screens/BacklogScreen'
 
 const Drawer = createDrawerNavigator(
   {
@@ -16,7 +16,7 @@ const Drawer = createDrawerNavigator(
     }
   },
   {
-    initialRouteName: 'Drawer1',
+    initialRouteName: 'Drawer3',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',

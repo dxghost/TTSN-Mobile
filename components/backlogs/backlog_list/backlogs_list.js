@@ -9,7 +9,7 @@ import {
     Dimensions,
     Platform,
 } from 'react-native';
-import { Avatar, Divider, ListItem, Header, Icon } from "react-native-elements";
+import { Avatar, Divider, ListItem, Header, Icon, CheckBox } from "react-native-elements";
 import SortableList from 'react-native-sortable-list';
 
 const window = Dimensions.get('window');
@@ -57,7 +57,7 @@ const data = {
 };
 
 
-export default class BacklogScreen extends React.Component {
+export default class BacklogList extends React.Component {
     render() {
         return (
             <View style={styles.container}>
@@ -66,7 +66,9 @@ export default class BacklogScreen extends React.Component {
                     style={styles.list}
                     contentContainerStyle={styles.contentContainer}
                     data={data}
-                    renderRow={this._renderRow} />
+                    renderRow={this._renderRow} 
+                    
+                    />
             </View>
         );
     }
@@ -78,6 +80,9 @@ export default class BacklogScreen extends React.Component {
 
 
 class Row extends React.Component {
+    state = {
+        checked: false
+    };
 
     constructor(props) {
         super(props);
@@ -98,7 +103,7 @@ class Row extends React.Component {
 
     render() {
         const { data, active } = this.props;
-
+        const { checked } = this.state;
         return (
             <ListItem
                 style={styles.row}
@@ -109,6 +114,24 @@ class Row extends React.Component {
                         color='#E0005A' />
 
                 }
+                rightElement={
+                    <CheckBox
+                        // center
+                        title={this.state.checked ? "it's not done" : "consider it done"}
+                        iconRight
+                        iconType='material'
+                        uncheckedIcon='check'
+                        uncheckedColor='green'
+                        checkedIcon='close'
+                        checkedColor='red'
+                        checked={this.state.checked}
+                        onPress={() => {
+                            // TODO add a function to move to footer
+                            this.setState({ checked: !checked })
+                        }
+                        }
+                    />
+                }
                 // key={item.index}
                 // leftAvatar={{ source: { uri: item.avatar_url } }}
                 title={data.text}
@@ -118,12 +141,6 @@ class Row extends React.Component {
     }
 }
 
-BacklogScreen.navigationOptions = {
-    drawerLabel: 'Backlogs',
-    // drawerIcon: () => (
-    //     <Image source={PeopleIcon} />
-    // ),
-};
 
 
 const styles = StyleSheet.create({
@@ -153,7 +170,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#fff',
-        height:60,
+        height: 60,
         flex: 1,
         marginTop: 2,
         marginBottom: 2,
