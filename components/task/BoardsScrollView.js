@@ -1,5 +1,6 @@
 import React from 'react'
 import {StyleSheet, ScrollView, View, Text,Dimensions} from 'react-native'
+import TaskBoard from './TaskBoard';
 
 //const style = 
 
@@ -8,22 +9,10 @@ export default class BoardsScrollView extends React.Component{
         return (
             <ScrollView horizontal = {true} pagingEnabled = {true}>
                 
-            
-                <View style={styles.container}>
-                     <Text> views of scroll view</Text>
-                 </View>
-
-                 <View style={styles.container}>
-                     <Text> views of scroll view</Text>
-                 </View>
-
-                 <View style={styles.container}>
-                     <Text> views of scroll view</Text>
-                 </View>
-
-                 <View style={styles.container}>
-                     <Text> views of scroll view</Text>
-                 </View>
+                <TaskBoard />
+                <TaskBoard />
+                <TaskBoard />
+                <TaskBoard />
 
             </ScrollView>
         );
