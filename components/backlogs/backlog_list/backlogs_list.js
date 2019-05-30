@@ -36,7 +36,7 @@ export default class BacklogList extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>React Native Sortable List</Text>
+                <Text style={styles.title}>Backlogs</Text>
                 <SortableList
                     style={styles.list}
                     contentContainerStyle={styles.contentContainer}
@@ -86,7 +86,7 @@ class Row extends React.Component {
                     <Icon
                         name='drag'
                         type='material-community'
-                        color='#E0005A' />
+                        color='rgb(150, 13, 255)' />
 
                 }
                 rightElement={
@@ -96,9 +96,9 @@ class Row extends React.Component {
                         iconRight
                         iconType='material'
                         uncheckedIcon='check'
-                        uncheckedColor='green'
+                        uncheckedColor='rgb(142, 187, 255)'
                         checkedIcon='close'
-                        checkedColor='red'
+                        checkedColor='rgb(198, 10, 255)'
                         checked={this.state.checked}
                         onPress={() => {
                             // TODO add a function to move to footer
@@ -123,14 +123,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#eee',
     },
 
     title: {
         fontSize: 20,
         paddingVertical: 20,
         marginTop: "3%",
-        color: '#999999',
     },
 
     list: {
@@ -144,10 +142,11 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        borderBottomWidth: 5,
+        borderBottomColor: "rgb(150, 13, 255)",
         height: 60,
         flex: 1,
         marginTop: 2,
-        marginBottom: 2,
+        marginBottom: 3,
     },
 });
