@@ -15,45 +15,20 @@ import SortableList from 'react-native-sortable-list';
 const window = Dimensions.get('window');
 const data = {
     0: {
-        image: 'https://placekitten.com/200/240',
-        text: 'Chloe',
+        text: 'Lorem ipsum dolor sit amet',
     },
     1: {
-        image: 'https://placekitten.com/200/201',
-        text: 'Jasper',
+        text: ' consectetur adipiscing elit,',
     },
     2: {
-        image: 'https://placekitten.com/200/202',
-        text: 'Pepper',
+        text: ' sed do eiusmod tempor',
     },
     3: {
-        image: 'https://placekitten.com/200/203',
-        text: 'Oscar',
+        text: 'Os incididunt ut labore et dolore magna aliquacar',
     },
     4: {
-        image: 'https://placekitten.com/200/204',
-        text: 'Dusty',
-    },
-    5: {
-        image: 'https://placekitten.com/200/205',
-        text: 'Spooky',
-    },
-    6: {
-        image: 'https://placekitten.com/200/210',
-        text: 'Kiki',
-    },
-    7: {
-        image: 'https://placekitten.com/200/215',
-        text: 'Smokey',
-    },
-    8: {
-        image: 'https://placekitten.com/200/220',
-        text: 'Gizmo',
-    },
-    9: {
-        image: 'https://placekitten.com/220/239',
-        text: 'Kitty',
-    },
+        text: 'Ut enim ad minim veniam',
+    }
 };
 
 
