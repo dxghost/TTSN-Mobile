@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
 import { Avatar, Divider, ListItem, Header, Icon } from "react-native-elements";
-import PeopleIcon from '../../../assets/Images/PeopleIcon2.png';
+import PeopleIcon from '../../../assets/icons/icons8-students-64.png';
 
 const list = [
     {
@@ -66,6 +66,6 @@ export default class PeopleList extends React.Component {
 PeopleList.navigationOptions = {
     drawerLabel: 'People',
     drawerIcon: () => (
-        <Image source={PeopleIcon} />
+        <Image source={PeopleIcon} style={{width:30,height:30}} />
     ),
 };
