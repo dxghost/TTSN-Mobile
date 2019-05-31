@@ -49,11 +49,7 @@ export default class PeopleList extends React.Component {
     )
     render() {
         return (
-            <View>
-                <Header
-                    leftComponent={{ icon: 'menu', color: '#fff' }}
-                    centerComponent={{ text: 'TTSN Project Collaborators', style: { color: '#fff' } }}
-                />
+            <View style={styles.container}>
                 <FlatList
                     keyExtractor={this.keyExtractor}
                     data={list}
@@ -69,3 +65,10 @@ PeopleList.navigationOptions = {
         <Image source={PeopleIcon} style={{width:30,height:30}} />
     ),
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        marginTop:"8%"
+    }
+})
