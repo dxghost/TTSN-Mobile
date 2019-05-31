@@ -25,6 +25,30 @@ const list = [
         name: 'update database',
         index: 5,
         description: 'modify task moded and ...modify task moded and ...modify task '
+    },{
+        name: 'update database',
+        index: 6,
+        description: 'modify task moded and ...modify task moded and ...modify task '
+    },{
+        name: 'update database',
+        index: 7,
+        description: 'modify task moded and ...modify task moded and ...modify task '
+    },{
+        name: 'update database',
+        index: 8,
+        description: 'modify task moded and ...modify task moded and ...modify task '
+    },{
+        name: 'update database',
+        index: 9,
+        description: 'modify task moded and ...modify task moded and ...modify task '
+    },{
+        name: 'update database',
+        index: 10,
+        description: 'modify task moded and ...modify task moded and ...modify task '
+    },{
+        name: 'update database',
+        index: 11,
+        description: 'modify task moded and ...modify task moded and ...modify task '
     },]
 
 export default class TaskBoard extends React.Component{
