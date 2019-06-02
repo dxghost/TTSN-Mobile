@@ -24,7 +24,7 @@ const data = {
         text: ' sed do eiusmod tempor',
     },
     3: {
-        text: 'Os incididunt ut labore et dolore magna aliquacar',
+        text: 'Os incididunt ut labore',
     },
     4: {
         text: 'Ut enim ad minim veniam',
