@@ -4767,6 +4767,20 @@ react-native-branch@2.2.5:
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.2.5.tgz#4074dd63b4973e6397d9ce50e97b57c77a518e9d"
   integrity sha1-QHTdY7SXPmOX2c5Q6XtXx3pRjp0=
 
+react-native-collapsible@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-collapsible/-/react-native-collapsible-1.4.0.tgz#ec03cac361178319b77bb9993b73677356dd89d2"
+  integrity sha512-lf2U3gRHTNakqtN04NLJkmF02XaOF/DPOTGlwK8yrn85wMAdRaPpD0fnb7RvH4OID3SmxXBTWzZqkBTmasJyIQ==
+  dependencies:
+    prop-types "^15.6.2"
+
+react-native-divider@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-divider/-/react-native-divider-1.0.3.tgz#fcc1cf6d6e3d40a09509991dc42cb49482bb0241"
+  integrity sha512-JK7nqiV6CYergVSKpfSEBLWFRu11vzZjSv76SHPlwNTR404fdR4WkjqgIXoUDz4mfDeadAcWnyUNuopxfFHseA==
+  dependencies:
+    prop-types "^15.6.1"
+
 react-native-elements@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-1.1.0.tgz#f99bcda4459a886f3ab4591c684c099d37aedf2b"
