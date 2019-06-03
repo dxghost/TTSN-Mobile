@@ -13,37 +13,59 @@ import { Avatar, Divider, ListItem, Header, Icon, CheckBox } from "react-native-
 import SortableList from 'react-native-sortable-list';
 
 const window = Dimensions.get('window');
-const data = {
-    0: {
-        text: 'Lorem ipsum dolor sit amet',
-    },
-    1: {
-        text: ' consectetur adipiscing elit,',
-    },
-    2: {
-        text: ' sed do eiusmod tempor',
-    },
-    3: {
-        text: 'Os incididunt ut labore',
-    },
-    4: {
-        text: 'Ut enim ad minim veniam',
-    }
-};
-
+// const data = [
+//     { "id": 1, "name": "cart", "priority": 1, "defenition_done": "be done", "description": "some description", "create_date": "2019-06-03" },
+//     { "id": 2, "name": "market", "priority": 2, "defenition_done": "can buy shit", "description": "some other description", "create_date": "2019-06-03" },
+//     { "id": 3, "name": "some backlog", "priority": 3, "defenition_done": "some defenition", "description": "some description", "create_date": "2019-06-03" }
+// ];
 
 export default class BacklogList extends React.Component {
+    state = {
+        isLoading: true,
+        data: []
+    }
+
+    requestHandler = async () => {
+        let apiUrl = 'http://mamaly100.pythonanywhere.com/Backlog/';
+        let formData = new FormData();
+        let options = {
+            method: 'GET',
+            // body: formData,
+            headers: {
+                Accept: '*/*',
+                'Content-Type': 'application/json',
+                // 'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnX2lhdCI6MTU1OTU1NjUxNCwiZXhwIjoxNTU5NTYyNTE0LCJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1haGRpcGF6b29raTIxQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiZHgifQ.kCdXNmh_o28eLCPsHOwIMefYE12ckg2QI0uMkfIsWZw'
+            }
+        };
+        return fetch(apiUrl, options)
+    }
+
+    componentWillMount = async () => {
+        var f = await this.requestHandler()
+        f = await f.json()
+        console.log(f)
+        this.setState({
+            data: f,
+            isLoading: false
+        })
+    }
+
     render() {
+        const { isLoading, data } = this.state;
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Backlogs</Text>
-                <SortableList
-                    style={styles.list}
-                    contentContainerStyle={styles.contentContainer}
-                    data={data}
-                    renderRow={this._renderRow} 
-                    
-                    />
+                {
+                    this.state.isLoading ? <Text>loading</Text> :
+                        <View>
+                            <Text style={styles.title}>Backlogs</Text>
+                            <SortableList
+                                style={styles.list}
+                                contentContainerStyle={styles.contentContainer}
+                                data={this.state.data}
+                                renderRow={this._renderRow}
+                            />
+                        </View>
+                }
             </View>
         );
     }
@@ -61,11 +83,8 @@ class Row extends React.Component {
 
     constructor(props) {
         super(props);
-
         this._active = new Animated.Value(0);
-
     }
-
     componentWillReceiveProps(nextProps) {
         if (this.props.active !== nextProps.active) {
             Animated.timing(this._active, {
@@ -75,7 +94,6 @@ class Row extends React.Component {
             }).start();
         }
     }
-
     render() {
         const { data, active } = this.props;
         const { checked } = this.state;
@@ -109,7 +127,7 @@ class Row extends React.Component {
                 }
                 // key={item.index}
                 // leftAvatar={{ source: { uri: item.avatar_url } }}
-                title={data.text}
+                title={data.name}
             // subtitle={item.subtitle}
             />
         );
