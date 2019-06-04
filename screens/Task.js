@@ -1,3 +1,4 @@
+
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 
@@ -6,6 +7,9 @@ const task={
     description : "modify task moded and ...modify task moded and ...modify task",
     id : 1,
     user : null,
+    backlog : {name: "view previous details",
+                id:10
+                },
 }
 
 export default class Task extends React.Component{

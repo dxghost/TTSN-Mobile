@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import AppDrawer from './navigators/Drawer';
 import { createAppContainer } from 'react-navigation';
 import Task from './screens/Task'
+import AddTask from './screens/AddTask';
 
 const AppContainer = createAppContainer(AppDrawer);
 
