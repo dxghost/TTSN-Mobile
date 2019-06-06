@@ -35,7 +35,7 @@ export default class TaskList extends React.Component {
     return (
       <ListItem
         title={section.description}
-        titleStyle={{color:"#9B689C",fontSize:15}}
+        titleStyle={{ color: "#9B689C", fontSize: 15 }}
       />
     );
   };
@@ -47,15 +47,18 @@ export default class TaskList extends React.Component {
   render() {
     return (
       <View style={styles.backlogDetailsContainer}>
-        <Accordion
-          sectionContainerStyle={styles.sectionContainer}
-          sections={this.props.Tasks}
-          activeSections={this.state.activeSections}
-          renderSectionTitle={this._renderSectionTitle}
-          renderHeader={this._renderHeader}
-          renderContent={this._renderContent}
-          onChange={this._updateSections}
-        />
+        {this.props.isLoading ?
+        <Text>Tasks Are Loading :D</Text>
+        :
+          <Accordion
+            sectionContainerStyle={styles.sectionContainer}
+            sections={this.props.Tasks}
+            activeSections={this.state.activeSections}
+            renderSectionTitle={this._renderSectionTitle}
+            renderHeader={this._renderHeader}
+            renderContent={this._renderContent}
+            onChange={this._updateSections}
+          />}
       </View>
     )
   }
