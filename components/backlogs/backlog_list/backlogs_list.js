@@ -71,7 +71,7 @@ export default class BacklogList extends React.Component {
     }
 
     _renderRow = ({ data, active }) => {
-        return <Row data={data} active={active} />
+        return <Row data={data} active={active} navigation={this.props.navigation} />
     }
 }
 
@@ -97,6 +97,7 @@ class Row extends React.Component {
     render() {
         const { data, active } = this.props;
         const { checked } = this.state;
+        const {navigate} = this.props.navigation;
         return (
             <ListItem
                 style={styles.row}
@@ -128,6 +129,9 @@ class Row extends React.Component {
                 // key={item.index}
                 // leftAvatar={{ source: { uri: item.avatar_url } }}
                 title={data.name}
+                onPress={() => {
+                    navigate('Drawer4', {backlogdata:data})
+                }}
             // subtitle={item.subtitle}
             />
         );

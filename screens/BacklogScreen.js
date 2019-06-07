@@ -7,7 +7,7 @@ import BacklogsIcon from '../assets/icons/icons8-brief-64.png'
 export default class BacklogScreen extends React.Component {
     render() {
         return (
-            <BacklogList />
+            <BacklogList navigation={this.props.navigation} />
         )
     }
 }

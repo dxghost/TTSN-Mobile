@@ -16,7 +16,7 @@ const Drawer = createDrawerNavigator(
     }
   },
   {
-    initialRouteName: 'Drawer4',
+    initialRouteName: 'Drawer3',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',

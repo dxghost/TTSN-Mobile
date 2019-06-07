@@ -49,14 +49,14 @@ const BacklogDetails = {
   definitionOfDone: "when the backlog is working properly",
   description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,",
 }
-const trueBacklogDetails = {
-  "id": 1,
-  "name": "cart",
-  "priority": 1,
-  "defenition_done": "be done",
-  "description": "some description",
-  "create_date": "2019-06-03"
-}
+// const trueBacklogDetails = {
+//   "id": 1,
+//   "name": "cart",
+//   "priority": 1,
+//   "defenition_done": "be done",
+//   "description": "some description",
+//   "create_date": "2019-06-03"
+// }
 // const data = [
 //     { "id": 1, "name": "cart", "priority": 1, "defenition_done": "be done", "description": "some description", "create_date": "2019-06-03" },
 //     { "id": 2, "name": "market", "priority": 2, "defenition_done": "can buy shit", "description": "some other description", "create_date": "2019-06-03" },
@@ -68,7 +68,6 @@ export default class BacklogDetailScreen extends React.Component {
     isLoading: true,
     taskdata: []
   }
-
   _requestHandler = async () => {
     let apiUrl = 'http://mamaly100.pythonanywhere.com/Task/';
     let formData = new FormData();
@@ -87,7 +86,7 @@ export default class BacklogDetailScreen extends React.Component {
   componentWillMount = async () => {
     var f = await this._requestHandler()
     f = await f.json()
-    console.log(f)
+    // console.log(f)
     this.setState({
       data: f,
       isLoading: false
@@ -96,6 +95,7 @@ export default class BacklogDetailScreen extends React.Component {
 
   render() {
     const { isLoading, data } = this.state;
+    const trueBacklogDetails=this.props.navigation.getParam("backlogdata")
     return (
       <ScrollView style={styles.container}>
         {/* TODO Header name would be BacklogDetails.name */}
