@@ -34,3 +34,8 @@ const styles = StyleSheet.create({
     text:{
         fontSize:18,
     }});
+
+
+    Task.navigationOptions = {
+        drawerLabel: 'Task',
+    }    

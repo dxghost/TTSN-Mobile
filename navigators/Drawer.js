@@ -2,6 +2,8 @@ import { createDrawerNavigator } from 'react-navigation';
 import PeopleScreen from '../components/people/people_list/PeopleList';
 import SamplePeople from '../components/people/people_list/samplePeople';
 import Tasks from '../screens/Tasks';
+import AddTask from '../screens/AddTask';
+import Task from '../screens/Task';
 
 const Drawer = createDrawerNavigator(
   {
@@ -13,10 +15,16 @@ const Drawer = createDrawerNavigator(
     },
     Drawer3: {
       screen: Tasks,
+    },
+    Drawer4:{
+      screen: AddTask,
+    },
+    Drawer5:{
+      screen: Task,
     }
   },
   {
-    initialRouteName: 'Drawer3',
+    initialRouteName: 'Drawer4',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',
