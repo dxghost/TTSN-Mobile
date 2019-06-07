@@ -43,12 +43,6 @@ const Tasks = [
     picker: "the great dx",
   },
 ];
-const BacklogDetails = {
-  name: "Sample backlog #1",
-  priority: '3',
-  definitionOfDone: "when the backlog is working properly",
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,",
-}
 // const trueBacklogDetails = {
 //   "id": 1,
 //   "name": "cart",
@@ -57,11 +51,6 @@ const BacklogDetails = {
 //   "description": "some description",
 //   "create_date": "2019-06-03"
 // }
-// const data = [
-//     { "id": 1, "name": "cart", "priority": 1, "defenition_done": "be done", "description": "some description", "create_date": "2019-06-03" },
-//     { "id": 2, "name": "market", "priority": 2, "defenition_done": "can buy shit", "description": "some other description", "create_date": "2019-06-03" },
-//     { "id": 3, "name": "some backlog", "priority": 3, "defenition_done": "some defenition", "description": "some description", "create_date": "2019-06-03" }
-// ];
 
 export default class BacklogDetailScreen extends React.Component {
   state = {
@@ -95,25 +84,25 @@ export default class BacklogDetailScreen extends React.Component {
 
   render() {
     const { isLoading, data } = this.state;
-    const trueBacklogDetails=this.props.navigation.getParam("backlogdata")
+    const backlog_data=this.props.navigation.getParam("backlogdata")
     return (
       <ScrollView style={styles.container}>
         {/* TODO Header name would be BacklogDetails.name */}
         {/* <Text>{this.props.backlog_name}</Text> */}
-        <Text style={{ fontSize: 20 }}> {trueBacklogDetails.name} </Text>
+        <Text style={{ fontSize: 20 }}> {backlog_data.name} </Text>
         <ListItem
           title={"Definition of done: "}
-          subtitle={trueBacklogDetails.defenition_done}
+          subtitle={backlog_data.defenition_done}
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
         <ListItem
           title={"Priority: "}
-          subtitle={(trueBacklogDetails.priority).toString()}
+          subtitle={(backlog_data.priority).toString()}
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
         <ListItem
           title={"Description : "}
-          subtitle={trueBacklogDetails.description}
+          subtitle={backlog_data.description}
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
         <ListItem
