@@ -7,12 +7,22 @@ import {Button} from 'react-native-elements'
 
 export default class AddTask extends React.Component{
 
+    constructor(props) {
+        super(props);
+        this.nameTextField = React.createRef();
+        this.dsrTextField = React.createRef();
+        this.backLogDropdown = React.createRef();
+      }
+    
     state = {taskDsr:'', 
             taskName:'', 
             backlogId:'', 
             fetchingBacklogs:true, 
             backlogData: [],
-            selectedBackLog : ''
+            selectedBackLog : '',
+            emptyName: false,
+            emptyDsr: false,
+            emptyBackLog: false,
         };
 
     requestHandler = async () => {
@@ -39,7 +49,23 @@ export default class AddTask extends React.Component{
             fetchingBacklogs: false
         })
     }
-    
+    clientSideCheck(){
+
+        if(!this.state.taskName){
+            this.setState({emptyName: true});
+        }
+        if(!this.state.taskDsr){
+            this.setState({emptyDsr: true});
+        }
+        if(!this.state.backlogId){
+            this.setState({emptyBackLog: true});
+        }
+        
+        if(this.state.name == '' || this.state.name == '' || this.state.backlogId == ''){
+            return false;
+        }
+        return true;
+    }
     render(){
         let {taskDsr, taskName,} = this.state;
         return(
@@ -47,29 +73,40 @@ export default class AddTask extends React.Component{
                 <View>
                 <TextField
                 //style={styles.field}
+                ref={this.nameTextField}
                 label='Task Name:'
+                error={this.state.emptyName? "can't be blank":null}
                 value={taskName}
-                onChangeText={(taskName) => this.setState({taskName})}/>
+                onChangeText={(taskName) => {this.setState({taskName, emptyName:false})}}/>
 
                 <TextField
                 // style={styles.field}
+                ref={this.dsrTextField}
                 label='Task Description:'
+                error={this.state.emptyDsr? "can't be blank":null}
                 characterRestriction={100}
                 value={taskDsr}
-                onChangeText={(taskDsr) => this.setState({taskDsr})}/>
+                onChangeText={(taskDsr) => this.setState({taskDsr, emptyDsr:false})}/>
 
                 <Dropdown
+                ref={this.backLogDropdown}
                 label= {this.state.fetchingBacklogs? 'Related BackLog : (fetching data ...)': 'Related BackLog :'}
+                error={this.state.emptyBackLog? "can't be blank":null}
                 disabled = {this.state.fetchingBacklogs}
                 //baseColor = {this.state.fetchingBacklogs? 'blue':'black'}
                 data={this.state.backlogData.map((item) => { return {value: item['name'],id: item['id']} })}
-                onChangeText={(value, index, data) => {this.setState({backlogId: data[index].id})}}
+                onChangeText={(value, index, data) => {this.setState({backlogId: data[index].id, emptyBackLog:false})}}
                 />
 
                 <View style={{paddingTop:20}}>
                 <Button 
                 title='Add Task'
-                onPress={() => console.log(`taskName : ${this.state.taskName}\ntask dsr : ${this.state.taskDsr}\n backlogId : ${this.state.backlogId}`)}
+                onPress={() => {
+                    console.log(`taskName : ${this.state.taskName}\ntask dsr : ${this.state.taskDsr}\n backlogId : ${this.state.backlogId}`)
+                    if(this.clientSideCheck()){
+                        //implement backend request and came back to tasks
+                    }
+                }}
                 type='solid'
                 />
                 </View>
