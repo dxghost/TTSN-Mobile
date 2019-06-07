@@ -1,7 +1,8 @@
-import { createDrawerNavigator } from 'react-navigation';
+import { createDrawerNavigator,createStackNavigator } from 'react-navigation';
 import PeopleScreen from '../components/people/people_list/PeopleList';
 import BacklogScreen from '../screens/BacklogScreen'
 import BacklogDetailScreen from '../screens/BacklogDetail'
+import NewBacklog from '../screens/NewBacklog'
 
 const Drawer = createDrawerNavigator(
   {
@@ -13,6 +14,9 @@ const Drawer = createDrawerNavigator(
     },
     Drawer4:{
       screen:BacklogDetailScreen,
+    },
+    Drawer5:{
+      screen:NewBacklog
     }
   },
   {
@@ -27,4 +31,27 @@ const Drawer = createDrawerNavigator(
   },
 );
 
-export default Drawer;
+const Stack = createStackNavigator(
+  {
+    Drawer:{
+      screen:Drawer
+    },
+    Drawer1: {
+      screen: PeopleScreen,
+    },
+    Drawer3: {
+      screen: BacklogScreen,
+    },
+    Drawer4:{
+      screen:BacklogDetailScreen,
+    },
+    Drawer5:{
+      screen:NewBacklog
+    }
+  },
+  {
+    headerMode:'none'
+  }
+)
+
+export default Stack;
