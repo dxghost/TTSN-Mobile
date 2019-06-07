@@ -6,13 +6,6 @@ import {Button} from 'react-native-elements'
 
 
 export default class AddTask extends React.Component{
-
-    constructor(props) {
-        super(props);
-        this.nameTextField = React.createRef();
-        this.dsrTextField = React.createRef();
-        this.backLogDropdown = React.createRef();
-      }
     
     state = {taskDsr:'', 
             taskName:'', 
@@ -73,7 +66,6 @@ export default class AddTask extends React.Component{
                 <View>
                 <TextField
                 //style={styles.field}
-                ref={this.nameTextField}
                 label='Task Name:'
                 error={this.state.emptyName? "can't be blank":null}
                 value={taskName}
@@ -81,7 +73,6 @@ export default class AddTask extends React.Component{
 
                 <TextField
                 // style={styles.field}
-                ref={this.dsrTextField}
                 label='Task Description:'
                 error={this.state.emptyDsr? "can't be blank":null}
                 characterRestriction={100}
@@ -89,7 +80,6 @@ export default class AddTask extends React.Component{
                 onChangeText={(taskDsr) => this.setState({taskDsr, emptyDsr:false})}/>
 
                 <Dropdown
-                ref={this.backLogDropdown}
                 label= {this.state.fetchingBacklogs? 'Related BackLog : (fetching data ...)': 'Related BackLog :'}
                 error={this.state.emptyBackLog? "can't be blank":null}
                 disabled = {this.state.fetchingBacklogs}
