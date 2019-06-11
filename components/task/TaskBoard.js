@@ -60,7 +60,7 @@ export default class TaskBoard extends React.Component{
         subtitle={item.description}
         rightElement={
             () => {
-            if (this.props.buttonTitle != '')
+            if (this.props.buttonTitle)
             return (<Button 
             title = {this.props.buttonTitle}/>);
         }
@@ -69,25 +69,11 @@ export default class TaskBoard extends React.Component{
     );
     render(){
         return (
-            <View style={styles.container}>
                 <FlatList 
                 keyExtractor={this.keyExtractor}
                 data={list}
                 renderItem={this.renderItem}
                 />
-            </View>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container:{
-        //flex: 1,
-        marginTop: 25,
-        //justifyContent: 'center',
-        //backgroundColor: '#faf',
-        //alignItems: 'center',
-        width : Dimensions.get('screen').width,
-        height : Dimensions.get('screen').height,
-    },
-});
