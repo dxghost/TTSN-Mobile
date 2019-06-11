@@ -1,30 +1,26 @@
-import { createDrawerNavigator } from 'react-navigation';
+import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import PeopleScreen from '../components/people/people_list/PeopleList';
-import SamplePeople from '../components/people/people_list/samplePeople';
 import Tasks from '../screens/Tasks';
 import AddTask from '../screens/AddTask';
 import Task from '../screens/Task';
+import BacklogScreen from '../screens/BacklogScreen'
+import BacklogDetailScreen from '../screens/BacklogDetail'
+import NewBacklog from '../screens/NewBacklog'
 
 const Drawer = createDrawerNavigator(
   {
-    Drawer1: {
+    PeopleList: {
       screen: PeopleScreen,
     },
-    Drawer2: {
-      screen: SamplePeople,
+    BacklogList: {
+      screen: BacklogScreen,
     },
-    Drawer3: {
+    TaskList: {
       screen: Tasks,
     },
-    Drawer4:{
-      screen: AddTask,
-    },
-    Drawer5:{
-      screen: Task,
-    }
   },
   {
-    initialRouteName: 'Drawer4',
+    initialRouteName: 'TaskList',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',
@@ -35,4 +31,36 @@ const Drawer = createDrawerNavigator(
   },
 );
 
-export default Drawer;
+const Stack = createStackNavigator(
+  {
+    Drawer: {
+      screen: Drawer
+    },
+    PeopleList: {
+      screen: PeopleScreen,
+    },
+    TaskList: {
+      screen: Tasks,
+    },
+    AddTask: {
+      screen: AddTask,
+    },
+    SingleTask: {
+      screen: Task,
+    },
+    BacklogList: {
+      screen: BacklogScreen,
+    },
+    AddBacklog: {
+      screen: NewBacklog
+    },
+    SingleBacklog: {
+      screen: BacklogDetailScreen,
+    },
+  },
+  {
+    headerMode: 'none'
+  }
+)
+
+export default Stack;
