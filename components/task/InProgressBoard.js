@@ -5,12 +5,17 @@ import {ListItem, Button} from 'react-native-elements'
 export default class InProgressBoard extends React.Component{
     render()
     {
+        const navigation = this.props.navigation
         const renderItem = ({item}) => (
             <ListItem 
             key={item.key}
             title={item.title}
             subtitle={item.description}
-            
+            rightElement={
+                () => <Button 
+                title = {'Done'}/>
+            }
+            onPress={() => navigation.navigate('SingleTask', {taskData:item})}
             />
         );
 
@@ -33,7 +38,7 @@ export default class InProgressBoard extends React.Component{
         <TaskBoard 
         renderItem={renderItem}
         requestHandler={requestHandler}
-        />
+        navigation = {this.props.navigation} />
     )
     }
 }

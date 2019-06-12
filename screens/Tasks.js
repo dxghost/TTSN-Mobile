@@ -2,27 +2,10 @@ import React from 'react'
 import {StyleSheet, View, Image, Text, ScrollView, Dimensions, StatusBar} from 'react-native'
 import TaskIcon from '../assets/tasks.png'
 import { TabView, SceneMap } from 'react-native-tab-view'
-import TaskBoard from '../components/task/TaskBoard';
 import { FAB } from 'react-native-paper';
 import TodoBoard from '../components/task/TodoBoard';
 import InProgressBoard from '../components/task/InProgressBoard';
 import DoneBoard from '../components/task/DoneBoard';
-
-const FirstRoute = () => (
-    <View style={[styles.scene]}>
-    <TodoBoard/>
-    </View>
-  );
-  const SecondRoute = () => (
-    <View style={[styles.scene]}>
-    <InProgressBoard/>
-    </View>
-);
-const ThirdRoute = () => (
-    <View style={[styles.scene]}>
-    <DoneBoard />
-    </View>
-);
 
 
 export default class Tasks extends React.Component{
@@ -36,10 +19,34 @@ export default class Tasks extends React.Component{
       };
       
     render(){
+
+      const navigation = this.props.navigation
+
+      const FirstRoute = () => (
+        <View style={[styles.scene]}>
+        <TodoBoard
+        navigation = {navigation} />
+        </View>
+      );
+      const SecondRoute = () => (
+        <View style={[styles.scene]}>
+        <InProgressBoard
+        navigation = {navigation} />
+        </View>
+    );
+    const ThirdRoute = () => (
+        <View style={[styles.scene]}>
+        <DoneBoard
+        navigation = {navigation} />
+        </View>
+    );
+    
+
         return (
             <View style = {styles.container}>
 
             <TabView
+            lazy
             navigationState={this.state}
             renderScene={SceneMap({
                 todo: FirstRoute,
@@ -48,14 +55,13 @@ export default class Tasks extends React.Component{
               })}
             onIndexChange={(index) => this.setState({index})}
             initialLayout={{width: Dimensions.get('window').width}}
-            
             />
 
             <FAB 
             style={styles.fab}
             small={false}
             icon="add"
-            onPress={() => console.log('pressed')}
+            onPress={() => navigation.navigate('AddTask')}
             />
             </View>
         );

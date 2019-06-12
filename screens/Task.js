@@ -14,6 +14,8 @@ const task={
 
 export default class Task extends React.Component{
     render(){
+
+    const taskData = this.props.navigation.getParam("taskData")
         return(
             <View style={styles.container}>
                 <Text style={styles.text}>name : {task.name}</Text>

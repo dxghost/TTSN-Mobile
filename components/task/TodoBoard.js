@@ -5,6 +5,7 @@ import {ListItem, Button} from 'react-native-elements'
 export default class TodoBoard extends React.Component{
     render()
     {
+        const navigation = this.props.navigation
         const renderItem = ({item}) => (
             <ListItem 
             key={item.key}
@@ -13,8 +14,8 @@ export default class TodoBoard extends React.Component{
             rightElement={
                 () => <Button 
                 title = {'Pick'}/>
-            
             }
+            onPress={() => navigation.navigate('SingleTask', {taskData:item})}
             />
         );
 
@@ -37,7 +38,7 @@ export default class TodoBoard extends React.Component{
         <TaskBoard 
         renderItem={renderItem}
         requestHandler={requestHandler}
-        />
+        navigation = {this.props.navigation} />
     )
     }
 }
