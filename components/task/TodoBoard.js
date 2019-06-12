@@ -10,7 +10,7 @@ export default class TodoBoard extends React.Component{
             <ListItem 
             key={item.key}
             title={item.title}
-            subtitle={item.description}
+            subtitle={item.description}re
             rightElement={
                 () => <Button 
                 title = {'Pick'}/>
