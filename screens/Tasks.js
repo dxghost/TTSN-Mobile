@@ -4,20 +4,23 @@ import TaskIcon from '../assets/tasks.png'
 import { TabView, SceneMap } from 'react-native-tab-view'
 import TaskBoard from '../components/task/TaskBoard';
 import { FAB } from 'react-native-paper';
+import TodoBoard from '../components/task/TodoBoard';
+import InProgressBoard from '../components/task/InProgressBoard';
+import DoneBoard from '../components/task/DoneBoard';
 
 const FirstRoute = () => (
     <View style={[styles.scene]}>
-    <TaskBoard buttonTitle='Pick'/>
+    <TodoBoard/>
     </View>
   );
   const SecondRoute = () => (
     <View style={[styles.scene]}>
-    <TaskBoard buttonTitle='Done'/>
+    <InProgressBoard/>
     </View>
 );
 const ThirdRoute = () => (
     <View style={[styles.scene]}>
-    <TaskBoard />
+    <DoneBoard />
     </View>
 );
 
@@ -54,7 +57,6 @@ export default class Tasks extends React.Component{
             icon="add"
             onPress={() => console.log('pressed')}
             />
-
             </View>
         );
     }
