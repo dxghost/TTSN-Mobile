@@ -8,6 +8,37 @@ import InProgressBoard from '../components/task/InProgressBoard';
 import DoneBoard from '../components/task/DoneBoard';
 
 
+// export default class FirstRoute extends React.PureComponent {
+//   render() {
+//     return (
+//       <View style={[styles.scene]}>
+//       <TodoBoard
+//       navigation = {navigation} />
+//       </View>
+//     );
+//   }
+// }
+// export default class SecondRoute extends React.PureComponent {
+//   render() {
+//     return (
+//       <View style={[styles.scene]}>
+//       <InProgressBoard
+//       navigation = {navigation} />
+//       </View>
+//     );
+//   }
+// }
+// export default class ThirdRoute extends React.PureComponent {
+//   render() {
+//     return (
+//       <View style={[styles.scene]}>
+//       <DoneBoard
+//       navigation = {navigation} />
+//       </View>
+//     );
+//   }
+// }
+
 export default class Tasks extends React.Component{
     state = {
         index: 0,
@@ -21,38 +52,26 @@ export default class Tasks extends React.Component{
     render(){
 
       const navigation = this.props.navigation
-
-      const FirstRoute = () => (
-        <View style={[styles.scene]}>
-        <TodoBoard
-        navigation = {navigation} />
-        </View>
-      );
-      const SecondRoute = () => (
-        <View style={[styles.scene]}>
-        <InProgressBoard
-        navigation = {navigation} />
-        </View>
-    );
-    const ThirdRoute = () => (
-        <View style={[styles.scene]}>
-        <DoneBoard
-        navigation = {navigation} />
-        </View>
-    );
-    
-
-        return (
+      return (
             <View style = {styles.container}>
-
             <TabView
-            lazy
+            lazy = {true}
+            lazyPreloadDistance={2}
             navigationState={this.state}
-            renderScene={SceneMap({
-                todo: FirstRoute,
-                inprog: SecondRoute,
-                done: ThirdRoute
-              })}
+            renderScene = { 
+              ({ route }) => {
+                switch (route.key) {
+                  case 'todo':
+                    return <TodoBoard navigation = {navigation} />;
+                  case 'inprog':
+                    return <InProgressBoard navigation = {navigation} />;
+                  case 'done':
+                    return <DoneBoard navigation = {navigation} />;
+                  default:
+                    return null;
+                }
+              }
+            }
             onIndexChange={(index) => this.setState({index})}
             initialLayout={{width: Dimensions.get('window').width}}
             />
@@ -92,3 +111,4 @@ Tasks.navigationOptions = {
         <Image source={TaskIcon} style={{width:30, height:30}} />
     ),
 }
+
