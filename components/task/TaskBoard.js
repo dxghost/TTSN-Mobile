@@ -13,45 +13,16 @@ const list = [
         name: 'update database',
         index: 2,
         description: 'modify task moded and ...modify task moded and ...modify task '
-    },{
-        name: 'update database',
-        index: 3,
-        description: 'modify task moded and ...modify task moded and ...modify task '
-    },{
-        name: 'update database',
-        index: 4,
-        description: 'modify task moded and ...modify task moded and ...modify task '
-    },{
-        name: 'update database',
-        index: 5,
-        description: 'modify task moded and ...modify task moded and ...modify task '
-    },{
-        name: 'update database',
-        index: 6,
-        description: 'modify task moded and ...modify task moded and ...modify task '
-    },{
-        name: 'update database',
-        index: 7,
-        description: 'modify task moded and ...modify task moded and ...modify task '
-    },{
-        name: 'update database',
-        index: 8,
-        description: 'modify task moded and ...modify task moded and ...modify task '
-    },{
-        name: 'update database',
-        index: 9,
-        description: 'modify task moded and ...modify task moded and ...modify task '
-    },{
-        name: 'update database',
-        index: 10,
-        description: 'modify task moded and ...modify task moded and ...modify task '
-    },{
-        name: 'update database',
-        index: 11,
-        description: 'modify task moded and ...modify task moded and ...modify task '
-    },]
+    }]
+
+
 
 export default class TaskBoard extends React.Component{
+    state = {
+        isLoading: true,
+        data: []
+    }
+
     keyExtractor = (item, index) => index.toString()
     renderItem = ({item}) => (
         <ListItem 
@@ -59,19 +30,43 @@ export default class TaskBoard extends React.Component{
         title={item.name}
         subtitle={item.description}
         rightElement={
-            () => {
-            if (this.props.buttonTitle)
-            return (<Button 
-            title = {this.props.buttonTitle}/>);
-        }
-        }
+            () => <Button 
+            title = {'Pick'}/>
+        } 
         />
-    );
+    )
+
+    requestHandler = async () => {
+        let apiUrl = 'http://mamaly100.pythonanywhere.com/Task/';
+        let formData = new FormData();
+        let options = {
+            method: 'GET',
+            // body: formData,
+            headers: {
+                Accept: '*/*',
+                'Content-Type': 'application/json',
+                // 'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnX2lhdCI6MTU1OTU1NjUxNCwiZXhwIjoxNTU5NTYyNTE0LCJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1haGRpcGF6b29raTIxQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiZHgifQ.kCdXNmh_o28eLCPsHOwIMefYE12ckg2QI0uMkfIsWZw'
+            }
+        };
+        return fetch(apiUrl, options)
+    }
+
+    componentWillMount = async () => {
+        var f = await this.requestHandler()
+        f = await f.json()
+        console.log(f)
+        this.setState({
+            data: f,
+            isLoading: false
+        })
+    }
+
     render(){
         return (
+                this.state.isLoading ? <Text>loading</Text> :
                 <FlatList 
                 keyExtractor={this.keyExtractor}
-                data={list}
+                data={this.state.data}
                 renderItem={this.renderItem}
                 />
         );
