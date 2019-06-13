@@ -92,7 +92,7 @@ export default class BacklogDetailScreen extends React.Component {
         <Text style={{ fontSize: 20 }}> {backlog_data.name} </Text>
         <ListItem
           title={"Definition of done: "}
-          subtitle={backlog_data.defenition_done}
+          subtitle={backlog_data.definition_done}
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
         <ListItem
