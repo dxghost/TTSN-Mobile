@@ -20,7 +20,7 @@ export default class CreateBacklog extends React.Component {
         let formData = new FormData();
         formData.append("name", this.state.name)
         formData.append("description", this.state.description)
-        formData.append("defenition_done", this.state.definition_of_done)
+        formData.append("definition_done", this.state.definition_of_done)
         // temp
         formData.append("priority", Math.floor(Math.random() * (+100 - +15)) + +15)
         let options = {
@@ -96,7 +96,7 @@ export default class CreateBacklog extends React.Component {
                     </View>
                     <Text style={{ marginTop: "10%" }}>logs:</Text>
                     <Text>{log}</Text>
-                    {success ?
+                    {/* {success ?
                         <View style={{ marginTop: "10%" }}>
                             <Button
                                 title="view created backlog"
@@ -104,7 +104,7 @@ export default class CreateBacklog extends React.Component {
                             />
                         </View>
                         : null
-                    }
+                    } */}
                 </View>
             </View>
         )
