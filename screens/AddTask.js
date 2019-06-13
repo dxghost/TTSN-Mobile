@@ -65,7 +65,7 @@ export default class AddTask extends React.Component{
             emptyDsr: false,
             emptyBackLog: false,
            })
-           this.dropdown.
+           
             console.log('task Added successfully')
         }
         else{
@@ -121,7 +121,7 @@ export default class AddTask extends React.Component{
                 onChangeText={(taskDsr) => this.setState({taskDsr, emptyDsr:false})}/>
 
                 <Dropdown
-                ref={this.dropdown}
+                //ref={this.dropdown}
                 label= {this.state.fetchingBacklogs? 'Related BackLog : (fetching data ...)': 'Related BackLog :'}
                 error={this.state.emptyBackLog? "can't be blank":null}
                 disabled = {this.state.fetchingBacklogs}
