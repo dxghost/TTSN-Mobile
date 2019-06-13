@@ -1,16 +1,17 @@
 import React from 'react'
-import {View, Text, StyleSheet, StatusBar} from 'react-native'
-import Login from '../components/authentication/Login';
+import {ScrollView,View, Text, StyleSheet, StatusBar} from 'react-native'
+import Login from '../components/authentication/login';
+import SignUp from '../components/authentication/signup'
 
 export default class LoginScreen extends React.Component{
     render() {
         return (
             <View style={styles.screen}>
 
-                <View style={styles.container}>
+                <ScrollView style={styles.container}>
                     <Login/>
-                </View>
-
+                    <SignUp/>
+                </ScrollView>
 
             </View>
         );
