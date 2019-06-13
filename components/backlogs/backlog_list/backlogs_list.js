@@ -12,6 +12,7 @@ import {
 import { Avatar, Divider, ListItem, Header, Icon, CheckBox } from "react-native-elements";
 import SortableList from 'react-native-sortable-list';
 
+
 const window = Dimensions.get('window');
 // const data = [
 //     { "id": 1, "name": "cart", "priority": 1, "defenition_done": "be done", "description": "some description", "create_date": "2019-06-03" },
@@ -97,16 +98,19 @@ class Row extends React.Component {
     render() {
         const { data, active } = this.props;
         const { checked } = this.state;
-        const {navigate} = this.props.navigation;
+        const { navigate } = this.props.navigation;
         return (
             <ListItem
                 style={styles.row}
-                leftIcon={
+                leftElement={
                     <Icon
-                        name='drag'
+                        name='book-open'
                         type='material-community'
-                        color='rgb(150, 13, 255)' />
-
+                        color='rgb(150, 13, 255)'
+                        onPress={() => {
+                            navigate('SingleBacklog', { backlogdata: data })
+                        }}
+                    />
                 }
                 rightElement={
                     <CheckBox
@@ -129,9 +133,6 @@ class Row extends React.Component {
                 // key={item.index}
                 // leftAvatar={{ source: { uri: item.avatar_url } }}
                 title={data.name}
-                onPress={() => {
-                    navigate('SingleBacklog', {backlogdata:data})
-                }}
             // subtitle={item.subtitle}
             />
         );
@@ -160,7 +161,6 @@ const styles = StyleSheet.create({
     contentContainer: {
         width: window.width,
     },
-
     row: {
         flexDirection: 'row',
         alignItems: 'center',
