@@ -8,37 +8,6 @@ import InProgressBoard from '../components/task/InProgressBoard';
 import DoneBoard from '../components/task/DoneBoard';
 
 
-// export default class FirstRoute extends React.PureComponent {
-//   render() {
-//     return (
-//       <View style={[styles.scene]}>
-//       <TodoBoard
-//       navigation = {navigation} />
-//       </View>
-//     );
-//   }
-// }
-// export default class SecondRoute extends React.PureComponent {
-//   render() {
-//     return (
-//       <View style={[styles.scene]}>
-//       <InProgressBoard
-//       navigation = {navigation} />
-//       </View>
-//     );
-//   }
-// }
-// export default class ThirdRoute extends React.PureComponent {
-//   render() {
-//     return (
-//       <View style={[styles.scene]}>
-//       <DoneBoard
-//       navigation = {navigation} />
-//       </View>
-//     );
-//   }
-// }
-
 export default class Tasks extends React.Component{
     state = {
         index: 0,

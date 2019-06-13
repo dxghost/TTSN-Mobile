@@ -38,8 +38,8 @@ export default class AddTask extends React.Component{
         let formData = new FormData();
         formData.append("TaskState", "TO_DO")
         formData.append("BackLogID", this.state.backlogId)
-        formData.append("title", this.state.name)
-        formData.append("description", this.state.description)
+        formData.append("title", this.state.taskName)
+        formData.append("description", this.state.taskDsr)
         let options = {
             method: 'POST',
             body: formData,
