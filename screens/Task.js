@@ -2,8 +2,8 @@ import React from 'react'
 import {ScrollView, Text, StyleSheet,StatusBar} from 'react-native'
 import {ListItem} from 'react-native-elements'
 
-
 export default class Task extends React.Component{
+    
     render(){
 
     const task = this.props.navigation.getParam("taskData")
@@ -12,14 +12,14 @@ export default class Task extends React.Component{
         <ScrollView style={styles.container}>
 
         <Text style={{ fontSize: 20 }}> {task.title} </Text>
-        <ListItem
+        {/* <ListItem
           title={"Title: "}
           subtitle={task.title}
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
-        />
+        /> */}
         <ListItem
           title={"Description: "}
-          subtitle={(task.description).toString()}
+          subtitle={task.description}
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
         <ListItem
@@ -29,20 +29,19 @@ export default class Task extends React.Component{
         />
         <ListItem
           title={"Related BackLog : "}
-          subtitle={task.backLogID}
+          subtitle={task.BackLogID.toString()}
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
         <ListItem
           title={"Task Picker : "}
-          subtitle={task.TaskState != "TO_DO"? task.picker:"not assigned yet" }
+          subtitle={task.TaskState != "TO_DO"? task.picker.toString():"not assigned yet" }
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
         <ListItem
           title={"Task ID : "}
-          subtitle={task.id}
+          subtitle={task.id.toString()}
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
-        
       </ScrollView>
         );
     }

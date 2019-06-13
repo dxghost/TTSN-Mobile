@@ -15,6 +15,7 @@ export default class TodoBoard extends React.Component{
                 <Button 
                 title = {'Pick'} onPress={() => {
                     putTaskRequestHandler(item)
+                    
                 }}/>
             }
             onPress={() => navigation.navigate('SingleTask', {taskData:item})}
@@ -60,6 +61,7 @@ export default class TodoBoard extends React.Component{
             if (response.ok == true) { 
             
                 console.log('task Pcked Successfully')
+                
             }
             else{
                 console.log(`action failed ${res_body.substring(0, 300)}`)
