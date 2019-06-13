@@ -16,7 +16,7 @@ export default class DoneBoard extends React.Component{
         );
 
         const requestHandler = async () => {
-            let apiUrl = 'http://mamaly100.pythonanywhere.com/Task/';
+            let apiUrl = 'http://mamaly100.pythonanywhere.com/Task/TaskByState/DONE/';
             let formData = new FormData();
             let options = {
                 method: 'GET',

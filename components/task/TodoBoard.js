@@ -22,7 +22,7 @@ export default class TodoBoard extends React.Component{
         );
 
         const getTaskRequestHandler = async () => {
-            let apiUrl = 'http://mamaly100.pythonanywhere.com/Task/';
+            let apiUrl = 'http://mamaly100.pythonanywhere.com/Task/TaskByState/TO_DO/';
             let formData = new FormData();
             let options = {
                 method: 'GET',

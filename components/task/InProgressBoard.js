@@ -23,7 +23,7 @@ export default class InProgressBoard extends React.Component{
         );
 
         const getRequestHandler = async () => {
-            let apiUrl = `http://mamaly100.pythonanywhere.com/Task/`;
+            let apiUrl = `http://mamaly100.pythonanywhere.com/Task/TaskByState/IN_PROGRESS/`;
             let formData = new FormData();
             
             let options = {
