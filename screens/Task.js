@@ -1,43 +1,59 @@
-
 import React from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {ScrollView, Text, StyleSheet,StatusBar} from 'react-native'
+import {ListItem} from 'react-native-elements'
 
-const task={
-    name : "update database",
-    description : "modify task moded and ...modify task moded and ...modify task",
-    id : 1,
-    user : null,
-    backlog : {name: "view previous details",
-                id:10
-                },
-}
 
 export default class Task extends React.Component{
     render(){
 
-    const taskData = this.props.navigation.getParam("taskData")
+    const task = this.props.navigation.getParam("taskData")
         return(
-            <View style={styles.container}>
-                <Text style={styles.text}>name : {task.name}</Text>
-                <Text style={styles.text}>description : {task.description}</Text>
-                <Text style={styles.text}>id : {task.id}</Text>
-                <Text style={styles.text}>user : {task.user !== null? task.user:"not assigned yet" }</Text>
-            </View>
+
+        <ScrollView style={styles.container}>
+
+        <Text style={{ fontSize: 20 }}> {task.title} </Text>
+        <ListItem
+          title={"Title: "}
+          subtitle={task.title}
+          titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
+        />
+        <ListItem
+          title={"Description: "}
+          subtitle={(task.description).toString()}
+          titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
+        />
+        <ListItem
+          title={"Task State : "}
+          subtitle={task.TaskState}
+          titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
+        />
+        <ListItem
+          title={"Related BackLog : "}
+          subtitle={task.backLogID}
+          titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
+        />
+        <ListItem
+          title={"Task Picker : "}
+          subtitle={task.TaskState != "TO_DO"? task.picker:"not assigned yet" }
+          titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
+        />
+        <ListItem
+          title={"Task ID : "}
+          subtitle={task.id}
+          titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
+        />
+        
+      </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container:{
-        marginTop: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+    container: {
+        flex: 1,
+        marginTop: StatusBar.currentHeight,
+        // alignItems: 'center',
+      },
     text:{
         fontSize:18,
     }});
-
-
-    Task.navigationOptions = {
-        drawerLabel: 'Task',
-    }    
