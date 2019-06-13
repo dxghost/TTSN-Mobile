@@ -1,26 +1,77 @@
 import React from 'react'
-import {StyleSheet, View, Image, Text, ScrollView, Dimensions} from 'react-native'
-import BoardsScrollView from '../components/task/BoardsScrollView'
+import {StyleSheet, View, Image, Text, ScrollView, Dimensions, StatusBar} from 'react-native'
 import TaskIcon from '../assets/tasks.png'
+import { TabView, SceneMap } from 'react-native-tab-view'
+import { FAB } from 'react-native-paper';
+import TodoBoard from '../components/task/TodoBoard';
+import InProgressBoard from '../components/task/InProgressBoard';
+import DoneBoard from '../components/task/DoneBoard';
+
 
 export default class Tasks extends React.Component{
+    state = {
+        index: 0,
+        routes: [
+          { key: 'todo', title: 'To Do' },
+          { key: 'inprog', title: 'In Progress' },
+          { key: 'done', title: 'Done'}
+        ],
+      };
+      
     render(){
-        
-        return (
-        <View>
-            <BoardsScrollView />
-        </View>
+
+      const navigation = this.props.navigation
+      return (
+            <View style = {styles.container}>
+            <TabView
+            lazy = {true}
+            lazyPreloadDistance={2}
+            navigationState={this.state}
+            renderScene = { 
+              ({ route }) => {
+                switch (route.key) {
+                  case 'todo':
+                    return <TodoBoard navigation = {navigation} />;
+                  case 'inprog':
+                    return <InProgressBoard navigation = {navigation} />;
+                  case 'done':
+                    return <DoneBoard navigation = {navigation} />;
+                  default:
+                    return null;
+                }
+              }
+            }
+            onIndexChange={(index) => this.setState({index})}
+            initialLayout={{width: Dimensions.get('window').width}}
+            />
+
+            <FAB 
+            style={styles.fab}
+            small={false}
+            icon="add"
+            onPress={() => navigation.navigate('AddTask')}
+            />
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
+
     container: {
-      flex: 1,
-      backgroundColor: '#f0f',
-      //alignItems: 'center',
-      //justifyContent: 'center',
+        height: '100%',
+        width: '100%',
+        paddingTop: StatusBar.currentHeight,
     },
+    scene: {
+        flex: 1,
+      },
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
+      },
   });
 
 Tasks.navigationOptions = {
@@ -29,3 +80,4 @@ Tasks.navigationOptions = {
         <Image source={TaskIcon} style={{width:30, height:30}} />
     ),
 }
+

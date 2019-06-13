@@ -18,7 +18,7 @@ export default class AddTask extends React.Component{
             emptyBackLog: false,
         };
 
-    requestHandler = async () => {
+    blRequestHandler = async () => {
         let apiUrl = 'http://mamaly100.pythonanywhere.com/Backlog/';
         let formData = new FormData();
         let options = {
@@ -33,8 +33,49 @@ export default class AddTask extends React.Component{
         return fetch(apiUrl, options)
     }
 
+    addTaskRequestHandler = async () => {
+        let apiUrl = 'http://mamaly100.pythonanywhere.com/Task/';
+        let formData = new FormData();
+        formData.append("TaskState", "TO_DO")
+        formData.append("BackLogID", this.state.backlogId)
+        formData.append("title", this.state.taskName)
+        formData.append("description", this.state.taskDsr)
+        let options = {
+            method: 'POST',
+            body: formData,
+            headers: {
+                Accept: '*/*',
+                'Content-Type': 'multipart/form-data',
+                // 'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnX2lhdCI6MTU1OTU1NjUxNCwiZXhwIjoxNTU5NTYyNTE0LCJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1haGRpcGF6b29raTIxQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiZHgifQ.kCdXNmh_o28eLCPsHOwIMefYE12ckg2QI0uMkfIsWZw'
+            }
+        };
+        // console.log(formData)
+        response = await fetch(apiUrl, options)
+        //res_data = await JSON.parse(response._bodyText)
+        res_body = response._bodyText
+        if (response.ok == true) { 
+        
+            this.setState({taskDsr:'', 
+            taskName:'', 
+            backlogId:'', 
+            fetchingBacklogs:true, 
+            backlogData: [],
+            selectedBackLog : '',
+            emptyName: false,
+            emptyDsr: false,
+            emptyBackLog: false,
+           })
+           
+            console.log('task Added successfully')
+        }
+        else{
+            console.log(`action failed ${res_body}`)
+        }
+        // return fetch(apiUrl, options)
+    }
+
     componentWillMount = async () => {
-        var f = await this.requestHandler()
+        var f = await this.blRequestHandler()
         f = await f.json()
         //console.log(f)
         this.setState({
@@ -80,6 +121,7 @@ export default class AddTask extends React.Component{
                 onChangeText={(taskDsr) => this.setState({taskDsr, emptyDsr:false})}/>
 
                 <Dropdown
+                //ref={this.dropdown}
                 label= {this.state.fetchingBacklogs? 'Related BackLog : (fetching data ...)': 'Related BackLog :'}
                 error={this.state.emptyBackLog? "can't be blank":null}
                 disabled = {this.state.fetchingBacklogs}
@@ -95,10 +137,13 @@ export default class AddTask extends React.Component{
                     console.log(`taskName : ${this.state.taskName}\ntask dsr : ${this.state.taskDsr}\n backlogId : ${this.state.backlogId}`)
                     if(this.clientSideCheck()){
                         //implement backend request and came back to tasks
+                        this.addTaskRequestHandler()
                     }
+                    
                 }}
                 type='solid'
                 />
+                
                 </View>
             
                 </View>
