@@ -24,7 +24,7 @@ const Drawer = createDrawerNavigator(
     }
   },
   {
-    initialRouteName: 'BacklogList',
+    initialRouteName: 'LoginScreen',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',
