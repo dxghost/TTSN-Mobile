@@ -39,7 +39,6 @@ export default class CreateBacklog extends React.Component {
         this.setState({ log: res_body, data: res_data })
         if (response.ok == true) {
             this.setState({ success: true })
-            await AsyncStorage.setItem('performFetch', "true");
             this.props.navigation.state.params.onGoBack();
         }
         Alert.alert(

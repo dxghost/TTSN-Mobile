@@ -13,17 +13,10 @@ import {
 } from 'react-native';
 import { Avatar, Divider, ListItem, Header, Icon, CheckBox } from "react-native-elements";
 import SortableList from 'react-native-sortable-list';
-import { requestBacklogs } from '../../../actions/fetcher'
+import { requestBacklogs, deleteBacklog } from '../../../actions/fetcher'
 import { FAB } from 'react-native-paper'
 
-
 const window = Dimensions.get('window');
-// const data = [
-//     { "id": 1, "name": "cart", "priority": 1, "defenition_done": "be done", "description": "some description", "create_date": "2019-06-03" },
-//     { "id": 2, "name": "market", "priority": 2, "defenition_done": "can buy shit", "description": "some other description", "create_date": "2019-06-03" },
-//     { "id": 3, "name": "some backlog", "priority": 3, "defenition_done": "some defenition", "description": "some description", "create_date": "2019-06-03" }
-// ];
-
 export default class BacklogList extends React.Component {
     state = {
         isLoading: true,
@@ -31,16 +24,13 @@ export default class BacklogList extends React.Component {
     }
 
     _refresh = async () => {
-        const result = await AsyncStorage.getItem('performFetch')
-        if (result == "true") {
-            await requestBacklogs()
-            backlogList = await AsyncStorage.getItem('backlogs')
-            backlogList = await JSON.parse(backlogList)
-            this.setState({
-                data: backlogList,
-                isLoading: false
-            })
-        }
+        await requestBacklogs()
+        backlogList = await AsyncStorage.getItem('backlogs')
+        backlogList = await JSON.parse(backlogList)
+        this.setState({
+            data: backlogList,
+            isLoading: false
+        })
     }
 
     componentWillMount = async () => {
@@ -51,7 +41,6 @@ export default class BacklogList extends React.Component {
 
         backlogList = await AsyncStorage.getItem('backlogs')
         backlogList = await JSON.parse(backlogList)
-        console.log(backlogList)
         this.setState({
             data: backlogList,
             isLoading: false
@@ -60,7 +49,7 @@ export default class BacklogList extends React.Component {
 
     render() {
         const { isLoading, data } = this.state;
-        const{navigate} = this.props.navigation;
+        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 {
@@ -90,19 +79,24 @@ export default class BacklogList extends React.Component {
     }
 
     _renderRow = ({ data, active }) => {
-        return <Row data={data} active={active} navigation={this.props.navigation} />
+        return <Row refresh={this._refresh} data={data} active={active} navigation={this.props.navigation} />
     }
 }
 
 
 class Row extends React.Component {
-    state = {
-        checked: false
-    };
-
     constructor(props) {
         super(props);
         this._active = new Animated.Value(0);
+    }
+    state = {
+        justifyContent: 'center'
+    };
+
+    _deleteRequest = async (ID) => {
+        response = await deleteBacklog(ID)
+        console.log(response)
+        if (response == true) this.props.refresh()
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.active !== nextProps.active) {
@@ -133,7 +127,7 @@ class Row extends React.Component {
                 rightElement={
                     <CheckBox
                         // center
-                        title={this.state.checked ? "it's not done" : "consider it done"}
+                        title="consider it done"
                         iconRight
                         iconType='material'
                         uncheckedIcon='check'
@@ -142,10 +136,8 @@ class Row extends React.Component {
                         checkedColor='rgb(198, 10, 255)'
                         checked={this.state.checked}
                         onPress={() => {
-                            // TODO add a function to move to footer
-                            this.setState({ checked: !checked })
-                        }
-                        }
+                            this._deleteRequest(data.id)
+                        }}
                     />
                 }
                 // key={item.index}
