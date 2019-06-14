@@ -1,5 +1,6 @@
 import React from 'react'
 import TaskBoard from './TaskBoard';
+import {Alert} from 'react-native'
 import {ListItem, Button} from 'react-native-elements'
 
 export default class InProgressBoard extends React.Component{
@@ -63,6 +64,16 @@ export default class InProgressBoard extends React.Component{
             else{
                 console.log(`action failed ${res_body}`)
             }
+
+            Alert.alert(
+                response.ok?'Done!':'Failed!',
+                response.ok?'Task Done Successfully':'An Error Occurred',
+                [
+                  {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                {cancelable: false},
+              );
+
             // return fetch(apiUrl, options)
         }
 

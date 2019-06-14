@@ -1,4 +1,5 @@
 import React from 'react'
+import {Alert} from 'react-native'
 import TaskBoard from './TaskBoard';
 import {ListItem, Button} from 'react-native-elements'
 
@@ -66,6 +67,15 @@ export default class TodoBoard extends React.Component{
             else{
                 console.log(`action failed ${res_body.substring(0, 300)}`)
             }
+
+            Alert.alert(
+                response.ok?'Done!':'Failed!',
+                response.ok?'Task Picked Successfully':'An Error Occurred',
+                [
+                  {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                {cancelable: false},
+              );
             // return fetch(apiUrl, options)
         }
     

@@ -80,7 +80,6 @@ export default class AddTask extends React.Component{
             ],
             {cancelable: false},
           );
-
         // return fetch(apiUrl, options)
     }
 
