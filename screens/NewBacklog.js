@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native'
+import { ScrollView, View, Text, Image, StyleSheet, AsyncStorage,Alert } from 'react-native'
 import { ListItem, Button, Divider } from "react-native-elements"
 import Icon from 'react-native-vector-icons/FontAwesome'
 import CreateNew from '../assets/icons/icons8-add-property-96.png'
@@ -42,8 +42,15 @@ export default class CreateBacklog extends React.Component {
             await AsyncStorage.setItem('performFetch', "true");
             this.props.navigation.state.params.onGoBack();
         }
-
-        // return fetch(apiUrl, options)
+        Alert.alert(
+            response.ok?'Done!':'Failed!',
+            response.ok?'Backlog Added Successfully':'An Error Occurred',
+            [
+              response.ok? {text: 'See On BacklogList Board', onPress: () => this.props.navigation.goBack()}:null,
+              {text: 'OK'},
+            ],
+            {cancelable: false},
+          );
     }
     _doNavigation = () => {
         const { navigate } = this.props.navigation;
