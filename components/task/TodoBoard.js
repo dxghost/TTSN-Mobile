@@ -96,7 +96,7 @@ export default class TodoBoard extends React.Component{
             small={false}
             icon="add"
             onPress={() => {
-                //navigation.navigate('AddTask')
+                navigation.navigate('AddTask')
             }}
             />
 
