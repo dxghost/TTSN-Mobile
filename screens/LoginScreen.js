@@ -1,16 +1,26 @@
 import React from 'react'
-import {ScrollView,View, Text, StyleSheet, StatusBar} from 'react-native'
+import {ScrollView,View, Text, StyleSheet, StatusBar, Dimensions} from 'react-native'
 import Login from '../components/authentication/login';
 import SignUp from '../components/authentication/signup'
+import { Button } from 'react-native-elements';
 
 export default class LoginScreen extends React.Component{
     render() {
         return (
             <View style={styles.screen}>
 
-                <ScrollView style={styles.container}>
-                    <Login/>
-                    <SignUp/>
+                <ScrollView style={styles.container}
+                pagingEnabled
+                horizontal={true}
+                >
+                    <View style={styles.scrollViewItem}>
+                        <Login />
+                    </View>
+
+                    <View style={styles.scrollViewItem}>
+                        <SignUp/>
+                    </View>
+                    
                 </ScrollView>
 
             </View>
@@ -24,15 +34,20 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: 'grey',
     flex:1,
+
     marginTop: StatusBar.currentHeight,
     },
     container:{
         marginVertical: '15%',
         marginHorizontal: '10%',
-        padding: 30,
         backgroundColor: 'white',
 
     },
+    scrollViewItem:{
+        width: Dimensions.get('window').width*(0.8), 
+        // use Dimensions cuase '100%' doesnt work properly
+        padding: 30,
+    }
 })
 
 LoginScreen.navigationOptions = {
