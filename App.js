@@ -13,7 +13,13 @@ export default class App extends React.Component {
     isLoading: true
   }
   componentWillMount = async () => {
-    console.log('called')
+    const result = await AsyncStorage.getItem('loggedIn')
+    if (result == null || result === "false") this.setState({ loggedIn: "false" })
+    else this.setState({ loggedIn: "true" })
+    this.setState({ isLoading: false })
+  }
+  _refresh = async () => {
+    console.log("called")
     const result = await AsyncStorage.getItem('loggedIn')
     if (result == null || result === "false") this.setState({ loggedIn: "false" })
     else this.setState({ loggedIn: "true" })
@@ -27,7 +33,7 @@ export default class App extends React.Component {
           <ActivityIndicator size="large" color="#DE94FF" />
         </View>
         :
-        loggedIn === "true" ? <AppContainer /> : <Login />
+        loggedIn === "true" ? <AppContainer /> : <Login refreshMain={this._refresh} />
 
 
     );
