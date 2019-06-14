@@ -9,6 +9,7 @@ import {
     View,
     Dimensions,
     Platform,
+    ActivityIndicator
 } from 'react-native';
 import { Avatar, Divider, ListItem, Header, Icon, CheckBox } from "react-native-elements";
 import SortableList from 'react-native-sortable-list';
@@ -63,7 +64,7 @@ export default class BacklogList extends React.Component {
         return (
             <View style={styles.container}>
                 {
-                    this.state.isLoading ? <Text>loading</Text> :
+                    this.state.isLoading ? <ActivityIndicator size="large" color="#DE94FF" /> :
                         <View>
                             <Text style={styles.title}>Backlogs</Text>
                             <SortableList
