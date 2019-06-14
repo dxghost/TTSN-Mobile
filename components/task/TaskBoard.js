@@ -25,14 +25,33 @@ export default class TaskBoard extends React.Component{
         })
     }
 
+    refreshData = async () => {
+        var f = await this.requestHandler()
+        f = await f.json()
+        console.log(f)
+        if(this.data != f){
+        this.setState({
+            data: f,
+            isLoading: false
+        })}
+    }
+
     render(){
         return (
-                this.state.isLoading ? <Text>loading</Text> :
+                <View>
+
+                <Button 
+                title = 'Reload'
+                onPress= {this.refreshData}/> 
+
+                {this.state.isLoading ? <Text>loading</Text> :
                 <FlatList 
                 keyExtractor={this.keyExtractor}
                 data={this.state.data}
                 renderItem={this.renderItem}
-                />
+                />}
+
+                </View>
         );
     }
 }

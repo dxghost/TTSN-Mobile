@@ -1,8 +1,7 @@
 import React from 'react'
 import {StyleSheet, View, Image, Text, ScrollView, Dimensions, StatusBar} from 'react-native'
 import TaskIcon from '../assets/tasks.png'
-import { TabView, SceneMap } from 'react-native-tab-view'
-import { FAB } from 'react-native-paper';
+import { TabView } from 'react-native-tab-view'
 import TodoBoard from '../components/task/TodoBoard';
 import InProgressBoard from '../components/task/InProgressBoard';
 import DoneBoard from '../components/task/DoneBoard';
@@ -44,13 +43,6 @@ export default class Tasks extends React.Component{
             onIndexChange={(index) => this.setState({index})}
             initialLayout={{width: Dimensions.get('window').width}}
             />
-
-            <FAB 
-            style={styles.fab}
-            small={false}
-            icon="add"
-            onPress={() => navigation.navigate('AddTask')}
-            />
             </View>
         );
     }
@@ -65,12 +57,6 @@ const styles = StyleSheet.create({
     },
     scene: {
         flex: 1,
-      },
-    fab: {
-        position: 'absolute',
-        margin: 16,
-        right: 0,
-        bottom: 0,
       },
   });
 
