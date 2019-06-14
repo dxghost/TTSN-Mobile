@@ -5,52 +5,6 @@ import CalendarIcon from "../assets/icons/icons8-calendar-64.png"
 import TaskList from "../components/backlogs/task_list/TaskList"
 import { ListItem, Divider } from "react-native-elements"
 
-const Tasks = [
-  {
-    title: 'Do This',
-    created_date: "Jan 21 2012",
-    description: 'description sampleLorem ipsum.hfgfdrstufgohkjfgjkffgjh;jkl..',
-    picker: "the great dx",
-  },
-  {
-    title: 'Do That',
-    created_date: "Jan 21 2012",
-    description: 'Lorem ipsum...',
-    picker: "the great ghost",
-  },
-  {
-    title: 'Do that again',
-    created_date: "Jan 21 2012",
-    description: 'Lorem ipsum...',
-    picker: "the great mahdi",
-  },
-  {
-    title: 'refactor code',
-    created_date: "Jan 21 2012",
-    description: 'Lorem ipsum...',
-    picker: "the great pazooki",
-  },
-  {
-    title: 'Fifth',
-    created_date: "Jan 21 2012",
-    description: 'Lorem ipsum...',
-    picker: "the great fullstack",
-  },
-  {
-    title: 'Sixth',
-    created_date: "Jan 21 2012",
-    description: 'Lorem ipsum...',
-    picker: "the great dx",
-  },
-];
-// const trueBacklogDetails = {
-//   "id": 1,
-//   "name": "cart",
-//   "priority": 1,
-//   "defenition_done": "be done",
-//   "description": "some description",
-//   "create_date": "2019-06-03"
-// }
 
 export default class BacklogDetailScreen extends React.Component {
   state = {
@@ -58,7 +12,9 @@ export default class BacklogDetailScreen extends React.Component {
     taskdata: []
   }
   _requestHandler = async () => {
-    let apiUrl = 'http://mamaly100.pythonanywhere.com/Task/';
+    const backlog_data = this.props.navigation.getParam("backlogdata")
+    let apiUrl = `http://mamaly100.pythonanywhere.com/Backlog/${backlog_data.id}/Tasks/`;
+    console.log(apiUrl)
     let formData = new FormData();
     let options = {
       method: 'GET',
@@ -73,18 +29,17 @@ export default class BacklogDetailScreen extends React.Component {
   }
 
   componentWillMount = async () => {
-    var f = await this._requestHandler()
-    f = await f.json()
-    // console.log(f)
+    var result = await this._requestHandler()    
+    result = await result.json()
     this.setState({
-      data: f,
+      data: result,
       isLoading: false
     })
   }
 
   render() {
     const { isLoading, data } = this.state;
-    const backlog_data=this.props.navigation.getParam("backlogdata")
+    const backlog_data = this.props.navigation.getParam("backlogdata")
     return (
       <ScrollView style={styles.container}>
         {/* TODO Header name would be BacklogDetails.name */}
@@ -111,7 +66,7 @@ export default class BacklogDetailScreen extends React.Component {
         />
         <ScrollView style={styles.backlogDetailsContainer}>
           {/* <TaskList Tasks={this.props.data} isLoading={this.state.isLoading} /> */}
-          <TaskList Tasks={Tasks} />
+          {isLoading ? <Text>Loading</Text> : <TaskList Tasks={data} />}
         </ScrollView>
       </ScrollView>
     )

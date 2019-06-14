@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    AsyncStorage,
     Animated,
     Easing,
     StyleSheet,
@@ -11,6 +12,8 @@ import {
 } from 'react-native';
 import { Avatar, Divider, ListItem, Header, Icon, CheckBox } from "react-native-elements";
 import SortableList from 'react-native-sortable-list';
+import { requestBacklogs } from '../../../actions/fetcher'
+import { FAB } from 'react-native-paper'
 
 
 const window = Dimensions.get('window');
@@ -26,33 +29,37 @@ export default class BacklogList extends React.Component {
         data: []
     }
 
-    requestHandler = async () => {
-        let apiUrl = 'http://mamaly100.pythonanywhere.com/Backlog/';
-        let formData = new FormData();
-        let options = {
-            method: 'GET',
-            // body: formData,
-            headers: {
-                Accept: '*/*',
-                'Content-Type': 'application/json',
-                // 'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnX2lhdCI6MTU1OTU1NjUxNCwiZXhwIjoxNTU5NTYyNTE0LCJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1haGRpcGF6b29raTIxQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiZHgifQ.kCdXNmh_o28eLCPsHOwIMefYE12ckg2QI0uMkfIsWZw'
-            }
-        };
-        return fetch(apiUrl, options)
+    _refresh = async () => {
+        const result = await AsyncStorage.getItem('performFetch')
+        if (result == "true") {
+            await requestBacklogs()
+            backlogList = await AsyncStorage.getItem('backlogs')
+            backlogList = await JSON.parse(backlogList)
+            this.setState({
+                data: backlogList,
+                isLoading: false
+            })
+        }
     }
 
     componentWillMount = async () => {
-        var f = await this.requestHandler()
-        f = await f.json()
-        console.log(f)
+        const result = await AsyncStorage.getItem('performFetch')
+        if (result == null || result == "true") {
+            await requestBacklogs()
+        }
+
+        backlogList = await AsyncStorage.getItem('backlogs')
+        backlogList = await JSON.parse(backlogList)
+        console.log(backlogList)
         this.setState({
-            data: f,
+            data: backlogList,
             isLoading: false
         })
     }
 
     render() {
         const { isLoading, data } = this.state;
+        const{navigate} = this.props.navigation;
         return (
             <View style={styles.container}>
                 {
@@ -67,6 +74,16 @@ export default class BacklogList extends React.Component {
                             />
                         </View>
                 }
+                <FAB
+                    style={styles.fab}
+                    small={false}
+                    icon="add"
+                    onPress={() =>
+                        navigate('AddBacklog', {
+                            onGoBack: () => this._refresh(),
+                        })
+                    }
+                />
             </View>
         );
     }
@@ -170,5 +187,11 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 2,
         marginBottom: 3,
+    },
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
     },
 });

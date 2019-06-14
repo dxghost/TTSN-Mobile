@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, Text, Image, StyleSheet } from 'react-native'
+import { ScrollView, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native'
 import { ListItem, Button, Divider } from "react-native-elements"
 import Icon from 'react-native-vector-icons/FontAwesome'
 import CreateNew from '../assets/icons/icons8-add-property-96.png'
@@ -37,7 +37,12 @@ export default class CreateBacklog extends React.Component {
         res_data = await JSON.parse(response._bodyText)
         res_body = response._bodyText
         this.setState({ log: res_body, data: res_data })
-        if (response.ok == true) { this.setState({ success: true }) }
+        if (response.ok == true) {
+            this.setState({ success: true })
+            await AsyncStorage.setItem('performFetch', "true");
+            this.props.navigation.state.params.onGoBack();
+        }
+
         // return fetch(apiUrl, options)
     }
     _doNavigation = () => {
