@@ -1,6 +1,8 @@
 import React from 'react'
+import {Alert, StyleSheet, View} from 'react-native'
 import TaskBoard from './TaskBoard';
 import {ListItem, Button} from 'react-native-elements'
+import { FAB } from 'react-native-paper'
 
 export default class TodoBoard extends React.Component{
     render()
@@ -66,15 +68,49 @@ export default class TodoBoard extends React.Component{
             else{
                 console.log(`action failed ${res_body.substring(0, 300)}`)
             }
+
+            Alert.alert(
+                response.ok?'Done!':'Failed!',
+                response.ok?'Task Picked Successfully':'An Error Occurred',
+                [
+                  {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                {cancelable: false},
+              );
             // return fetch(apiUrl, options)
         }
     
 
         return(
-        <TaskBoard 
-        renderItem={renderItem}
-        requestHandler={getTaskRequestHandler}
-        navigation = {this.props.navigation} />
+        <View style={{flex:1}}>
+
+            <TaskBoard 
+            ref={'todoBoard'}
+            renderItem={renderItem}
+            requestHandler={getTaskRequestHandler}
+            navigation = {this.props.navigation}
+            />
+
+            <FAB 
+            style={styles.fab}
+            small={false}
+            icon="add"
+            onPress={() => {
+                //navigation.navigate('AddTask')
+            }}
+            />
+
+        </View>
+        
     )
     }
 }
+
+const styles = StyleSheet.create({
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
+      },
+  });

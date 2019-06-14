@@ -24,7 +24,7 @@ const Drawer = createDrawerNavigator(
     }
   },
   {
-    initialRouteName: 'LoginScreen',
+    initialRouteName: 'TaskList',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',

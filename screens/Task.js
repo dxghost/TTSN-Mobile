@@ -18,7 +18,7 @@ export default class Task extends React.Component{
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         /> */}
         <ListItem
-          title={"Description: "}
+          title={"Description : "}
           subtitle={task.description}
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
@@ -34,7 +34,7 @@ export default class Task extends React.Component{
         />
         <ListItem
           title={"Task Picker : "}
-          subtitle={task.TaskState != "TO_DO"? task.picker.toString():"not assigned yet" }
+          subtitle={(task.TaskState == "TO_DO" || !task.picker)? "not assigned yet": task.picker.toString() }
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
         <ListItem
