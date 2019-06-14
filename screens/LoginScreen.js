@@ -10,11 +10,17 @@ export default class LoginScreen extends React.Component{
             <View style={styles.screen}>
 
                 <ScrollView style={styles.container}
+                ref={"scrollView"}
                 pagingEnabled
                 horizontal={true}
                 >
                     <View style={styles.scrollViewItem}>
                         <Login />
+                        <Button
+                        title="not registered?"
+                        type="clear"
+                        onPress={() => this.refs.scrollView.scrollToEnd({animated: true})}
+                        />
                     </View>
 
                     <View style={styles.scrollViewItem}>
