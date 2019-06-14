@@ -6,6 +6,7 @@ import Task from '../screens/Task';
 import BacklogScreen from '../screens/BacklogScreen'
 import BacklogDetailScreen from '../screens/BacklogDetail'
 import NewBacklog from '../screens/NewBacklog'
+import LoginScreen from '../screens/LoginScreen';
 
 const Drawer = createDrawerNavigator(
   {
@@ -18,9 +19,12 @@ const Drawer = createDrawerNavigator(
     TaskList: {
       screen: Tasks,
     },
+    LoginScreen:{
+      screen: LoginScreen
+    }
   },
   {
-    initialRouteName: 'BacklogList',
+    initialRouteName: 'LoginScreen',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',
