@@ -41,7 +41,6 @@ export default class Tasks extends React.Component{
               }
             }
             onIndexChange={(index) => this.setState({index})}
-            initialLayout={{width: Dimensions.get('window').width}}
             />
             </View>
         );
