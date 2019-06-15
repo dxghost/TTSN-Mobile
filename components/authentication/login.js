@@ -34,7 +34,6 @@ export default class Login extends React.Component {
         res_body = response._bodyText
         this.setState({ log: res_body })
         if (response.ok) {
-            console.log('ok')
             // await AsyncStorage.setItem("token", res_body.token)
             await AsyncStorage.setItem("loggedIn", "true")
             this.props.refresh()

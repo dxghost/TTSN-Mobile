@@ -7,6 +7,7 @@ import BacklogScreen from '../screens/BacklogScreen'
 import BacklogDetailScreen from '../screens/BacklogDetail'
 import NewBacklog from '../screens/NewBacklog'
 import LoginScreen from '../screens/LoginScreen';
+import LogOut from '../components/authentication/signout'
 
 const Drawer = createDrawerNavigator(
   {
@@ -21,6 +22,9 @@ const Drawer = createDrawerNavigator(
     },
     LoginScreen:{
       screen: LoginScreen
+    },
+    SignOut:{
+      screen:LogOut
     }
   },
   {

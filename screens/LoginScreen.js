@@ -9,7 +9,6 @@ export default class LoginScreen extends React.Component{
         super(props);
     }
     _rfMain=async ()=>{
-        console.log('callef1')
         await this.props.refreshMain()
     }
     render() {
@@ -31,7 +30,7 @@ export default class LoginScreen extends React.Component{
                     </View>
 
                     <View style={styles.scrollViewItem}>
-                        <SignUp/>
+                        <SignUp  refresh={this._rfMain} />
                     </View>
                     
                 </ScrollView>
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
     }
 })
 
-LoginScreen.navigationOptions = {
-    drawerLabel: 'LoginScreen',
-}
 
+LoginScreen.navigationOptions = {
+    drawerLabel: ()=>null,
+};
