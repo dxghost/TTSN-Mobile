@@ -55,7 +55,7 @@ export default class BacklogList extends React.Component {
                 {
                     this.state.isLoading ? <ActivityIndicator size="large" color="#DE94FF" /> :
                         <View>
-                            <Text style={styles.title}>Backlogs</Text>
+                            {/* <Text style={styles.title}>Backlogs</Text> */}
                             <SortableList
                                 style={styles.list}
                                 contentContainerStyle={styles.contentContainer}

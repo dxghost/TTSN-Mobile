@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollView, View, Text, Image, StyleSheet, AsyncStorage,Alert } from 'react-native'
-import { ListItem, Button, Divider } from "react-native-elements"
+import { ListItem, Button, Divider, Header } from "react-native-elements"
 import Icon from 'react-native-vector-icons/FontAwesome'
 import CreateNew from '../assets/icons/icons8-add-property-96.png'
 import { TextField } from 'react-native-material-textfield';
@@ -69,6 +69,9 @@ export default class CreateBacklog extends React.Component {
         let { name, description, definition_of_done, success, log } = this.state;
         return (
             <View>
+                <Header style={{color:'rgb(150, 13, 255'}}
+                centerComponent={{ text: 'New BackLog', style: { color: '#fff' } }}
+                />
                 <View style={styles.formContainer}>
                     <TextField
                         label='Backlog Name:'
