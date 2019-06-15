@@ -1,9 +1,13 @@
 import React from 'react'
-import {View, StyleSheet, Text} from 'react-native'
-import {TextField} from 'react-native-material-textfield'
-import {Button} from 'react-native-elements'
+import { View, StyleSheet, Text, AsyncStorage } from 'react-native'
+import { TextField } from 'react-native-material-textfield'
+import { Button } from 'react-native-elements'
 
-export default class Login extends React.Component{
+export default class Login extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     state = {
         username: "",
         password: "",
@@ -29,32 +33,34 @@ export default class Login extends React.Component{
         response = await fetch(apiUrl, options)
         res_body = response._bodyText
         this.setState({ log: res_body })
-        if(response.ok){
-            this.setState({token:res_body.token})
+        if (response.ok) {
+            // await AsyncStorage.setItem("token", res_body.token)
+            await AsyncStorage.setItem("loggedIn", "true")
+            this.props.refresh()
         }
         console.log(res_body)
 
     }
 
-    render(){
-        let {username, password} = this.state
-        return(
+    render() {
+        let { username, password } = this.state
+        return (
             <View>
-                <TextField 
-                label={"Username"}
-                value={username}
-                onChangeText={(username) => this.setState({ username })}
-                textContentType='username'/>
+                <TextField
+                    label={"Username"}
+                    value={username}
+                    onChangeText={(username) => this.setState({ username })}
+                    textContentType='username' />
 
                 <TextField
-                label={"Password"}
-                value={password}
-                onChangeText={(password) => this.setState({password})}
-                secureTextEntry={true}/>
+                    label={"Password"}
+                    value={password}
+                    onChangeText={(password) => this.setState({ password })}
+                    secureTextEntry={true} />
 
                 <Button
-                title={"log in"}
-                onPress={this.loginRequestHandler}/>
+                    title={"log in"}
+                    onPress={this.loginRequestHandler} />
                 <Text>logs:</Text>
                 <Text> {this.state.log}</Text>
             </View>

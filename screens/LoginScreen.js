@@ -5,6 +5,12 @@ import SignUp from '../components/authentication/signup'
 import { Button } from 'react-native-elements';
 
 export default class LoginScreen extends React.Component{
+    constructor(props) {
+        super(props);
+    }
+    _rfMain=async ()=>{
+        await this.props.refreshMain()
+    }
     render() {
         return (
             <View style={styles.screen}>
@@ -15,7 +21,7 @@ export default class LoginScreen extends React.Component{
                 horizontal={true}
                 >
                     <View style={styles.scrollViewItem}>
-                        <Login />
+                        <Login refresh={this._rfMain} />
                         <Button
                         title="not registered?"
                         type="clear"
@@ -24,7 +30,7 @@ export default class LoginScreen extends React.Component{
                     </View>
 
                     <View style={styles.scrollViewItem}>
-                        <SignUp/>
+                        <SignUp  refresh={this._rfMain} />
                     </View>
                     
                 </ScrollView>
@@ -56,7 +62,7 @@ const styles = StyleSheet.create({
     }
 })
 
-LoginScreen.navigationOptions = {
-    drawerLabel: 'LoginScreen',
-}
 
+LoginScreen.navigationOptions = {
+    drawerLabel: ()=>null,
+};
