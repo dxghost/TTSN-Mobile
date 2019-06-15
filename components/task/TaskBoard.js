@@ -40,7 +40,7 @@ export default class TaskBoard extends React.Component {
     render() {
         return (
             <View>
-
+                
                 <Button
                     title='Reload'
                     onPress={this.refreshData} />

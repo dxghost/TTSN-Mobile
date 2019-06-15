@@ -27,13 +27,13 @@ export default class App extends React.Component {
   render() {
     const { isLoading, loggedIn } = this.state
     return (
-      isLoading ?
-        <View style={{ justifyContent: 'center', marginTop: "50%" }}>
-          <ActivityIndicator size="large" color="#DE94FF" />
-        </View>
-        :
-        loggedIn === "true" ? <AppContainer/> : <Login refreshMain={this._refresh} />
-
+      // isLoading ?
+      //   <View style={{ justifyContent: 'center', marginTop: "50%" }}>
+      //     <ActivityIndicator size="large" color="#DE94FF" />
+      //   </View>
+      //   :
+      //   loggedIn === "true" ? <AppContainer/> : <Login refreshMain={this._refresh} />
+      <AppContainer/>
 
     );
   }

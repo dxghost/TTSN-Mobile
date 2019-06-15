@@ -2,7 +2,7 @@ import React from 'react'
 import {View, Text, Alert, StyleSheet} from 'react-native'
 import {TextField} from 'react-native-material-textfield'
 import {Dropdown} from 'react-native-material-dropdown'
-import {Button} from 'react-native-elements'
+import {Button, Header} from 'react-native-elements'
 
 
 export default class AddTask extends React.Component{
@@ -112,8 +112,12 @@ export default class AddTask extends React.Component{
     render(){
         let {taskDsr, taskName, backlogId} = this.state;
         return(
-            <View style={styles.container}>
-                <View>
+            <View >
+                <Header style={{color:'rgb(150, 13, 255'}}
+                centerComponent={{ text: 'New Task', style: { color: '#fff' } }}
+                />
+                
+                <View style={styles.formContainer}>
                 <TextField
                 //style={styles.field}
                 label='Task Name:'
@@ -155,7 +159,7 @@ export default class AddTask extends React.Component{
                 />
                 
                 </View>
-            
+                
                 </View>
             </View>
         );
@@ -163,16 +167,10 @@ export default class AddTask extends React.Component{
 }
 
 const styles = StyleSheet.create({
-    container:{
-        paddingTop: 20,
-        paddingRight: 20,
-        paddingLeft: 20,
-        // borderColor: 'red',
-        // borderWidth: 2,
-        flex: 1,
-        // marginTop: 25,
-        // justifyContent: 'center',
-        // alignItems: 'center',
+    formContainer: {
+        marginHorizontal: '10%',
+        padding: "5%",
+        borderColor: "black",
     },
     text:{
         fontSize:18,
