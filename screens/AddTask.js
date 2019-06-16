@@ -3,9 +3,12 @@ import {View, Text, Alert, StyleSheet} from 'react-native'
 import {TextField} from 'react-native-material-textfield'
 import {Dropdown} from 'react-native-material-dropdown'
 import {Button, Header} from 'react-native-elements'
+import {connect} from 'react-redux'
+import { getTasksWithState } from '../actions/fetcher';
+import { updateTodo } from '../actions/taskActions';
 
 
-export default class AddTask extends React.Component{
+class AddTask extends React.Component{
     
     state = {taskDsr:'', 
             taskName:'', 
@@ -65,6 +68,7 @@ export default class AddTask extends React.Component{
            })
            
             console.log('task Added successfully')
+            getTasksWithState("TO_DO").then((f) => this.props.todo_update(f))
         }
         else{
             console.log(`action failed ${res_body}`)
@@ -165,6 +169,14 @@ export default class AddTask extends React.Component{
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        todo_update: (data) => dispatch(updateTodo({data : data}))
+    }
+}
+
+export default connect (null,mapDispatchToProps)(AddTask)
 
 const styles = StyleSheet.create({
     formContainer: {

@@ -56,9 +56,8 @@ class TodoBoard extends React.Component{
             //res_data = await JSON.parse(response._bodyText)
             res_body = response._bodyText
             if (response.ok == true) { 
-            
-                console.log('task Pcked Successfully')
-                
+                getTasksWithState("TO_DO").then((f) => this.props.todo_update(f))
+                getTasksWithState("IN_PROGRESS").then((f) => this.props.inprogress_update(f))
             }
             else{
                 console.log(`action failed ${res_body.substring(0, 300)}`)
