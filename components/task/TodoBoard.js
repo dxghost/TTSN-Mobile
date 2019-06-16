@@ -3,8 +3,18 @@ import {Alert, StyleSheet, View} from 'react-native'
 import TaskBoard from './TaskBoard';
 import {ListItem, Button} from 'react-native-elements'
 import { FAB } from 'react-native-paper'
+import {connect} from 'react-redux'
+import { getTasksWithState } from '../../actions/fetcher';
+import { updateInProgress } from '../../actions/taskActions';
+import { updateTodo } from '../../actions/taskActions';
 
-export default class TodoBoard extends React.Component{
+class TodoBoard extends React.Component{
+
+    componentWillMount = async () => {
+        data = await getTasksWithState("TO_DO")
+        this.props.todo_update(data)
+    }
+
     render()
     {
         const navigation = this.props.navigation
@@ -23,21 +33,6 @@ export default class TodoBoard extends React.Component{
             onPress={() => navigation.navigate('SingleTask', {taskData:item})}
             />
         );
-
-        const getTaskRequestHandler = async () => {
-            let apiUrl = 'http://mamaly100.pythonanywhere.com/Task/TaskByState/TO_DO/';
-            let formData = new FormData();
-            let options = {
-                method: 'GET',
-                // body: formData,
-                headers: {
-                    Accept: '*/*',
-                    'Content-Type': 'application/json',
-                    // 'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnX2lhdCI6MTU1OTU1NjUxNCwiZXhwIjoxNTU5NTYyNTE0LCJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1haGRpcGF6b29raTIxQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiZHgifQ.kCdXNmh_o28eLCPsHOwIMefYE12ckg2QI0uMkfIsWZw'
-                }
-            };
-            return fetch(apiUrl, options)
-        }
 
         const putTaskRequestHandler = async (task) => {
             
@@ -87,7 +82,7 @@ export default class TodoBoard extends React.Component{
             <TaskBoard 
             ref={'todoBoard'}
             renderItem={renderItem}
-            requestHandler={getTaskRequestHandler}
+            data={this.props.tasksData.to_do}
             navigation = {this.props.navigation}
             />
 
@@ -105,6 +100,22 @@ export default class TodoBoard extends React.Component{
     )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        tasksData: state.tasks
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        todo_update: (data) => dispatch(updateTodo({data : data})),
+        inprogress_update: (data) => dispatch(updateInProgress({data : data})),
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoBoard) 
 
 const styles = StyleSheet.create({
     fab: {
