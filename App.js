@@ -3,6 +3,8 @@ import { AsyncStorage, ActivityIndicator, View } from 'react-native';
 import AppDrawer from './navigators/Drawer';
 import { createAppContainer } from 'react-navigation';
 import Login from './screens/LoginScreen'
+import {Provider} from 'react-redux'
+import store from './store'
 
 const AppContainer = createAppContainer(AppDrawer);
 
@@ -32,7 +34,7 @@ export default class App extends React.Component {
           <ActivityIndicator size="large" color="#DE94FF" />
         </View>
         :
-        loggedIn === "true" ? <AppContainer/> : <Login refreshMain={this._refresh} />
+        loggedIn === "true" ? <Provider store={store}><AppContainer/></Provider> : <Login refreshMain={this._refresh} />
 
 
     );

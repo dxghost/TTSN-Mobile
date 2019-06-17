@@ -1,8 +1,16 @@
 import React from 'react'
 import TaskBoard from './TaskBoard';
 import {ListItem, Button} from 'react-native-elements'
+import { updateDone } from '../../actions/taskActions';
+import {connect} from 'react-redux'
+import {getTasksWithState} from '../../actions/fetcher'
 
-export default class DoneBoard extends React.Component{
+class DoneBoard extends React.Component{
+
+    componentWillMount = async () => {
+        getTasksWithState("DONE").then((f) => this.props.done_update(f))
+    }
+
     render()
     {
         const navigation = this.props.navigation
@@ -33,8 +41,22 @@ export default class DoneBoard extends React.Component{
         return(
         <TaskBoard 
         renderItem={renderItem}
-        requestHandler={requestHandler}
+        data={this.props.tasksData.done}
         navigation = {this.props.navigation} />
     )
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        done_update: (data) => dispatch(updateDone({data : data}))
+    }
+}
+
+function mapStateToProps(state){
+    return {
+        tasksData : state.tasks
+    }
+}
+
+export default connect (mapStateToProps,mapDispatchToProps)(DoneBoard)

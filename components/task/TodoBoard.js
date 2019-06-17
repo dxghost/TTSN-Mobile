@@ -3,8 +3,16 @@ import {Alert, StyleSheet, View} from 'react-native'
 import TaskBoard from './TaskBoard';
 import {ListItem, Button} from 'react-native-elements'
 import { FAB } from 'react-native-paper'
+import {connect} from 'react-redux'
+import { getTasksWithState } from '../../actions/fetcher'
+import { updateInProgress, updateTodo } from '../../actions/taskActions'
 
-export default class TodoBoard extends React.Component{
+class TodoBoard extends React.Component{
+
+    componentWillMount = async () => {
+        getTasksWithState("TO_DO").then((f) => this.props.todo_update(f))
+    }
+
     render()
     {
         const navigation = this.props.navigation
@@ -23,21 +31,6 @@ export default class TodoBoard extends React.Component{
             onPress={() => navigation.navigate('SingleTask', {taskData:item})}
             />
         );
-
-        const getTaskRequestHandler = async () => {
-            let apiUrl = 'http://mamaly100.pythonanywhere.com/Task/TaskByState/TO_DO/';
-            let formData = new FormData();
-            let options = {
-                method: 'GET',
-                // body: formData,
-                headers: {
-                    Accept: '*/*',
-                    'Content-Type': 'application/json',
-                    // 'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnX2lhdCI6MTU1OTU1NjUxNCwiZXhwIjoxNTU5NTYyNTE0LCJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1haGRpcGF6b29raTIxQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiZHgifQ.kCdXNmh_o28eLCPsHOwIMefYE12ckg2QI0uMkfIsWZw'
-                }
-            };
-            return fetch(apiUrl, options)
-        }
 
         const putTaskRequestHandler = async (task) => {
             
@@ -61,9 +54,8 @@ export default class TodoBoard extends React.Component{
             //res_data = await JSON.parse(response._bodyText)
             res_body = response._bodyText
             if (response.ok == true) { 
-            
-                console.log('task Pcked Successfully')
-                
+                getTasksWithState("TO_DO").then((f) => this.props.todo_update(f))
+                getTasksWithState("IN_PROGRESS").then((f) => this.props.inprogress_update(f))
             }
             else{
                 console.log(`action failed ${res_body.substring(0, 300)}`)
@@ -85,9 +77,8 @@ export default class TodoBoard extends React.Component{
         <View style={{flex:1}}>
 
             <TaskBoard 
-            ref={'todoBoard'}
             renderItem={renderItem}
-            requestHandler={getTaskRequestHandler}
+            data={this.props.tasksData.to_do}
             navigation = {this.props.navigation}
             />
 
@@ -105,6 +96,22 @@ export default class TodoBoard extends React.Component{
     )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        tasksData: state.tasks
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        todo_update: (data) => dispatch(updateTodo({data : data})),
+        inprogress_update: (data) => dispatch(updateInProgress({data : data})),
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoBoard) 
 
 const styles = StyleSheet.create({
     fab: {
