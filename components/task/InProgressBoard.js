@@ -5,6 +5,7 @@ import {ListItem, Button} from 'react-native-elements'
 import { updateDone, updateInProgress } from '../../actions/taskActions';
 import {connect} from 'react-redux'
 import {getTasksWithState} from '../../actions/fetcher'
+import { withNavigation } from 'react-navigation';
 
 class InProgressBoard extends React.Component{
 
@@ -50,9 +51,8 @@ class InProgressBoard extends React.Component{
             //res_data = await JSON.parse(response._bodyText)
             res_body = response._bodyText
             if (response.ok == true) {
-                console.log('task Done successfully')
-                getTasksWithState("DONE").then((f) => this.props.done_update(f))
                 getTasksWithState("IN_PROGRESS").then((f) => this.props.inprogress_update(f))
+                getTasksWithState("DONE").then((f) => this.props.done_update(f))
             }
             else{
                 console.log(`action failed ${res_body}`)
