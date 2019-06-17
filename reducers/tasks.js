@@ -1,7 +1,7 @@
 initalState = { //initialState for tasks data
-    to_do:[],
-    in_progress:[],
-    done:[]
+    to_do:null,
+    in_progress:null,
+    done:null
 }
 const tasks = (state = initalState, action) => {
     switch(action.type){
