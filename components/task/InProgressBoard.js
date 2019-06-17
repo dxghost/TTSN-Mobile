@@ -2,8 +2,16 @@ import React from 'react'
 import TaskBoard from './TaskBoard';
 import {Alert} from 'react-native'
 import {ListItem, Button} from 'react-native-elements'
+import { updateDone, updateInProgress } from '../../actions/taskActions';
+import {connect} from 'react-redux'
+import {getTasksWithState} from '../../actions/fetcher'
 
-export default class InProgressBoard extends React.Component{
+class InProgressBoard extends React.Component{
+
+    componentWillMount = async () => {
+        getTasksWithState("IN_PROGRESS").then((f) => this.props.inprogress_update(f))
+    }
+
     render()
     {
         const navigation = this.props.navigation
@@ -23,22 +31,6 @@ export default class InProgressBoard extends React.Component{
             />
         );
 
-        const getRequestHandler = async () => {
-            let apiUrl = `http://mamaly100.pythonanywhere.com/Task/TaskByState/IN_PROGRESS/`;
-            let formData = new FormData();
-            
-            let options = {
-                method: 'GET',
-                // body: formData,
-                headers: {
-                    Accept: '*/*',
-                    'Content-Type': 'application/json',
-                    // 'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnX2lhdCI6MTU1OTU1NjUxNCwiZXhwIjoxNTU5NTYyNTE0LCJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1haGRpcGF6b29raTIxQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiZHgifQ.kCdXNmh_o28eLCPsHOwIMefYE12ckg2QI0uMkfIsWZw'
-                }
-            };
-            return fetch(apiUrl, options)
-        }
-
         const doneTaskRequestHandler = async (task) => {
             let apiUrl = `http://mamaly100.pythonanywhere.com/Task/${task.id}/`;
             let formData = new FormData();
@@ -57,9 +49,10 @@ export default class InProgressBoard extends React.Component{
             response = await fetch(apiUrl, options)
             //res_data = await JSON.parse(response._bodyText)
             res_body = response._bodyText
-            if (response.ok == true) { 
-            
+            if (response.ok == true) {
                 console.log('task Done successfully')
+                getTasksWithState("DONE").then((f) => this.props.done_update(f))
+                getTasksWithState("IN_PROGRESS").then((f) => this.props.inprogress_update(f))
             }
             else{
                 console.log(`action failed ${res_body}`)
@@ -80,8 +73,25 @@ export default class InProgressBoard extends React.Component{
         return(
         <TaskBoard 
         renderItem={renderItem}
-        requestHandler={getRequestHandler}
+        data = {this.props.tasksData.in_progress}
         navigation = {this.props.navigation} />
     )
     }
 }
+
+
+function mapStateToProps(state) {
+    return {
+        tasksData: state.tasks
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        inprogress_update: (data) => dispatch(updateInProgress({data : data})),
+        done_update: (data) => dispatch(updateDone({data : data}))
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(InProgressBoard) 

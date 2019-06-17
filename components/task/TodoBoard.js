@@ -4,15 +4,13 @@ import TaskBoard from './TaskBoard';
 import {ListItem, Button} from 'react-native-elements'
 import { FAB } from 'react-native-paper'
 import {connect} from 'react-redux'
-import { getTasksWithState } from '../../actions/fetcher';
-import { updateInProgress } from '../../actions/taskActions';
-import { updateTodo } from '../../actions/taskActions';
+import { getTasksWithState } from '../../actions/fetcher'
+import { updateInProgress, updateTodo } from '../../actions/taskActions'
 
 class TodoBoard extends React.Component{
 
     componentWillMount = async () => {
-        data = await getTasksWithState("TO_DO")
-        this.props.todo_update(data)
+        getTasksWithState("TO_DO").then((f) => this.props.todo_update(f))
     }
 
     render()
@@ -79,7 +77,6 @@ class TodoBoard extends React.Component{
         <View style={{flex:1}}>
 
             <TaskBoard 
-            ref={'todoBoard'}
             renderItem={renderItem}
             data={this.props.tasksData.to_do}
             navigation = {this.props.navigation}
