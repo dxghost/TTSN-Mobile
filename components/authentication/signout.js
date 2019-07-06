@@ -1,6 +1,6 @@
 import React from 'react'
 import { View,ActivityIndicator, AsyncStorage } from 'react-native'
-
+import {Icon} from 'react-native-elements'
 
 export default class SignOut extends React.Component {
     state = {
@@ -21,7 +21,11 @@ export default class SignOut extends React.Component {
 }
 SignOut.navigationOptions = {
     drawerLabel: "Sign Out",
-    // drawerIcon: () => (
-    //     <Image source={PeopleIcon} style={{width:30,height:30}} />
-    // ),
+    drawerIcon: () => (
+        <Icon 
+        name='exit-to-app'
+        type='material-community'
+        color='rgb(150, 13, 255)'
+        />
+    ),
 };

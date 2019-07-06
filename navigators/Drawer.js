@@ -28,7 +28,7 @@ const Drawer = createDrawerNavigator(
     }
   },
   {
-    initialRouteName: 'TaskList',
+    initialRouteName: 'BacklogList',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',

@@ -13,16 +13,15 @@ import {
 } from 'react-native';
 import { Avatar, Divider, ListItem, Header, Icon, CheckBox } from "react-native-elements";
 import SortableList from 'react-native-sortable-list';
-import { requestBacklogs, deleteBacklog } from '../../../actions/fetcher'
+import { requestBacklogs, deleteBacklog, setPriority } from '../../../actions/fetcher'
 import { FAB } from 'react-native-paper'
-import { FlatList } from 'react-native-gesture-handler'
-
 
 const window = Dimensions.get('window');
 export default class BacklogList extends React.Component {
     state = {
         isLoading: true,
-        data: []
+        data: [],
+        priorities:[],
     }
 
     _refresh = async () => {
@@ -48,23 +47,9 @@ export default class BacklogList extends React.Component {
             isLoading: false
         })
     }
-    renderItem = ({ item }) => (
-        <ListItem
-            key={item.key}
-            title={item.title}
-            subtitle={item.description}
-            rightElement={
-                <Button
-                    title={'Done'}
-                    onPress={() => {
-                        doneTaskRequestHandler(item)
-                    }} />
-            }
-            onPress={() => navigation.navigate('SingleTask', { taskData: item })}
-        />
-    );
+
     render() {
-        const { isLoading, data } = this.state;
+        const { isLoading, data,priorities } = this.state;
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
@@ -72,39 +57,33 @@ export default class BacklogList extends React.Component {
                     this.state.isLoading ? <ActivityIndicator size="large" color="#DE94FF" /> :
                         <View>
                             {/* <Text style={styles.title}>Backlogs</Text> */}
-                            {/* <SortableList
+                            <SortableList
                                 style={styles.list}
                                 contentContainerStyle={styles.contentContainer}
                                 data={this.state.data}
                                 renderRow={this._renderRow}
-                            /> */}
-                            <FlatList
-                                style={styles.list}
-                                contentContainerStyle={styles.contentContainer}
-                                keyExtractor={this.keyExtractor}
-                                data={this.state.data}
-                                renderItem={this._renderRow}
+                                onChangeOrder={(order) => this.setState({priorities:order})}
                             />
                         </View>
                 }
                 <FAB
                     style={styles.fab}
                     small={false}
-                    icon="add"
-                    color='white'
-                    
-                    onPress={() =>
-                        navigate('AddBacklog', {
-                            onGoBack: () => this._refresh(),
-                        })
+                    icon="check"
+                    onPress={async () =>{
+                        // request
+                        await setPriority(priorities)
+                        this._refresh()
+                        this.setState({priorities:[]})
+                        }
                     }
                 />
             </View>
         );
     }
-    keyExtractor = (item, index) => index.toString()
-    _renderRow = ({ item }) => {
-        return <Row refresh={this._refresh} data={item} navigation={this.props.navigation} />
+
+    _renderRow = ({ data, active }) => {
+        return <Row refresh={this._refresh} data={data} active={active} navigation={this.props.navigation} />
     }
 }
 
@@ -123,7 +102,15 @@ class Row extends React.Component {
         console.log(response)
         if (response == true) this.props.refresh()
     }
-
+    componentWillReceiveProps(nextProps) {
+        if (this.props.active !== nextProps.active) {
+            Animated.timing(this._active, {
+                duration: 300,
+                easing: Easing.bounce,
+                toValue: Number(nextProps.active),
+            }).start();
+        }
+    }
     render() {
         const { data, active } = this.props;
         const { checked } = this.state;
@@ -138,22 +125,6 @@ class Row extends React.Component {
                         color='rgb(150, 13, 255)'
                         onPress={() => {
                             navigate('SingleBacklog', { backlogdata: data })
-                        }}
-                    />
-                }
-                rightElement={
-                    <CheckBox
-                        // center
-                        title="consider it done"
-                        iconRight
-                        iconType='material'
-                        uncheckedIcon='check'
-                        uncheckedColor='rgb(142, 187, 255)'
-                        checkedIcon='close'
-                        checkedColor='rgb(198, 10, 255)'
-                        checked={this.state.checked}
-                        onPress={() => {
-                            this._deleteRequest(data.id)
                         }}
                     />
                 }
@@ -191,7 +162,7 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderBottomWidth: 5,
+        borderBottomWidth: 1,
         borderBottomColor: "rgb(150, 13, 255)",
         height: 60,
         flex: 1,
