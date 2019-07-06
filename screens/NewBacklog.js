@@ -22,7 +22,6 @@ export default class CreateBacklog extends React.Component {
         formData.append("description", this.state.description)
         formData.append("definition_done", this.state.definition_of_done)
         // temp
-        formData.append("priority", Math.floor(Math.random() * (+100 - +15)) + +15)
         let options = {
             method: 'POST',
             body: formData,

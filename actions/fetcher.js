@@ -58,3 +58,28 @@ export async function getTasksWithState(tastState){
         console.log(f)
         return f
 }
+
+export async function setPriority(priorities){
+    let apiUrl = 'http://mamaly100.pythonanywhere.com/Backlog/set_list_priority/';
+    var p_list = priorities
+    p_list = p_list.map((x)=>parseInt(x,10))
+    let formData = {"priorities":p_list}
+    formData=JSON.stringify(formData)
+
+    console.log(formData)
+
+            let options = {
+                method: 'POST',
+                body:formData,
+                headers: {
+                    'accept': '*/*',
+                    'Content-Type': 'application/json', 
+                    // 'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnX2lhdCI6MTU1OTU1NjUxNCwiZXhwIjoxNTU5NTYyNTE0LCJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1haGRpcGF6b29raTIxQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiZHgifQ.kCdXNmh_o28eLCPsHOwIMefYE12ckg2QI0uMkfIsWZw'
+                }
+            };
+        var f = await fetch(apiUrl, options)
+        console.log(f)
+        f = await f.json()
+        console.log(f)
+        return f
+}
