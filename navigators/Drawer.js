@@ -11,23 +11,17 @@ import LogOut from '../components/authentication/signout'
 import Projects from '../screens/Projects';
 import ProjectDashboard from '../screens/ProjectDashboard';
 
-const Drawer = createDrawerNavigator(
+const MainDrawer = createDrawerNavigator(
   {
-    PeopleList: {
-      screen: PeopleScreen,
-    },
-    BacklogList: {
-      screen: BacklogScreen,
-    },
-    TaskList: {
-      screen: Tasks,
-    },
     SignOut: {
       screen: LogOut
+    },
+    Projects: {
+      screen: Projects
     }
   },
   {
-    initialRouteName: 'BacklogList',
+    initialRouteName: 'Projects',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',
@@ -38,9 +32,50 @@ const Drawer = createDrawerNavigator(
   },
 );
 
+const ProjectDrawer = createDrawerNavigator(
+  {
+    PeopleList: {
+      screen: PeopleScreen,
+    },
+    BacklogList: {
+      screen: BacklogScreen,
+    },
+    TaskList: {
+      screen: Tasks,
+    },
+    ProjectDashboard: {
+      screen: ProjectDashboard
+    }
+  },
+  {
+    initialRouteName: 'ProjectDashboard',
+    drawerPosition: 'left',
+    contentOptions: {
+      activeTintColor: '#e91e63',
+      inactiveTintColor: '#CCC',
+      activeBackgroundColor: '#EEE',
+      inactiveBackgroundColor: '#FFF',
+    },
+  },
+);
+
+
 const mainFlow = createStackNavigator({
   Drawer: {
-    screen: Drawer
+    screen: MainDrawer
+  },
+  Projects:{
+    screen: Projects
+  },
+  
+}, {
+    headerMode: 'none'
+  })
+
+
+const ProjectFlow = createStackNavigator({
+  Drawer: {
+    screen: ProjectDrawer
   },
   PeopleList: {
     screen: PeopleScreen,
@@ -63,10 +98,14 @@ const mainFlow = createStackNavigator({
   SingleBacklog: {
     screen: BacklogDetailScreen,
   },
+  ProjectDashboard:{
+    screen: ProjectDashboard,
+  }
 
 }, {
     headerMode: 'none'
   })
+
 const loginFlow = createStackNavigator({
   LoginScreen: {
     screen: LoginScreen
@@ -81,9 +120,12 @@ const Stack = createStackNavigator({
   mainFlow: {
     screen: mainFlow
   },
+  ProjectFlow:{
+    screen: ProjectFlow
+  },
   loginFlow: {
     screen: loginFlow
-  }
+  },
 },
   {
     headerMode: 'none'
