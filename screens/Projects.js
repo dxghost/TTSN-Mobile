@@ -28,7 +28,7 @@ export default class Projects extends React.Component{
                   case 'user':
                     return <UserProjects navigation = {navigation} />;
                   case 'all':
-                    return <AllProjects/>;
+                    return <AllProjects navigation = {navigation} />;
                   default:
                     return null;
                 }

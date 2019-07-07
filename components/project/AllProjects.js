@@ -1,49 +1,29 @@
 import React from 'react'
-import {StyleSheet, View, Text, StatusBar} from 'react-native'
+import {StyleSheet, View, ActivityIndicator} from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { ListItem, Card, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-const data = [
-    {
-        id : 0,
-        name : 'project1',
-        description : 'first project of ...'
-    },
-    {
-        id : 1,
-        name : 'project2',
-        description : 'second project of ...'
-    },
-    {
-        id : 0,
-        name : 'project1',
-        description : 'first project of ...'
-    },
-    {
-        id : 1,
-        name : 'project2',
-        description : 'second project of ...'
-    },
-    {
-        id : 0,
-        name : 'project1',
-        description : 'first project of ...'
-    },
-
-]
+import { getAllProjects } from '../../actions/fetcher'
 
 export default class AllProjects extends React.Component{
-
+    state = {
+        isLoading: true,
+        data: []
+    }
+    navigation = this.props.navigation
+    componentWillMount = async () => {
+        await getAllProjects().then((f) => {
+            this.setState({data:f, isLoading:false})
+        })
+    }
     keyExtractor = (item, index) => index.toString()
-
     renderItem = ({item}) => (
         <Card style={{paddingHorizontal : 1, flexDirection : 'row'}}>
             <ListItem 
             key={item.id}
-            title={item.name}
+            title={item.Name}
             titleStyle={{fontSize:21, color:'rgb(122,169,220)'}}
-            subtitle={item.description}
+            subtitle={item.StartDate}
             rightElement={
                 <Button
                 icon={
@@ -52,7 +32,7 @@ export default class AllProjects extends React.Component{
                       size={15}
                       color="white"
                     />}
-                onPress = {() => console.log('pressed')}
+                onPress = {() => this.navigation.navigate('ProjectDetail',{project: item})}
                 />
             }
             />
@@ -65,13 +45,24 @@ export default class AllProjects extends React.Component{
 
     render(){
         return(
-            <View>
+            <View style={this.state.isLoading? styles.container:{}}>
+                {
+                this.state.isLoading ? <ActivityIndicator size="large" color="#DE94FF" /> :
                 <FlatList
                     keyExtractor={this.keyExtractor}
-                    data={data}
+                    data={this.state.data}
                     renderItem={this.renderItem}
                 />
+                }
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+})
