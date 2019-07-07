@@ -33,7 +33,7 @@ const data = [
 
 ]
 
-export default class UserProjects extends React.Component{
+export default class AllProjects extends React.Component{
 
     keyExtractor = (item, index) => index.toString()
 
@@ -52,7 +52,7 @@ export default class UserProjects extends React.Component{
                       size={15}
                       color="white"
                     />}
-                onPress = {() => console.log('shit')}
+                onPress = {() => console.log('pressed')}
                 />
             }
             />
@@ -65,7 +65,7 @@ export default class UserProjects extends React.Component{
 
     render(){
         return(
-            <View style = {styles.container}>
+            <View>
                 <FlatList
                     keyExtractor={this.keyExtractor}
                     data={data}
@@ -74,16 +74,4 @@ export default class UserProjects extends React.Component{
             </View>
         );
     }
-}
-
-const styles = StyleSheet.create({
-
-    container: {
-        marginTop: StatusBar.currentHeight,
-    },
-
-  });
-
-UserProjects.navigationOptions = {
-    drawerLabel: 'UserProjects',
 }

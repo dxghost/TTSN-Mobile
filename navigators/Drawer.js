@@ -8,7 +8,7 @@ import BacklogDetailScreen from '../screens/BacklogDetail'
 import NewBacklog from '../screens/NewBacklog'
 import LoginScreen from '../screens/LoginScreen';
 import LogOut from '../components/authentication/signout'
-import UserProjects from '../screens/UserProjects';
+import Projects from '../screens/Projects';
 
 const Drawer = createDrawerNavigator(
   {
@@ -27,12 +27,12 @@ const Drawer = createDrawerNavigator(
     SignOut:{
       screen:LogOut
     },
-    UserProjects:{
-      screen:UserProjects
+    Projects:{
+      screen:Projects
     },
   },
   {
-    initialRouteName: 'UserProjects',
+    initialRouteName: 'Projects',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',
@@ -69,8 +69,8 @@ const Stack = createStackNavigator(
     SingleBacklog: {
       screen: BacklogDetailScreen,
     },
-    UserProjects:{
-      screen:UserProjects
+    Projects:{
+      screen:Projects
     },
   },
   {
