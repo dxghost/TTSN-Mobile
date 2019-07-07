@@ -1,4 +1,4 @@
-import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
+import { createDrawerNavigator, createStackNavigator, StackNavigator } from 'react-navigation';
 import PeopleScreen from '../components/people/people_list/PeopleList';
 import Tasks from '../screens/Tasks';
 import AddTask from '../screens/AddTask';
@@ -20,11 +20,8 @@ const Drawer = createDrawerNavigator(
     TaskList: {
       screen: Tasks,
     },
-    LoginScreen:{
-      screen: LoginScreen
-    },
-    SignOut:{
-      screen:LogOut
+    SignOut: {
+      screen: LogOut
     }
   },
   {
@@ -39,36 +36,55 @@ const Drawer = createDrawerNavigator(
   },
 );
 
-const Stack = createStackNavigator(
-  {
-    Drawer: {
-      screen: Drawer
-    },
-    PeopleList: {
-      screen: PeopleScreen,
-    },
-    TaskList: {
-      screen: Tasks,
-    },
-    AddTask: {
-      screen: AddTask,
-    },
-    SingleTask: {
-      screen: Task,
-    },
-    BacklogList: {
-      screen: BacklogScreen,
-    },
-    AddBacklog: {
-      screen: NewBacklog
-    },
-    SingleBacklog: {
-      screen: BacklogDetailScreen,
-    },
+const mainFlow = createStackNavigator({
+  Drawer: {
+    screen: Drawer
   },
+  PeopleList: {
+    screen: PeopleScreen,
+  },
+  TaskList: {
+    screen: Tasks,
+  },
+  AddTask: {
+    screen: AddTask,
+  },
+  SingleTask: {
+    screen: Task,
+  },
+  BacklogList: {
+    screen: BacklogScreen,
+  },
+  AddBacklog: {
+    screen: NewBacklog
+  },
+  SingleBacklog: {
+    screen: BacklogDetailScreen,
+  },
+
+}, {
+    headerMode: 'none'
+  })
+const loginFlow = createStackNavigator({
+  LoginScreen: {
+    screen: LoginScreen
+  },
+  SignOut: {
+    screen: LogOut
+  }
+},{
+  headerMode:"none"
+})
+const Stack = createStackNavigator({
+  mainFlow: {
+    screen: mainFlow
+  },
+  loginFlow: {
+    screen: loginFlow
+  }
+},
   {
     headerMode: 'none'
-  }
-)
+  })
 
 export default Stack;
