@@ -36,7 +36,7 @@ const data = [
 export default class UserProjects extends React.Component{
 
     keyExtractor = (item, index) => index.toString()
-
+    navigation = this.props.navigation
     renderItem = ({item}) => (
         <Card style={{paddingHorizontal : 1, flexDirection : 'row'}}>
             <ListItem 
@@ -52,7 +52,7 @@ export default class UserProjects extends React.Component{
                       size={15}
                       color="white"
                     />}
-                onPress = {() => console.log('pressed')}
+                onPress = {() => this.navigation.navigate('ProjectDashboard')}
                 />
             }
             />

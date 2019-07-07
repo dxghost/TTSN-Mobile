@@ -9,6 +9,7 @@ import NewBacklog from '../screens/NewBacklog'
 import LoginScreen from '../screens/LoginScreen';
 import LogOut from '../components/authentication/signout'
 import Projects from '../screens/Projects';
+import ProjectDashboard from '../screens/ProjectDashboard';
 
 const Drawer = createDrawerNavigator(
   {
@@ -70,7 +71,10 @@ const Stack = createStackNavigator(
       screen: BacklogDetailScreen,
     },
     Projects:{
-      screen:Projects
+      screen: Projects
+    },
+    ProjectDashboard:{
+      screen: ProjectDashboard
     },
   },
   {

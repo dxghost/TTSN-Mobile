@@ -26,7 +26,7 @@ export default class Projects extends React.Component{
               ({ route }) => {
                 switch (route.key) {
                   case 'user':
-                    return <UserProjects/>;
+                    return <UserProjects navigation = {navigation} />;
                   case 'all':
                     return <AllProjects/>;
                   default:
