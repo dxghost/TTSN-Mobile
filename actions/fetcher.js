@@ -81,7 +81,7 @@ export async function setPriority(priorities) {
 }
 
 export async function getAllProjects() {
-    let apiUrl = 'http://mamaly100.pythonanywhere.com/Projects/';
+    let apiUrl = 'http://mamaly100.pythonanywhere.com/Projects/projects/';
     let formData = new FormData();
     let options = {
         method: 'GET',

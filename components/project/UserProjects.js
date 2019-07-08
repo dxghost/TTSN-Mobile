@@ -1,51 +1,33 @@
 import React from 'react'
-import {StyleSheet, View, Text, StatusBar} from 'react-native'
+import {StyleSheet, View, ActivityIndicator} from 'react-native'
 import { FlatList, State } from 'react-native-gesture-handler'
 import { ListItem, Card, Button } from 'react-native-elements';
 import {connect} from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {updateProject} from '../../actions/projectActions'
+import { getAllProjects } from '../../actions/fetcher'
 
-const data = [
-    {
-        id : 0,
-        name : 'project1',
-        description : 'first project of ...'
-    },
-    {
-        id : 1,
-        name : 'project2',
-        description : 'second project of ...'
-    },
-    {
-        id : 0,
-        name : 'project1',
-        description : 'first project of ...'
-    },
-    {
-        id : 1,
-        name : 'project2',
-        description : 'second project of ...'
-    },
-    {
-        id : 0,
-        name : 'project1',
-        description : 'first project of ...'
-    },
-
-]
 
 class UserProjects extends React.Component{
-
+    state = {
+        isLoading: true,
+        data: []
+    }
+    navigation = this.props.navigation
+    componentWillMount = async () => {
+        await getAllProjects().then((f) => { //request for user project is not available now.
+            this.setState({data:f, isLoading:false})
+        })
+    }
     keyExtractor = (item, index) => index.toString()
     navigation = this.props.navigation
     renderItem = ({item}) => (
         <Card style={{paddingHorizontal : 1, flexDirection : 'row'}}>
             <ListItem 
             key={item.id}
-            title={item.name}
+            title={item.Name}
             titleStyle={{fontSize:21, color:'rgb(122,169,220)'}}
-            subtitle={item.description}
+            subtitle={item.StartDate}
             rightElement={
                 <Button
                 icon={
@@ -70,12 +52,15 @@ class UserProjects extends React.Component{
     );
     render(){
         return(
-            <View>
+            <View style={this.state.isLoading? styles.container:{}}>
+                {
+                this.state.isLoading ? <ActivityIndicator size="large" color="#DE94FF" /> :
                 <FlatList
                     keyExtractor={this.keyExtractor}
-                    data={data}
+                    data={this.state.data}
                     renderItem={this.renderItem}
                 />
+                }
             </View>
         );
     }
@@ -94,3 +79,11 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProjects)
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+})
