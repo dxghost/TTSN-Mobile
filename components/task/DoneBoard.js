@@ -55,7 +55,9 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state){
     return {
-        tasksData : state.tasks
+        tasksData: state.tasks,
+        user: state.user,
+        project: state.project,
     }
 }
 

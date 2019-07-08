@@ -81,7 +81,9 @@ class InProgressBoard extends React.Component{
 
 function mapStateToProps(state) {
     return {
-        tasksData: state.tasks
+        tasksData: state.tasks,
+        user: state.user,
+        project: state.project,
     }
 }
 

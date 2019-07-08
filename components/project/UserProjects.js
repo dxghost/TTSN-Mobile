@@ -1,8 +1,10 @@
 import React from 'react'
 import {StyleSheet, View, Text, StatusBar} from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
+import { FlatList, State } from 'react-native-gesture-handler'
 import { ListItem, Card, Button } from 'react-native-elements';
+import {connect} from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {updateProject} from '../../actions/projectActions'
 
 const data = [
     {
@@ -33,7 +35,7 @@ const data = [
 
 ]
 
-export default class UserProjects extends React.Component{
+class UserProjects extends React.Component{
 
     keyExtractor = (item, index) => index.toString()
     navigation = this.props.navigation
@@ -52,7 +54,11 @@ export default class UserProjects extends React.Component{
                       size={15}
                       color="white"
                     />}
-                onPress = {() => this.navigation.navigate('ProjectDashboard')}
+                onPress = {() => {
+                    this.props.project_update(item)
+                    this.navigation.navigate('ProjectDashboard', {project: item})
+                    }
+                }
                 />
             }
             />
@@ -62,7 +68,6 @@ export default class UserProjects extends React.Component{
 
         </Card>
     );
-
     render(){
         return(
             <View>
@@ -75,3 +80,17 @@ export default class UserProjects extends React.Component{
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        user: state.user
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        project_update: (project) => dispatch(updateProject(project)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProjects)
