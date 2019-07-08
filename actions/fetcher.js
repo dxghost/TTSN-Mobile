@@ -41,8 +41,8 @@ export async function deleteBacklog(backlogID) {
     return result.ok
 }
 
-export async function getTasksWithState(tastState) {
-    let apiUrl = `http://mamaly100.pythonanywhere.com/Task/TaskByState/${tastState}/`;
+export async function getTasksWithState(taskState, project_id) {
+    let apiUrl = `http://mamaly100.pythonanywhere.com/Projects/projects/${project_id}/get_Tasks/`;
     let formData = new FormData();
     let options = {
         method: 'GET',
@@ -56,6 +56,14 @@ export async function getTasksWithState(tastState) {
     var f = await fetch(apiUrl, options)
     f = await f.json()
     console.log(f)
+
+    function filterByState(item, taskState) {
+        if(item.TaskState == taskState){
+            return true
+      }
+      return false
+    }
+
     return f
 }
 

@@ -5,6 +5,7 @@ import { ListItem, Card, Button } from 'react-native-elements';
 import {connect} from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {updateProject} from '../../actions/projectActions'
+import { clear } from '../../actions/taskActions'
 import { getAllProjects } from '../../actions/fetcher'
 
 
@@ -37,6 +38,7 @@ class UserProjects extends React.Component{
                       color="white"
                     />}
                 onPress = {() => {
+                    this.props.clear_tasks()
                     this.props.project_update(item)
                     this.navigation.navigate('ProjectDashboard', {project: item})
                     }
@@ -75,6 +77,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         project_update: (project) => dispatch(updateProject(project)),
+        clear_tasks: () => dispatch(clear())
     }
 }
 

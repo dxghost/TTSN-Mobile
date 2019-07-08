@@ -68,7 +68,7 @@ class AddTask extends React.Component{
            })
            
             console.log('task Added successfully')
-            getTasksWithState("TO_DO").then((f) => this.props.todo_update(f))
+            getTasksWithState("TO_DO", this.props.project.id).then((f) => this.props.todo_update(f))
         }
         else{
             console.log(`action failed ${res_body}`)
