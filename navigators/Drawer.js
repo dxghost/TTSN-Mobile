@@ -9,9 +9,32 @@ import NewBacklog from '../screens/NewBacklog'
 import LoginScreen from '../screens/LoginScreen';
 import LogOut from '../components/authentication/signout'
 import AddProj from '../screens/AddProject'
+import Projects from '../screens/Projects';
+import ProjectDashboard from '../screens/ProjectDashboard';
 
 
-const Drawer = createDrawerNavigator(
+const MainDrawer = createDrawerNavigator(
+  {
+    SignOut: {
+      screen: LogOut
+    },
+    Projects: {
+      screen: Projects
+    }
+  },
+  {
+    initialRouteName: 'Projects',
+    drawerPosition: 'left',
+    contentOptions: {
+      activeTintColor: '#e91e63',
+      inactiveTintColor: '#CCC',
+      activeBackgroundColor: '#EEE',
+      inactiveBackgroundColor: '#FFF',
+    },
+  },
+);
+
+const ProjectDrawer = createDrawerNavigator(
   {
     PeopleList: {
       screen: PeopleScreen,
@@ -27,10 +50,13 @@ const Drawer = createDrawerNavigator(
     },
     CreateProj: {
       screen: AddProj,
+    },
+     ProjectDashboard: {
+      screen: ProjectDashboard
     }
   },
   {
-    initialRouteName: 'CreateProj',
+    initialRouteName: 'ProjectDashboard',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',
@@ -41,9 +67,23 @@ const Drawer = createDrawerNavigator(
   },
 );
 
+
 const mainFlow = createStackNavigator({
   Drawer: {
-    screen: Drawer
+    screen: MainDrawer
+  },
+  Projects:{
+    screen: Projects
+  },
+  
+}, {
+    headerMode: 'none'
+  })
+
+
+const ProjectFlow = createStackNavigator({
+  Drawer: {
+    screen: ProjectDrawer
   },
   PeopleList: {
     screen: PeopleScreen,
@@ -68,10 +108,14 @@ const mainFlow = createStackNavigator({
   },
   CreateProj: {
     screen: AddProj,
+  },
+  ProjectDashboard:{
+    screen: ProjectDashboard,
   }
 }, {
     headerMode: 'none'
   })
+
 const loginFlow = createStackNavigator({
   LoginScreen: {
     screen: LoginScreen
@@ -86,9 +130,12 @@ const Stack = createStackNavigator({
   mainFlow: {
     screen: mainFlow
   },
+  ProjectFlow:{
+    screen: ProjectFlow
+  },
   loginFlow: {
     screen: loginFlow
-  }
+  },
 },
   {
     headerMode: 'none'
