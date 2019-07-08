@@ -8,8 +8,10 @@ import BacklogDetailScreen from '../screens/BacklogDetail'
 import NewBacklog from '../screens/NewBacklog'
 import LoginScreen from '../screens/LoginScreen';
 import LogOut from '../components/authentication/signout'
+import AddProj from '../screens/AddProject'
 import Projects from '../screens/Projects';
 import ProjectDashboard from '../screens/ProjectDashboard';
+
 
 const MainDrawer = createDrawerNavigator(
   {
@@ -43,7 +45,13 @@ const ProjectDrawer = createDrawerNavigator(
     TaskList: {
       screen: Tasks,
     },
-    ProjectDashboard: {
+    SignOut: {
+      screen: LogOut
+    },
+    CreateProj: {
+      screen: AddProj,
+    },
+     ProjectDashboard: {
       screen: ProjectDashboard
     }
   },
@@ -98,10 +106,12 @@ const ProjectFlow = createStackNavigator({
   SingleBacklog: {
     screen: BacklogDetailScreen,
   },
+  CreateProj: {
+    screen: AddProj,
+  },
   ProjectDashboard:{
     screen: ProjectDashboard,
   }
-
 }, {
     headerMode: 'none'
   })
@@ -113,9 +123,9 @@ const loginFlow = createStackNavigator({
   SignOut: {
     screen: LogOut
   }
-},{
-  headerMode:"none"
-})
+}, {
+    headerMode: "none"
+  })
 const Stack = createStackNavigator({
   mainFlow: {
     screen: mainFlow
