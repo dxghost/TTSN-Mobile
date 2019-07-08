@@ -4,9 +4,10 @@ import { ListItem, Button, Divider, Header } from "react-native-elements"
 import Icon from 'react-native-vector-icons/FontAwesome'
 import CreateNew from '../assets/icons/icons8-add-property-96.png'
 import { TextField } from 'react-native-material-textfield';
+import { connect } from 'react-redux'
 
 
-export default class CreateBacklog extends React.Component {
+class CreateBacklog extends React.Component {
     state = {
         success: false,
         name: '',
@@ -21,6 +22,7 @@ export default class CreateBacklog extends React.Component {
         formData.append("name", this.state.name)
         formData.append("description", this.state.description)
         formData.append("definition_done", this.state.definition_of_done)
+        formData.append("ProjectID", this.props.project.id)
         // temp
         let options = {
             method: 'POST',
@@ -124,6 +126,13 @@ export default class CreateBacklog extends React.Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        project: state.project,
+    }
+}
+
+export default connect(mapStateToProps,null)(CreateBacklog)
 
 CreateBacklog.navigationOptions = {
     drawerLabel: 'Create a new Backlog',

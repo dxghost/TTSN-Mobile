@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-export async function requestBacklogs() {
+export async function requestBacklogs(project_id) {
     let apiUrl = 'http://mamaly100.pythonanywhere.com/Backlog/';
     let formData = new FormData();
     let options = {
@@ -110,9 +110,7 @@ export async function addProject(data) {
         console.log(response)
     }
     catch (err){console.log(err)}
-    
-
-
+}
 export async function getAllProjects() {
     let apiUrl = 'http://mamaly100.pythonanywhere.com/Projects/projects/';
     let formData = new FormData();
