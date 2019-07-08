@@ -8,7 +8,7 @@ import {getTasksWithState} from '../../actions/fetcher'
 class DoneBoard extends React.Component{
 
     componentWillMount = async () => {
-        getTasksWithState("DONE").then((f) => this.props.done_update(f))
+        getTasksWithState("DONE", this.props.project.id).then((f) => this.props.done_update(f))
     }
 
     render()
@@ -55,7 +55,9 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state){
     return {
-        tasksData : state.tasks
+        tasksData: state.tasks,
+        user: state.user,
+        project: state.project,
     }
 }
 

@@ -9,7 +9,7 @@ import {getTasksWithState} from '../../actions/fetcher'
 class InProgressBoard extends React.Component{
 
     componentWillMount = async () => {
-        getTasksWithState("IN_PROGRESS").then((f) => this.props.inprogress_update(f))
+        getTasksWithState("IN_PROGRESS", this.props.project.id).then((f) => this.props.inprogress_update(f))
     }
 
     render()
@@ -50,8 +50,8 @@ class InProgressBoard extends React.Component{
             //res_data = await JSON.parse(response._bodyText)
             res_body = response._bodyText
             if (response.ok == true) {
-                getTasksWithState("IN_PROGRESS").then((f) => this.props.inprogress_update(f))
-                getTasksWithState("DONE").then((f) => this.props.done_update(f))
+                getTasksWithState("IN_PROGRESS", this.props.project.id).then((f) => this.props.inprogress_update(f))
+                getTasksWithState("DONE", this.props.project.id).then((f) => this.props.done_update(f))
             }
             else{
                 console.log(`action failed ${res_body}`)
@@ -81,7 +81,9 @@ class InProgressBoard extends React.Component{
 
 function mapStateToProps(state) {
     return {
-        tasksData: state.tasks
+        tasksData: state.tasks,
+        user: state.user,
+        project: state.project,
     }
 }
 
