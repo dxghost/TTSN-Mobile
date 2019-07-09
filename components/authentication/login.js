@@ -58,8 +58,15 @@ export default class Login extends React.Component {
         response = await response.json()
         ID = response[0].id
         ID=ID.toString()
+        Bio = response[0].bio
+        Prof_pic = response[0].profile_picture
+        Email = response[0].email
+        UserName = response[0].username
         AsyncStorage.setItem("userID",ID)
-
+        AsyncStorage.setItem("bio",Bio)
+        AsyncStorage.setItem("pro_pic",Prof_pic)
+        AsyncStorage.setItem("email",Email)
+        AsyncStorage.setItem("userName",UserName)
     }
     render() {
         let { username, password } = this.state
