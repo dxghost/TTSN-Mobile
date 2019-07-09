@@ -22,7 +22,8 @@ class TodoBoard extends React.Component{
             title={item.title}
             subtitle={item.description}
             rightElement={
-                <Button 
+                <Button
+                buttonStyle={{backgroundColor:'#8f2883'}}
                 title = {'Pick'} onPress={() => {
                     putTaskRequestHandler(item)
                     
@@ -86,6 +87,7 @@ class TodoBoard extends React.Component{
             style={styles.fab}
             small={false}
             icon="add"
+            color="white"
             onPress={() => {
                 navigation.navigate('AddTask')
             }}
@@ -121,5 +123,6 @@ const styles = StyleSheet.create({
         margin: 16,
         right: 0,
         bottom: 0,
+        backgroundColor:'rgb(87, 42, 112)'
       },
   });

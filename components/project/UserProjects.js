@@ -14,6 +14,7 @@ import { updateUser } from "../../actions/projectsActions";
 import { clear } from "../../actions/taskActions";
 import { getUserProjects } from "../../actions/fetcher";
 
+
 class UserProjects extends React.Component {
   navigation = this.props.navigation;
   componentWillMount = async () => {
@@ -31,6 +32,7 @@ class UserProjects extends React.Component {
         subtitle={item.StartDate}
         rightElement={
           <Button
+            buttonStyle={{ backgroundColor: '#8f2883' }}
             icon={<Icon name="arrow-right" size={15} color="white" />}
             onPress={async () => {
               this.navigation.navigate("ProjectDashboard", { project: item });
@@ -52,12 +54,12 @@ class UserProjects extends React.Component {
         {!this.props.projects.user ? (
           <ActivityIndicator size="large" color="#DE94FF" />
         ) : (
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            data={this.props.projects.user}
-            renderItem={this.renderItem}
-          />
-        )}
+            <FlatList
+              keyExtractor={this.keyExtractor}
+              data={this.props.projects.user}
+              renderItem={this.renderItem}
+            />
+          )}
       </View>
     );
   }
