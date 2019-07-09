@@ -7,22 +7,22 @@ import { TextField } from 'react-native-material-textfield'
 import scrum from '../assets/methodologies/scrum.png'
 import waterfall from '../assets/methodologies/waterfall.png'
 import xp from '../assets/methodologies/xp.jpg'
-import { addProject } from '../actions/fetcher'
 
 
 export default class InviteUser extends React.Component {
     state = {
         userEmail: "",
     }
-    _addProj = async () => {
-        var f = await AsyncStorage.getItem()
+    _inviteUser = async () => {
+        var projID = await AsyncStorage.getItem("currentProjectID")
+        projID = Number.parseInt(projID)
         var data = {
             "email": this.state.userEmail,
-
+            "Project": projID
         }
         data = JSON.stringify(data)
-
-        let apiUrl = 'https://mamaly100.pythonanywhere.com//Projects/projects/'
+        console.log(data)
+        let apiUrl = 'https://mamaly100.pythonanywhere.com/Projects/invitations/'
 
         let options = {
             method: 'POST',
@@ -30,13 +30,15 @@ export default class InviteUser extends React.Component {
             headers: {
                 'accept': '*/*',
                 'Content-Type': 'application/json',
-                'Authorization': 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJleHAiOjE1NjI2MzAwMTUsInVzZXJuYW1lIjoibSIsImVtYWlsIjoibUBtLmNvbSJ9.rXeSxgREY6Nmlfw8TidUiCYYcKL1nQPg_1OJvKoX230'
+                'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI2NDU5MjAsInVzZXJfaWQiOjUsInVzZXJuYW1lIjoiZHgiLCJlbWFpbCI6ImR4QGR4LmR4In0.ZevhpYsYHp1WMSveun9wn8uCtHK0KBlMk-azjEwLRRU'
             }
 
         }
         var response = await fetch(apiUrl, options)
-        response = await response.json()
+        // response = await response.json()
         console.log(response)
+        console.log(response.status)
+
     }
     render() {
         const { projectName, projectDescription, projectType, startDate, endDate, methodology, checked, checkedMethodology } = this.state
@@ -58,6 +60,7 @@ export default class InviteUser extends React.Component {
                         <Button
                             title="Invite"
                             containerStyle={{width:"40%",marginTop:"5%"}}
+                            onPress={() => this._inviteUser() }
                         />
                         </View>
                     </View>
