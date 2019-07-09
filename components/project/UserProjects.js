@@ -37,11 +37,12 @@ class UserProjects extends React.Component {
                                 size={15}
                                 color="white"
                             />}
-                        onPress={() => {
+                        onPress={async () => {
                             this.props.clear_tasks()
                             this.props.project_update(item)
-                            console.log("current item",item.id)
-                            AsyncStorage.setItem("currentProjectID",item.id)
+                            var projID = item.id.toString()
+                            console.log("current item",projID)
+                            await AsyncStorage.setItem("currentProjectID",projID)
                             this.navigation.navigate('ProjectDashboard', { project: item })
                         }
                         }
