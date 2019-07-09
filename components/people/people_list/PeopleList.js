@@ -28,6 +28,7 @@ class PeopleList extends React.Component {
             leftAvatar={{ source: { uri: item.profile_picture } }}
             title={item.username}
             subtitle={item.email}
+            onPress={() => this.props.navigation.navigate("CollabProfile",{profile: item})}
         />
     )
     render() {
