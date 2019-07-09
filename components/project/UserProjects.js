@@ -12,7 +12,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { updateProject } from "../../actions/projectActions";
 import { updateUser } from "../../actions/projectsActions";
 import { clear } from "../../actions/taskActions";
-import { getUserProjects } from "../../actions/fetcher";
+import { getUserProjects } from "../../requests/ProjectActions";
 
 class UserProjects extends React.Component {
   navigation = this.props.navigation;

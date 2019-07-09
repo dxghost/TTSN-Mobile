@@ -3,7 +3,7 @@ import { StyleSheet, View, ActivityIndicator } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { ListItem, Card, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getAllProjects } from '../../actions/fetcher'
+import { getAllProjects } from '../../requests/ProjectActions'
 import {connect} from 'react-redux'
 import { updateAll } from '../../actions/projectsActions'
 

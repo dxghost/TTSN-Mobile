@@ -9,7 +9,7 @@ import waterfall from '../assets/methodologies/waterfall.png'
 import xp from '../assets/methodologies/xp.jpg'
 import { addProject } from '../actions/fetcher'
 import { connect } from 'react-redux'
-import { getAllProjects, getUserProjects } from '../actions/fetcher'
+import { getAllProjects, getUserProjects } from '../requests/ProjectActions'
 import { updateUser, updateAll } from '../actions/projectsActions'
 
 
