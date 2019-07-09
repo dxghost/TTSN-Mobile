@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, Text, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, Alert } from 'react-native'
+import { ScrollView, View, Text, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, Alert, AsyncStorage} from 'react-native'
 import { Button, Icon, Header, CheckBox, Card, ButtonGroup } from 'react-native-elements';
 import { FAB } from 'react-native-paper'
 import DatePicker from 'react-native-datepicker'
@@ -9,7 +9,7 @@ import waterfall from '../assets/methodologies/waterfall.png'
 import xp from '../assets/methodologies/xp.jpg'
 import { addProject } from '../actions/fetcher'
 import { connect } from 'react-redux'
-import { getAllProjects } from '../actions/fetcher'
+import { getAllProjects, getUserProjects } from '../actions/fetcher'
 import { updateUser, updateAll } from '../actions/projectsActions'
 
 
@@ -44,7 +44,7 @@ class CreateProject extends React.Component {
         formData.append("StartDate", this.state.StartDate)
         formData.append("Methodology", this.state.methodology)
         console.log(data)
-
+        let token = await AsyncStorage.getItem('token')
         let apiUrl = 'https://mamaly100.pythonanywhere.com//Projects/projects/'
 
         let options = {
@@ -53,7 +53,7 @@ class CreateProject extends React.Component {
             headers: {
                 'accept': '*/*',
                 'Content-Type': 'application/json',
-                'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImR4IiwiZW1haWwiOiJkeEBkeC5keCIsInVzZXJfaWQiOjUsImV4cCI6MTU2Mzg2OTg5MX0.cekTEJbDKBj2ba-nbokedomyHdk4PfB-glMRRkvjHDs'
+                'Authorization': `JWT ${token}`
             }
 
         }
@@ -61,7 +61,7 @@ class CreateProject extends React.Component {
         response_json = await response.json()
 
         if(response.ok){
-            getAllProjects().then((f) => this.props.user_update(f))
+            getUserProjects().then((f) => this.props.user_update(f))
             getAllProjects().then((f) => this.props.all_update(f))
         }
 
