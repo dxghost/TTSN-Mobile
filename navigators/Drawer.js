@@ -23,9 +23,6 @@ const MainDrawer = createDrawerNavigator(
     Projects: {
       screen: Projects
     },
-    CreateProj: {
-      screen: AddProj,
-    },
     Profile: {
       screen: Profile
     },
