@@ -5,6 +5,7 @@ import {Header, Button} from 'react-native-elements'
 export default class ProjectDashboard extends React.Component{
     
     render(){
+        const project = this.props.navigation.getParam("project")
         return(
             <View>
                 <Header style={{color:'rgb(150, 13, 255'}}

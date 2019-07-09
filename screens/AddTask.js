@@ -22,7 +22,7 @@ class AddTask extends React.Component{
         };
 
     blRequestHandler = async () => {
-        let apiUrl = 'http://mamaly100.pythonanywhere.com/Backlog/';
+        let apiUrl = `http://mamaly100.pythonanywhere.com/Projects/projects/${this.props.project.id}/Backlogs/`;
         let formData = new FormData();
         let options = {
             method: 'GET',
@@ -68,7 +68,7 @@ class AddTask extends React.Component{
            })
            
             console.log('task Added successfully')
-            getTasksWithState("TO_DO").then((f) => this.props.todo_update(f))
+            getTasksWithState("TO_DO", this.props.project.id).then((f) => this.props.todo_update(f))
         }
         else{
             console.log(`action failed ${res_body}`)
@@ -170,13 +170,19 @@ class AddTask extends React.Component{
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        project: state.project,
+    }
+}
+
 function mapDispatchToProps(dispatch) {
     return {
         todo_update: (data) => dispatch(updateTodo({data : data}))
     }
 }
 
-export default connect (null,mapDispatchToProps)(AddTask)
+export default connect (mapStateToProps, mapDispatchToProps)(AddTask)
 
 const styles = StyleSheet.create({
     formContainer: {

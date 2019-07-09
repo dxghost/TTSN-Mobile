@@ -10,7 +10,7 @@ import { updateInProgress, updateTodo } from '../../actions/taskActions'
 class TodoBoard extends React.Component{
 
     componentWillMount = async () => {
-        getTasksWithState("TO_DO").then((f) => this.props.todo_update(f))
+        getTasksWithState("TO_DO", this.props.project.id).then((f) => this.props.todo_update(f))
     }
 
     render()
@@ -54,8 +54,8 @@ class TodoBoard extends React.Component{
             //res_data = await JSON.parse(response._bodyText)
             res_body = response._bodyText
             if (response.ok == true) { 
-                getTasksWithState("TO_DO").then((f) => this.props.todo_update(f))
-                getTasksWithState("IN_PROGRESS").then((f) => this.props.inprogress_update(f))
+                getTasksWithState("TO_DO", this.props.project.id).then((f) => this.props.todo_update(f))
+                getTasksWithState("IN_PROGRESS", this.props.project.id).then((f) => this.props.inprogress_update(f))
             }
             else{
                 console.log(`action failed ${res_body.substring(0, 300)}`)
@@ -99,7 +99,9 @@ class TodoBoard extends React.Component{
 
 function mapStateToProps(state) {
     return {
-        tasksData: state.tasks
+        tasksData: state.tasks,
+        user: state.user,
+        project: state.project,
     }
 }
 

@@ -20,6 +20,8 @@ const tasks = (state = initalState, action) => {
                 ...state,
                 done: action.payload.data
             }
+        case("CLEAR"):
+            return initalState
         default:
             return state
     }

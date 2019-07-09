@@ -19,3 +19,10 @@ export function updateDone(payload){
     }
 }
 
+export function clear(){
+    return{
+        type: 'CLEAR',
+        payload: {}
+    }
+}
+
