@@ -33,15 +33,34 @@ export default class Login extends React.Component {
         response = await fetch(apiUrl, options)
         res_body = response._bodyText
         this.setState({ log: res_body })
+        // response = response.json()
         if (response.ok) {
-            // await AsyncStorage.setItem("token", res_body.token)
+            response = await response.json()
+            token = response.token
+            await AsyncStorage.setItem("token", token)
             await AsyncStorage.setItem("loggedIn", "true")
+            this._whoami(token)
             this.props.refresh()
         }
-        console.log(res_body)
 
     }
+    _whoami = async (token) => {
+        let apiUrl = 'http://mamaly100.pythonanywhere.com/accounts/current_user/'
+        let options = {
+            method: 'GET',
+            headers: {
+                Accept: '*/*',
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `JWT ${token}`
+            }
+        };
+        response = await fetch(apiUrl,options)
+        response = await response.json()
+        ID = response[0].id
+        ID=ID.toString()
+        AsyncStorage.setItem("userID",ID)
 
+    }
     render() {
         let { username, password } = this.state
         return (
