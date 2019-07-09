@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, Text, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Text, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, Alert } from 'react-native'
 import { Button, Icon, Header, CheckBox, Card, ButtonGroup } from 'react-native-elements';
 import { FAB } from 'react-native-paper'
 import DatePicker from 'react-native-datepicker'
@@ -55,8 +55,20 @@ export default class CreateProject extends React.Component {
 
         }
         var response = await fetch(apiUrl, options)
-        response = await response.json()
-        console.log(response)
+        response_json = await response.json()
+
+        Alert.alert(
+            response.ok?'Done!':'Failed!',
+            response.ok?'Project Added Successfully':`An Error Occurred (${response_json.detail})`,
+            [
+              response.ok? {text: 'See On Projects Board', onPress: () => this.props.navigation.navigate("Projects")}:{},
+            
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            {cancelable: false},
+          );
+
+        console.log(response_json)
     }
     render() {
         const { projectName, projectDescription, projectType, startDate, endDate, methodology, checked, checkedMethodology } = this.state
