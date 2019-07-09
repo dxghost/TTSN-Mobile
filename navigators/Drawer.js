@@ -25,12 +25,13 @@ const MainDrawer = createDrawerNavigator(
     },
     CreateProj: {
       screen: AddProj,
+    },
     Profile:{
       screen: Profile
     },
   },
   {
-    initialRouteName: 'Project',
+    initialRouteName: 'Projects',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',
