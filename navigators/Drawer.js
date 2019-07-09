@@ -11,6 +11,7 @@ import LogOut from '../components/authentication/signout'
 import AddProj from '../screens/AddProject'
 import Projects from '../screens/Projects';
 import ProjectDashboard from '../screens/ProjectDashboard';
+import InviteUser from '../screens/InviteUser'
 
 
 const MainDrawer = createDrawerNavigator(
@@ -51,8 +52,11 @@ const ProjectDrawer = createDrawerNavigator(
     CreateProj: {
       screen: AddProj,
     },
-     ProjectDashboard: {
+    ProjectDashboard: {
       screen: ProjectDashboard
+    },
+    InviteUser:{
+      screen:InviteUser
     }
   },
   {
@@ -72,10 +76,10 @@ const mainFlow = createStackNavigator({
   Drawer: {
     screen: MainDrawer
   },
-  Projects:{
+  Projects: {
     screen: Projects
   },
-  
+
 }, {
     headerMode: 'none'
   })
@@ -109,7 +113,7 @@ const ProjectFlow = createStackNavigator({
   CreateProj: {
     screen: AddProj,
   },
-  ProjectDashboard:{
+  ProjectDashboard: {
     screen: ProjectDashboard,
   }
 }, {
@@ -130,7 +134,7 @@ const Stack = createStackNavigator({
   mainFlow: {
     screen: mainFlow
   },
-  ProjectFlow:{
+  ProjectFlow: {
     screen: ProjectFlow
   },
   loginFlow: {
