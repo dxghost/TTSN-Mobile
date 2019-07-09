@@ -136,3 +136,22 @@ export async function getAllProjects() {
     console.log(f)
     return f
 }
+
+export async function getUserProjects() {
+    let apiUrl = 'http://mamaly100.pythonanywhere.com/accounts/Projects/';
+    let formData = new FormData();
+    let token = await AsyncStorage.getItem('token')
+    let options = {
+        method: 'GET',
+        // body: formData,
+        headers: {
+            Accept: '*/*',
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${token}`
+        }
+    };
+    var f = await fetch(apiUrl, options)
+    f = await f.json()
+    console.log(f)
+    return f
+}

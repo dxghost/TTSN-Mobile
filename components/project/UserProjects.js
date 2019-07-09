@@ -12,12 +12,12 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { updateProject } from "../../actions/projectActions";
 import { updateUser } from "../../actions/projectsActions";
 import { clear } from "../../actions/taskActions";
-import { getAllProjects } from "../../actions/fetcher";
+import { getUserProjects } from "../../actions/fetcher";
 
 class UserProjects extends React.Component {
   navigation = this.props.navigation;
   componentWillMount = async () => {
-    getAllProjects().then(f => this.props.user_update(f));
+    getUserProjects().then(f => this.props.user_update(f));
   };
 
   keyExtractor = (item, index) => index.toString();
