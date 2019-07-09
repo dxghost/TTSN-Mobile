@@ -88,6 +88,9 @@ const mainFlow = createStackNavigator({
   },
   Profile: {
     screen: Profile
+  },
+  ProjectDetail: {
+    screen: ProjectDashboard
   }
 }, {
     headerMode: 'none'
