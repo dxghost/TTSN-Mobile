@@ -1,11 +1,14 @@
 import React from 'react'
-import {View, Text, Picker, StyleSheet} from 'react-native'
+import {View, Text, Alert, StyleSheet} from 'react-native'
 import {TextField} from 'react-native-material-textfield'
 import {Dropdown} from 'react-native-material-dropdown'
-import {Button} from 'react-native-elements'
+import {Button, Header} from 'react-native-elements'
+import {connect} from 'react-redux'
+import { getTasksWithState } from '../actions/fetcher';
+import { updateTodo } from '../actions/taskActions';
 
 
-export default class AddTask extends React.Component{
+class AddTask extends React.Component{
     
     state = {taskDsr:'', 
             taskName:'', 
@@ -19,7 +22,7 @@ export default class AddTask extends React.Component{
         };
 
     blRequestHandler = async () => {
-        let apiUrl = 'http://mamaly100.pythonanywhere.com/Backlog/';
+        let apiUrl = `http://mamaly100.pythonanywhere.com/Projects/projects/${this.props.project.id}/Backlogs/`;
         let formData = new FormData();
         let options = {
             method: 'GET',
@@ -39,6 +42,7 @@ export default class AddTask extends React.Component{
         formData.append("TaskState", "TO_DO")
         formData.append("BackLogID", this.state.backlogId)
         formData.append("title", this.state.taskName)
+        formData.append("ProjectID", this.props.project.id)
         formData.append("description", this.state.taskDsr)
         let options = {
             method: 'POST',
@@ -57,9 +61,7 @@ export default class AddTask extends React.Component{
         
             this.setState({taskDsr:'', 
             taskName:'', 
-            backlogId:'', 
-            fetchingBacklogs:true, 
-            backlogData: [],
+            backlogId:'',
             selectedBackLog : '',
             emptyName: false,
             emptyDsr: false,
@@ -67,10 +69,22 @@ export default class AddTask extends React.Component{
            })
            
             console.log('task Added successfully')
+            getTasksWithState("TO_DO", this.props.project.id).then((f) => this.props.todo_update(f))
         }
         else{
             console.log(`action failed ${res_body}`)
         }
+
+        Alert.alert(
+            response.ok?'Done!':'Failed!',
+            response.ok?'Task Added Successfully':'An Error Occurred',
+            [
+              response.ok? {text: 'See On Task Board', onPress: () => this.props.navigation.goBack()}:{},
+            
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            {cancelable: false},
+          );
         // return fetch(apiUrl, options)
     }
 
@@ -95,16 +109,20 @@ export default class AddTask extends React.Component{
             this.setState({emptyBackLog: true});
         }
         
-        if(this.state.name == '' || this.state.name == '' || this.state.backlogId == ''){
+        if(this.state.taskDsr == '' || this.state.backlogId == '' || this.state.taskName == ''){
             return false;
         }
         return true;
     }
     render(){
-        let {taskDsr, taskName,} = this.state;
+        let {taskDsr, taskName, backlogId} = this.state;
         return(
-            <View style={styles.container}>
-                <View>
+            <View >
+                <Header style={{color:'rgb(150, 13, 255'}}
+                centerComponent={{ text: 'New Task', style: { color: '#fff' } }}
+                />
+                
+                <View style={styles.formContainer}>
                 <TextField
                 //style={styles.field}
                 label='Task Name:'
@@ -125,6 +143,7 @@ export default class AddTask extends React.Component{
                 label= {this.state.fetchingBacklogs? 'Related BackLog : (fetching data ...)': 'Related BackLog :'}
                 error={this.state.emptyBackLog? "can't be blank":null}
                 disabled = {this.state.fetchingBacklogs}
+                value={backlogId}
                 //baseColor = {this.state.fetchingBacklogs? 'blue':'black'}
                 data={this.state.backlogData.map((item) => { return {value: item['name'],id: item['id']} })}
                 onChangeText={(value, index, data) => {this.setState({backlogId: data[index].id, emptyBackLog:false})}}
@@ -145,24 +164,32 @@ export default class AddTask extends React.Component{
                 />
                 
                 </View>
-            
+                
                 </View>
             </View>
         );
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        project: state.project,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        todo_update: (data) => dispatch(updateTodo({data : data}))
+    }
+}
+
+export default connect (mapStateToProps, mapDispatchToProps)(AddTask)
+
 const styles = StyleSheet.create({
-    container:{
-        paddingTop: 20,
-        paddingRight: 20,
-        paddingLeft: 20,
-        // borderColor: 'red',
-        // borderWidth: 2,
-        flex: 1,
-        // marginTop: 25,
-        // justifyContent: 'center',
-        // alignItems: 'center',
+    formContainer: {
+        marginHorizontal: '10%',
+        padding: "5%",
+        borderColor: "black",
     },
     text:{
         fontSize:18,

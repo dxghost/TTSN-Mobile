@@ -1,10 +1,13 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, AsyncStorage } from 'react-native'
 import { TextField } from 'react-native-material-textfield'
 import { Button } from 'react-native-elements'
 
 
 export default class SignUp extends React.Component {
+    constructor(props) {
+        super(props);
+    }
     state = {
         username: '',
         password1: '',
@@ -32,7 +35,11 @@ export default class SignUp extends React.Component {
         response = await fetch(apiUrl, options)
         res_body = response._bodyText
         this.setState({ log: res_body })
-        console.log(res_body)
+        if (response.ok) {
+            // await AsyncStorage.setItem("token", res_body.token)
+            await AsyncStorage.setItem("loggedIn", "true")
+            this.props.refresh()
+        }
     }
 
     render() {

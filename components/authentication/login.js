@@ -1,9 +1,13 @@
 import React from 'react'
-import {View, StyleSheet, Text} from 'react-native'
-import {TextField} from 'react-native-material-textfield'
-import {Button} from 'react-native-elements'
+import { View, StyleSheet, Text, AsyncStorage } from 'react-native'
+import { TextField } from 'react-native-material-textfield'
+import { Button } from 'react-native-elements'
 
-export default class Login extends React.Component{
+export default class Login extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     state = {
         username: "",
         password: "",
@@ -29,32 +33,60 @@ export default class Login extends React.Component{
         response = await fetch(apiUrl, options)
         res_body = response._bodyText
         this.setState({ log: res_body })
-        if(response.ok){
-            this.setState({token:res_body.token})
+        // response = response.json()
+        if (response.ok) {
+            response = await response.json()
+            token = response.token
+            await AsyncStorage.setItem("token", token)
+            await AsyncStorage.setItem("loggedIn", "true")
+            this._whoami(token)
+            this.props.refresh()
         }
-        console.log(res_body)
 
     }
-
-    render(){
-        let {username, password} = this.state
-        return(
+    _whoami = async (token) => {
+        let apiUrl = 'http://mamaly100.pythonanywhere.com/accounts/current_user/'
+        let options = {
+            method: 'GET',
+            headers: {
+                Accept: '*/*',
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `JWT ${token}`
+            }
+        };
+        response = await fetch(apiUrl,options)
+        response = await response.json()
+        ID = response[0].id
+        ID=ID.toString()
+        Bio = response[0].bio
+        Prof_pic = response[0].profile_picture
+        Email = response[0].email
+        UserName = response[0].username
+        AsyncStorage.setItem("userID",ID)
+        AsyncStorage.setItem("bio",Bio)
+        AsyncStorage.setItem("pro_pic",Prof_pic)
+        AsyncStorage.setItem("email",Email)
+        AsyncStorage.setItem("userName",UserName)
+    }
+    render() {
+        let { username, password } = this.state
+        return (
             <View>
-                <TextField 
-                label={"Username"}
-                value={username}
-                onChangeText={(username) => this.setState({ username })}
-                textContentType='username'/>
+                <TextField
+                    label={"Username"}
+                    value={username}
+                    onChangeText={(username) => this.setState({ username })}
+                    textContentType='username' />
 
                 <TextField
-                label={"Password"}
-                value={password}
-                onChangeText={(password) => this.setState({password})}
-                secureTextEntry={true}/>
+                    label={"Password"}
+                    value={password}
+                    onChangeText={(password) => this.setState({ password })}
+                    secureTextEntry={true} />
 
                 <Button
-                title={"log in"}
-                onPress={this.loginRequestHandler}/>
+                    title={"log in"}
+                    onPress={this.loginRequestHandler} />
                 <Text>logs:</Text>
                 <Text> {this.state.log}</Text>
             </View>

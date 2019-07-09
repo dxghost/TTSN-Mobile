@@ -3,7 +3,7 @@ import { ScrollView, View, Text, Image, StyleSheet } from 'react-native'
 import BacklogDetailIcon from "../assets/icons/icons8-cashbook-64.png"
 import CalendarIcon from "../assets/icons/icons8-calendar-64.png"
 import TaskList from "../components/backlogs/task_list/TaskList"
-import { ListItem, Divider } from "react-native-elements"
+import { ListItem, Divider, Header } from "react-native-elements"
 
 
 export default class BacklogDetailScreen extends React.Component {
@@ -41,7 +41,11 @@ export default class BacklogDetailScreen extends React.Component {
     const { isLoading, data } = this.state;
     const backlog_data = this.props.navigation.getParam("backlogdata")
     return (
-      <ScrollView style={styles.container}>
+      <View>
+        <Header style={{color:'rgb(150, 13, 255'}}
+          centerComponent={{ text: 'BackLog Details', style: { color: '#fff' } }}
+          />
+      <ScrollView>
         {/* TODO Header name would be BacklogDetails.name */}
         {/* <Text>{this.props.backlog_name}</Text> */}
         <Text style={{ fontSize: 20 }}> {backlog_data.name} </Text>
@@ -69,6 +73,7 @@ export default class BacklogDetailScreen extends React.Component {
           {isLoading ? <Text>Loading</Text> : <TaskList Tasks={data} />}
         </ScrollView>
       </ScrollView>
+      </View>
     )
   }
 }
@@ -80,11 +85,6 @@ BacklogDetailScreen.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: "8%",
-    // alignItems: 'center',
-  },
   backlogDetailsContainer: {
     // backgroundColor: 'grey',
     // marginTop: "5%",

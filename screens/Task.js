@@ -1,6 +1,6 @@
 import React from 'react'
-import {ScrollView, Text, StyleSheet,StatusBar} from 'react-native'
-import {ListItem} from 'react-native-elements'
+import {ScrollView, Text, StyleSheet,StatusBar, View} from 'react-native'
+import {ListItem, Header} from 'react-native-elements'
 
 export default class Task extends React.Component{
     
@@ -9,7 +9,11 @@ export default class Task extends React.Component{
     const task = this.props.navigation.getParam("taskData")
         return(
 
-        <ScrollView style={styles.container}>
+          <View>
+            <Header style={{color:'rgb(150, 13, 255'}}
+              centerComponent={{ text: 'Task Detail', style: { color: '#fff' } }}
+            />
+        <ScrollView>
 
         <Text style={{ fontSize: 20 }}> {task.title} </Text>
         {/* <ListItem
@@ -18,7 +22,7 @@ export default class Task extends React.Component{
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         /> */}
         <ListItem
-          title={"Description: "}
+          title={"Description : "}
           subtitle={task.description}
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
@@ -34,7 +38,7 @@ export default class Task extends React.Component{
         />
         <ListItem
           title={"Task Picker : "}
-          subtitle={task.TaskState != "TO_DO"? task.picker.toString():"not assigned yet" }
+          subtitle={(task.TaskState == "TO_DO" || !task.picker)? "not assigned yet": task.picker.toString() }
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
         <ListItem
@@ -43,16 +47,12 @@ export default class Task extends React.Component{
           titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
         />
       </ScrollView>
+      </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: StatusBar.currentHeight,
-        // alignItems: 'center',
-      },
     text:{
         fontSize:18,
     }});

@@ -1,12 +1,13 @@
 import React from 'react'
-import { ScrollView, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native'
-import { ListItem, Button, Divider } from "react-native-elements"
+import { ScrollView, View, Text, Image, StyleSheet, AsyncStorage,Alert } from 'react-native'
+import { ListItem, Button, Divider, Header } from "react-native-elements"
 import Icon from 'react-native-vector-icons/FontAwesome'
 import CreateNew from '../assets/icons/icons8-add-property-96.png'
 import { TextField } from 'react-native-material-textfield';
+import { connect } from 'react-redux'
 
 
-export default class CreateBacklog extends React.Component {
+class CreateBacklog extends React.Component {
     state = {
         success: false,
         name: '',
@@ -21,8 +22,8 @@ export default class CreateBacklog extends React.Component {
         formData.append("name", this.state.name)
         formData.append("description", this.state.description)
         formData.append("definition_done", this.state.definition_of_done)
+        formData.append("ProjectID", this.props.project.id)
         // temp
-        formData.append("priority", Math.floor(Math.random() * (+100 - +15)) + +15)
         let options = {
             method: 'POST',
             body: formData,
@@ -39,11 +40,17 @@ export default class CreateBacklog extends React.Component {
         this.setState({ log: res_body, data: res_data })
         if (response.ok == true) {
             this.setState({ success: true })
-            await AsyncStorage.setItem('performFetch', "true");
             this.props.navigation.state.params.onGoBack();
         }
-
-        // return fetch(apiUrl, options)
+        Alert.alert(
+            response.ok?'Done!':'Failed!',
+            response.ok?'Backlog Added Successfully':'An Error Occurred',
+            [
+              response.ok? {text: 'See On BacklogList Board', onPress: () => this.props.navigation.goBack()}:null,
+              {text: 'OK'},
+            ],
+            {cancelable: false},
+          );
     }
     _doNavigation = () => {
         const { navigate } = this.props.navigation;
@@ -63,6 +70,9 @@ export default class CreateBacklog extends React.Component {
         let { name, description, definition_of_done, success, log } = this.state;
         return (
             <View>
+                <Header style={{color:'rgb(150, 13, 255'}}
+                centerComponent={{ text: 'New BackLog', style: { color: '#fff' } }}
+                />
                 <View style={styles.formContainer}>
                     <TextField
                         label='Backlog Name:'
@@ -116,6 +126,13 @@ export default class CreateBacklog extends React.Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        project: state.project,
+    }
+}
+
+export default connect(mapStateToProps,null)(CreateBacklog)
 
 CreateBacklog.navigationOptions = {
     drawerLabel: 'Create a new Backlog',
