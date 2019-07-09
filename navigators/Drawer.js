@@ -12,6 +12,7 @@ import AddProj from '../screens/AddProject'
 import Projects from '../screens/Projects';
 import ProjectDashboard from '../screens/ProjectDashboard';
 import Profile from '../components/profile/index';
+import CollabProfile from '../components/profile/collabProfile'
 import InviteUser from '../screens/InviteUser'
 
 
@@ -85,6 +86,9 @@ const mainFlow = createStackNavigator({
   },
   Profile: {
     screen: Profile
+  },
+  ProjectDetail: {
+    screen: ProjectDashboard
   }
 }, {
     headerMode: 'none'
@@ -118,6 +122,9 @@ const ProjectFlow = createStackNavigator({
   },
   ProjectDashboard: {
     screen: ProjectDashboard,
+  },
+  CollabProfile: {
+    screen: CollabProfile
   }
 }, {
     headerMode: 'none'
