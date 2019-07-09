@@ -5,21 +5,17 @@ import { ListItem, Card, Button } from 'react-native-elements';
 import {connect} from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {updateProject} from '../../actions/projectActions'
+import { updateUser } from '../../actions/projectsActions'
 import { clear } from '../../actions/taskActions'
 import { getAllProjects } from '../../actions/fetcher'
 
 
 class UserProjects extends React.Component{
-    state = {
-        isLoading: true,
-        data: []
-    }
     navigation = this.props.navigation
     componentWillMount = async () => {
-        await getAllProjects().then((f) => { //request for user project is not available now.
-            this.setState({data:f, isLoading:false})
-        })
+        getAllProjects().then((f) => this.props.user_update(f))
     }
+
     keyExtractor = (item, index) => index.toString()
     navigation = this.props.navigation
     renderItem = ({item}) => (
@@ -55,12 +51,12 @@ class UserProjects extends React.Component{
     );
     render(){
         return(
-            <View style={this.state.isLoading? styles.container:{}}>
+            <View style={!this.props.projects.user? styles.container:{}}>
                 {
-                this.state.isLoading ? <ActivityIndicator size="large" color="#DE94FF" /> :
+                !this.props.projects.user ? <ActivityIndicator size="large" color="#DE94FF" /> :
                 <FlatList
                     keyExtractor={this.keyExtractor}
-                    data={this.state.data}
+                    data={this.props.projects.user}
                     renderItem={this.renderItem}
                 />
                 }
@@ -71,14 +67,15 @@ class UserProjects extends React.Component{
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user,
+        projects: state.projects
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        project_update: (project) => dispatch(updateProject(project)),
-        clear_tasks: () => dispatch(clear())
+        clear_tasks: () => dispatch(clear()),
+        user_update: (data) => dispatch(updateUser({data:data}))
     }
 }
 
