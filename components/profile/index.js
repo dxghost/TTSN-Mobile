@@ -2,23 +2,41 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Profile from './Profile'
 import AvatarBG from '../../assets/profile/bg.jpg'
-const data = {
-  "name": "Mahdi Pazooki",
-  "avatar": "https://instagram.fevn1-2.fna.fbcdn.net/vp/673dd59ed74fb76fb86f1f19952d37c8/5D9E5A0B/t51.2885-19/s150x150/57414280_422448701852444_8741262464684916736_n.jpg?_nc_ht=instagram.fevn1-2.fna.fbcdn.net",
-  "avatarBackground":
-    AvatarBG,
-  "bio": [
-    {"description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum" }
-  ],
-  "emails": [
-    { "id": 1, "name": "Personal", "email": "goddamnghost@dx.dx" }
-  ],
-}
+import {AsyncStorage, View, ActivityIndicator} from 'react-native'
+
 
 class ProfileScreen extends React.Component {
+  state = {
+    data : {},
+    isLoading : true
+  }
+  componentWillMount = async () => {
+    var UserName = await AsyncStorage.getItem("userName")
+    var Email = await AsyncStorage.getItem("email")
+    var Prof_Pic = await AsyncStorage.getItem("pro_pic")
+    var Bio = await AsyncStorage.getItem("bio")
+    data = {
+      "name": UserName? UserName:'noname',
+      "avatar": Prof_Pic,
+      "avatarBackground":
+        AvatarBG,
+      "bio": [
+        {"description": Bio? Bio : 'Using Project Assistant App.' }
+      ],
+      "emails": [
+        { "id": 1, "name": "Personal", "email": Email?Email:'no email' }
+      ],
+    }
+    console.log(data)
+    this.setState({data:data, isLoading:false})
+  }
   render() {
     return (
-      <Profile {...data} />
+      this.state.isLoading? <View style={{ justifyContent: 'center',marginTop:"50%"}}>
+      <ActivityIndicator size="large" color="#DE94FF" />
+      </View>  :
+      <Profile {...this.state.data} />
+  
     )
   }
 }
