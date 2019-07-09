@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View, ActivityIndicator} from 'react-native'
+import {StyleSheet, View, ActivityIndicator, AsyncStorage} from 'react-native'
 import { FlatList, State } from 'react-native-gesture-handler'
 import { ListItem, Card, Button } from 'react-native-elements';
 import {connect} from 'react-redux'
@@ -37,8 +37,9 @@ class UserProjects extends React.Component{
                       size={15}
                       color="white"
                     />}
-                onPress = {() => {
+                onPress = {async () => {
                     this.props.clear_tasks()
+                    await AsyncStorage.setItem('performFetch', "true");
                     this.props.project_update(item)
                     this.navigation.navigate('ProjectDashboard', {project: item})
                     }

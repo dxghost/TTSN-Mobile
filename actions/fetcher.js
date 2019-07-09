@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
 export async function requestBacklogs(project_id) {
-    let apiUrl = 'http://mamaly100.pythonanywhere.com/Backlog/';
+    let apiUrl = `http://mamaly100.pythonanywhere.com/Projects/projects/${project_id}/Backlogs/`
     let formData = new FormData();
     let options = {
         method: 'GET',
