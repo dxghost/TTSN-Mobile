@@ -10,7 +10,7 @@ import LoginScreen from '../screens/LoginScreen';
 import LogOut from '../components/authentication/signout'
 import Projects from '../screens/Projects';
 import ProjectDashboard from '../screens/ProjectDashboard';
-import Profile from '../screens/Profile';
+import Profile from '../components/profile/index';
 
 const MainDrawer = createDrawerNavigator(
   {
