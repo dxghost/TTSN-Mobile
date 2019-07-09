@@ -25,8 +25,7 @@ const MainDrawer = createDrawerNavigator(
     },
     Profile:{
       screen: Profile
-    }
-
+    },
   },
   {
     initialRouteName: 'Profile',
@@ -86,7 +85,7 @@ const mainFlow = createStackNavigator({
   },
   Profile:{
     screen: Profile
-}, {
+}}, {
     headerMode: 'none'
   })
 
