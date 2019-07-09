@@ -1,8 +1,8 @@
 import React from 'react'
-import {StyleSheet, View, ActivityIndicator, AsyncStorage} from 'react-native'
+import { StyleSheet, View, ActivityIndicator, AsyncStorage } from 'react-native'
 import { FlatList, State } from 'react-native-gesture-handler'
 import { ListItem, Card, Button } from 'react-native-elements';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {updateProject} from '../../actions/projectActions'
 import { updateUser } from '../../actions/projectsActions'
@@ -35,16 +35,17 @@ class UserProjects extends React.Component{
                     />}
                 onPress = {async () => {
                     this.navigation.navigate('ProjectDashboard', {project: item})
+                    var projID = item.id.toString()
+                    console.log("current item",projID)
+                    await AsyncStorage.setItem("currentProjectID",projID)
                     this.props.clear_tasks()
                     await AsyncStorage.setItem('performFetch', "true");
                     this.props.project_update(item)
                     }
                 }
-                />
-            }
             />
-        
-        {/* <Text style={{fontSize:21, color:'rgb(122,169,220)'}}>{item.name}</Text>
+
+            {/* <Text style={{fontSize:21, color:'rgb(122,169,220)'}}>{item.name}</Text>
         <Text style={{color:'grey'}}>{item.description}</Text> */}
 
         </Card>

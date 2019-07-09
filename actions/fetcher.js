@@ -58,10 +58,10 @@ export async function getTasksWithState(taskState, project_id) {
     console.log(f)
 
     function filterByState(item, taskState) {
-        if(item.TaskState == taskState){
+        if (item.TaskState == taskState) {
             return true
-      }
-      return false
+        }
+        return false
     }
 
     return f
@@ -111,6 +111,7 @@ export async function addProject(data) {
     }
     catch (err){console.log(err)}
 }
+
 export async function getAllProjects() {
     let apiUrl = 'http://mamaly100.pythonanywhere.com/Projects/projects/';
     let formData = new FormData();

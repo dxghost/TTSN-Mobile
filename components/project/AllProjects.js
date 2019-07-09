@@ -1,11 +1,12 @@
 import React from 'react'
-import {StyleSheet, View, ActivityIndicator} from 'react-native'
+import { StyleSheet, View, ActivityIndicator } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { ListItem, Card, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getAllProjects } from '../../actions/fetcher'
 import {connect} from 'react-redux'
 import { updateAll } from '../../actions/projectsActions'
+
 
 class AllProjects extends React.Component{
     navigation = this.props.navigation
@@ -14,27 +15,31 @@ class AllProjects extends React.Component{
 
     }
     keyExtractor = (item, index) => index.toString()
-    renderItem = ({item}) => (
-        <Card style={{paddingHorizontal : 1, flexDirection : 'row'}}>
-            <ListItem 
-            key={item.id}
-            title={item.Name}
-            titleStyle={{fontSize:21, color:'rgb(122,169,220)'}}
-            subtitle={item.StartDate}
-            rightElement={
-                <Button
-                icon={
-                    <Icon
-                      name="arrow-right"
-                      size={15}
-                      color="white"
-                    />}
-                onPress = {() => this.navigation.navigate('ProjectDetail',{project: item})}
-                />
-            }
+    renderItem = ({ item }) => (
+        <Card style={{ paddingHorizontal: 1, flexDirection: 'row' }}>
+            <ListItem
+                key={item.id}
+                title={item.Name}
+                titleStyle={{ fontSize: 21, color: 'rgb(122,169,220)' }}
+                subtitle={item.StartDate}
+                rightElement={
+                    <Button
+                        icon={
+                            <Icon
+                                name="arrow-right"
+                                size={15}
+                                color="white"
+                            />}
+                        onPress={() => {
+                            console.log(item)
+                            this.navigation.navigate('ProjectDetail', { project: item })
+                        }
+                        }
+                    />
+                }
             />
-        
-        {/* <Text style={{fontSize:21, color:'rgb(122,169,220)'}}>{item.name}</Text>
+
+            {/* <Text style={{fontSize:21, color:'rgb(122,169,220)'}}>{item.name}</Text>
         <Text style={{color:'grey'}}>{item.description}</Text> */}
 
         </Card>

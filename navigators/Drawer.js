@@ -11,6 +11,8 @@ import LogOut from '../components/authentication/signout'
 import AddProj from '../screens/AddProject'
 import Projects from '../screens/Projects';
 import ProjectDashboard from '../screens/ProjectDashboard';
+import Profile from '../components/profile/index';
+import InviteUser from '../screens/InviteUser'
 
 
 const MainDrawer = createDrawerNavigator(
@@ -23,10 +25,12 @@ const MainDrawer = createDrawerNavigator(
     },
     CreateProj: {
       screen: AddProj,
+    Profile:{
+      screen: Profile
     },
   },
   {
-    initialRouteName: 'Projects',
+    initialRouteName: 'Project',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',
@@ -53,6 +57,9 @@ const ProjectDrawer = createDrawerNavigator(
     },
      ProjectDashboard: {
       screen: ProjectDashboard
+    },
+    InviteUser:{
+      screen:InviteUser
     }
   },
   {
@@ -72,14 +79,15 @@ const mainFlow = createStackNavigator({
   Drawer: {
     screen: MainDrawer
   },
-  Projects:{
+  Projects: {
     screen: Projects
   },
   CreateProj: {
     screen: AddProj,
   },
-  
-}, {
+  Profile:{
+    screen: Profile
+}}, {
     headerMode: 'none'
   })
 
@@ -130,7 +138,7 @@ const Stack = createStackNavigator({
   mainFlow: {
     screen: mainFlow
   },
-  ProjectFlow:{
+  ProjectFlow: {
     screen: ProjectFlow
   },
   loginFlow: {
