@@ -15,10 +15,13 @@ export default class InviteUser extends React.Component {
     }
     _inviteUser = async () => {
         var projID = await AsyncStorage.getItem("currentProjectID")
+        var userID = await AsyncStorage.getItem("userID")
         projID = Number.parseInt(projID)
+        userID = Number.parseInt(userID)
         var data = {
             "email": this.state.userEmail,
-            "Project": projID
+            "Project": projID,
+            "UserID":userID
         }
         data = JSON.stringify(data)
         console.log(data)

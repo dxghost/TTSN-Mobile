@@ -26,20 +26,23 @@ const MainDrawer = createDrawerNavigator(
     CreateProj: {
       screen: AddProj,
     },
-    Profile:{
+    Profile: {
       screen: Profile
     },
+    InviteUser: {
+      screen: InviteUser
+  }
   },
-  {
-    initialRouteName: 'Projects',
+{
+  initialRouteName: 'Projects',
     drawerPosition: 'left',
-    contentOptions: {
-      activeTintColor: '#e91e63',
+      contentOptions: {
+    activeTintColor: '#e91e63',
       inactiveTintColor: '#CCC',
-      activeBackgroundColor: '#EEE',
-      inactiveBackgroundColor: '#FFF',
+        activeBackgroundColor: '#EEE',
+          inactiveBackgroundColor: '#FFF',
     },
-  },
+},
 );
 
 const ProjectDrawer = createDrawerNavigator(
@@ -56,11 +59,11 @@ const ProjectDrawer = createDrawerNavigator(
     SignOut: {
       screen: LogOut
     },
-     ProjectDashboard: {
+    ProjectDashboard: {
       screen: ProjectDashboard
     },
-    InviteUser:{
-      screen:InviteUser
+    InviteUser: {
+      screen: InviteUser
     }
   },
   {
@@ -86,9 +89,10 @@ const mainFlow = createStackNavigator({
   CreateProj: {
     screen: AddProj,
   },
-  Profile:{
+  Profile: {
     screen: Profile
-}}, {
+  }
+}, {
     headerMode: 'none'
   })
 
@@ -118,7 +122,7 @@ const ProjectFlow = createStackNavigator({
   SingleBacklog: {
     screen: BacklogDetailScreen,
   },
-  ProjectDashboard:{
+  ProjectDashboard: {
     screen: ProjectDashboard,
   }
 }, {
