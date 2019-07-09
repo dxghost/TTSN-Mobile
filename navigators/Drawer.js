@@ -20,7 +20,10 @@ const MainDrawer = createDrawerNavigator(
     },
     Projects: {
       screen: Projects
-    }
+    },
+    CreateProj: {
+      screen: AddProj,
+    },
   },
   {
     initialRouteName: 'Projects',
@@ -48,9 +51,6 @@ const ProjectDrawer = createDrawerNavigator(
     SignOut: {
       screen: LogOut
     },
-    CreateProj: {
-      screen: AddProj,
-    },
      ProjectDashboard: {
       screen: ProjectDashboard
     }
@@ -74,6 +74,9 @@ const mainFlow = createStackNavigator({
   },
   Projects:{
     screen: Projects
+  },
+  CreateProj: {
+    screen: AddProj,
   },
   
 }, {
@@ -105,9 +108,6 @@ const ProjectFlow = createStackNavigator({
   },
   SingleBacklog: {
     screen: BacklogDetailScreen,
-  },
-  CreateProj: {
-    screen: AddProj,
   },
   ProjectDashboard:{
     screen: ProjectDashboard,
