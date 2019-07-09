@@ -29,9 +29,6 @@ const MainDrawer = createDrawerNavigator(
     Profile: {
       screen: Profile
     },
-    InviteUser: {
-      screen: InviteUser
-  }
   },
 {
   initialRouteName: 'Projects',

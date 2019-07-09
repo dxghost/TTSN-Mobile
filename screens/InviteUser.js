@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, Text, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity,AsyncStorage } from 'react-native'
+import { ScrollView, View, Text, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity,AsyncStorage,Alert } from 'react-native'
 import { Button, Icon, Header, CheckBox, Card, ButtonGroup } from 'react-native-elements';
 import { FAB } from 'react-native-paper'
 import DatePicker from 'react-native-datepicker'
@@ -15,13 +15,11 @@ export default class InviteUser extends React.Component {
     }
     _inviteUser = async () => {
         var projID = await AsyncStorage.getItem("currentProjectID")
-        var userID = await AsyncStorage.getItem("userID")
+        var token = await AsyncStorage.getItem("token")
         projID = Number.parseInt(projID)
-        userID = Number.parseInt(userID)
         var data = {
             "email": this.state.userEmail,
             "Project": projID,
-            "UserID":userID
         }
         data = JSON.stringify(data)
         console.log(data)
@@ -33,7 +31,7 @@ export default class InviteUser extends React.Component {
             headers: {
                 'accept': '*/*',
                 'Content-Type': 'application/json',
-                'Authorization': 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImR4IiwiZXhwIjoxNTYzODg4ODE0LCJlbWFpbCI6ImR4QGR4LmR4IiwidXNlcl9pZCI6NX0.1C_goD2Dk6yvCqaKvYCOrtY4HLDMKN_SGoKfBwFUdF0'
+                'Authorization': `JWT ${token}`
             }
 
         }
@@ -41,6 +39,10 @@ export default class InviteUser extends React.Component {
         // response = await response.json()
         console.log(response)
         console.log(response.status)
+        Alert.alert(
+            response.ok?'Done!':'Failed!',
+            response.ok?'User Invited Successfully':'An Error Occurred'
+          );
 
     }
     render() {
