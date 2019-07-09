@@ -16,17 +16,18 @@ import SortableList from 'react-native-sortable-list';
 import { requestBacklogs, deleteBacklog } from '../../../actions/fetcher'
 import { FAB } from 'react-native-paper'
 import { FlatList } from 'react-native-gesture-handler'
+import { connect } from 'react-redux'
 
 
 const window = Dimensions.get('window');
-export default class BacklogList extends React.Component {
+class BacklogList extends React.Component {
     state = {
         isLoading: true,
         data: []
     }
 
     _refresh = async () => {
-        await requestBacklogs()
+        await requestBacklogs(this.props.project.id)
         backlogList = await AsyncStorage.getItem('backlogs')
         backlogList = await JSON.parse(backlogList)
         this.setState({
@@ -38,7 +39,7 @@ export default class BacklogList extends React.Component {
     componentWillMount = async () => {
         const result = await AsyncStorage.getItem('performFetch')
         if (result == null || result == "true") {
-            await requestBacklogs()
+            await requestBacklogs(this.props.project.id)
         }
 
         backlogList = await AsyncStorage.getItem('backlogs')
@@ -165,6 +166,14 @@ class Row extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        project: state.project,
+    }
+}
+
+export default connect(mapStateToProps,null)(BacklogList)
 
 
 

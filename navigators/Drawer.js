@@ -23,12 +23,14 @@ const MainDrawer = createDrawerNavigator(
     Projects: {
       screen: Projects
     },
+    CreateProj: {
+      screen: AddProj,
     Profile:{
       screen: Profile
     },
   },
   {
-    initialRouteName: 'Profile',
+    initialRouteName: 'Project',
     drawerPosition: 'left',
     contentOptions: {
       activeTintColor: '#e91e63',
@@ -53,10 +55,7 @@ const ProjectDrawer = createDrawerNavigator(
     SignOut: {
       screen: LogOut
     },
-    CreateProj: {
-      screen: AddProj,
-    },
-    ProjectDashboard: {
+     ProjectDashboard: {
       screen: ProjectDashboard
     },
     InviteUser:{
@@ -82,6 +81,9 @@ const mainFlow = createStackNavigator({
   },
   Projects: {
     screen: Projects
+  },
+  CreateProj: {
+    screen: AddProj,
   },
   Profile:{
     screen: Profile
@@ -115,10 +117,7 @@ const ProjectFlow = createStackNavigator({
   SingleBacklog: {
     screen: BacklogDetailScreen,
   },
-  CreateProj: {
-    screen: AddProj,
-  },
-  ProjectDashboard: {
+  ProjectDashboard:{
     screen: ProjectDashboard,
   }
 }, {

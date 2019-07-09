@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
-export async function requestBacklogs() {
-    let apiUrl = 'http://mamaly100.pythonanywhere.com/Backlog/';
+export async function requestBacklogs(project_id) {
+    let apiUrl = `http://mamaly100.pythonanywhere.com/Projects/projects/${project_id}/Backlogs/`
     let formData = new FormData();
     let options = {
         method: 'GET',
@@ -42,7 +42,7 @@ export async function deleteBacklog(backlogID) {
 }
 
 export async function getTasksWithState(taskState, project_id) {
-    let apiUrl = `http://mamaly100.pythonanywhere.com/Projects/projects/${project_id}/get_Tasks/`;
+    let apiUrl = `http://mamaly100.pythonanywhere.com/Task/TaskByState/${taskState}/${project_id}/`;
     let formData = new FormData();
     let options = {
         method: 'GET',
@@ -87,6 +87,31 @@ export async function setPriority(priorities) {
     };
     await fetch(apiUrl, options)
 }
+
+export async function addProject(data) {
+
+    let apiUrl = 'https/mamaly100.pythonanywhere.com/Projects/projects/'
+    // var formData = JSON.stringify(data)
+    // data = {data}
+    data = JSON.stringify(data)
+    console.log(data)
+    let options = {
+        method: 'POST',
+        body: data,
+        headers: {
+            'accept': '*/*',
+            'Content-Type': 'application/json',
+            'Authorization': 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJleHAiOjE1NjI2MzAwMTUsInVzZXJuYW1lIjoibSIsImVtYWlsIjoibUBtLmNvbSJ9.rXeSxgREY6Nmlfw8TidUiCYYcKL1nQPg_1OJvKoX230'
+        }
+    }
+    try {
+        const response = await fetch(apiUrl, options)
+        response = await response.json()
+        console.log(response)
+    }
+    catch (err){console.log(err)}
+}
+
 export async function getAllProjects() {
     let apiUrl = 'http://mamaly100.pythonanywhere.com/Projects/projects/';
     let formData = new FormData();

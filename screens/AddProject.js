@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, Text, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Text, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, Alert } from 'react-native'
 import { Button, Icon, Header, CheckBox, Card, ButtonGroup } from 'react-native-elements';
 import { FAB } from 'react-native-paper'
 import DatePicker from 'react-native-datepicker'
@@ -8,9 +8,12 @@ import scrum from '../assets/methodologies/scrum.png'
 import waterfall from '../assets/methodologies/waterfall.png'
 import xp from '../assets/methodologies/xp.jpg'
 import { addProject } from '../actions/fetcher'
+import { connect } from 'react-redux'
+import { getAllProjects } from '../actions/fetcher'
+import { updateUser, updateAll } from '../actions/projectsActions'
 
 
-export default class CreateProject extends React.Component {
+class CreateProject extends React.Component {
     state = {
         projectName: "",
         projectDescription: "",
@@ -50,13 +53,30 @@ export default class CreateProject extends React.Component {
             headers: {
                 'accept': '*/*',
                 'Content-Type': 'application/json',
-                'Authorization': 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJleHAiOjE1NjI2MzAwMTUsInVzZXJuYW1lIjoibSIsImVtYWlsIjoibUBtLmNvbSJ9.rXeSxgREY6Nmlfw8TidUiCYYcKL1nQPg_1OJvKoX230'
+                'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImR4IiwiZW1haWwiOiJkeEBkeC5keCIsInVzZXJfaWQiOjUsImV4cCI6MTU2Mzg2OTg5MX0.cekTEJbDKBj2ba-nbokedomyHdk4PfB-glMRRkvjHDs'
             }
 
         }
         var response = await fetch(apiUrl, options)
-        response = await response.json()
-        console.log(response)
+        response_json = await response.json()
+
+        if(response.ok){
+            getAllProjects().then((f) => this.props.user_update(f))
+            getAllProjects().then((f) => this.props.all_update(f))
+        }
+
+        Alert.alert(
+            response.ok?'Done!':'Failed!',
+            response.ok?'Project Added Successfully':`An Error Occurred (${response_json.detail})`,
+            [
+              response.ok? {text: 'See On Projects Board', onPress: () => this.props.navigation.navigate("Projects")}:{},
+            
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            {cancelable: false},
+          );
+
+        console.log(response_json)
     }
     render() {
         const { projectName, projectDescription, projectType, startDate, endDate, methodology, checked, checkedMethodology } = this.state
@@ -240,6 +260,17 @@ export default class CreateProject extends React.Component {
     }
 
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        all_update: (data) => dispatch(updateAll({data:data})),
+        user_update: (data) => dispatch(updateUser({data:data}))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(CreateProject)
+
+
 const styles = StyleSheet.create({
     scrollViewItem: {
         width: Dimensions.get('window').width * (1),
