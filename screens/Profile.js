@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, Text, StyleSheet } from 'react-native'
+import { ScrollView, View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import { Avatar, Header, Divider } from 'react-native-elements'
 
 const profile = {
