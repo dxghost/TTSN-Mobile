@@ -42,6 +42,7 @@ class AddTask extends React.Component{
         formData.append("TaskState", "TO_DO")
         formData.append("BackLogID", this.state.backlogId)
         formData.append("title", this.state.taskName)
+        formData.append("ProjectID", this.props.project.id)
         formData.append("description", this.state.taskDsr)
         let options = {
             method: 'POST',
