@@ -15,9 +15,10 @@ import { Avatar, Divider, ListItem, Header, Icon, CheckBox } from "react-native-
 import SortableList from 'react-native-sortable-list';
 import { requestBacklogs, deleteBacklog, setPriority } from '../../../actions/fetcher'
 import { FAB } from 'react-native-paper'
+import {connect} from 'react-redux'
 
 const window = Dimensions.get('window');
-export default class BacklogList extends React.Component {
+class BacklogList extends React.Component {
     state = {
         isLoading: true,
         data: [],
@@ -25,7 +26,7 @@ export default class BacklogList extends React.Component {
     }
 
     _refresh = async () => {
-        await requestBacklogs()
+        await requestBacklogs(this.props.project.id)
         backlogList = await AsyncStorage.getItem('backlogs')
         backlogList = await JSON.parse(backlogList)
         this.setState({
@@ -33,7 +34,6 @@ export default class BacklogList extends React.Component {
             isLoading: false
         })
     }
-
     componentWillMount = async () => {
         const result = await AsyncStorage.getItem('performFetch')
         if (result == null || result == "true") {
@@ -137,6 +137,14 @@ class Row extends React.Component {
     }
 }
 
+
+function mapStateToProps(state) {
+    return {
+        project: state.project,
+    }
+}
+
+export default connect(mapStateToProps,null)(BacklogList)
 
 
 const styles = StyleSheet.create({

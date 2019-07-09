@@ -14,7 +14,8 @@ export async function requestBacklogs(project_id) {
     };
     result = await fetch(apiUrl, options)
     result = result._bodyInit
-    result.toString()
+    result = result.toString()
+    console.log(result)
     try {
         await AsyncStorage.setItem('backlogs', result);
         await AsyncStorage.setItem('performFetch', "false");
@@ -70,8 +71,13 @@ export async function getTasksWithState(taskState, project_id) {
 export async function setPriority(priorities) {
     let apiUrl = 'http://mamaly100.pythonanywhere.com/Backlog/set_list_priority/';
     var p_list = priorities
+    var projectID = await AsyncStorage.getItem("currentProjectID")
+    projectID = Number.parseInt(projectID)
     p_list = p_list.map((x) => parseInt(x, 10))
-    let formData = { "priorities": p_list }
+    let formData = {
+        "priorities": p_list,
+        "ProjectID" : projectID
+    }
     formData = JSON.stringify(formData)
 
     console.log(formData)
@@ -85,7 +91,8 @@ export async function setPriority(priorities) {
             // 'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnX2lhdCI6MTU1OTU1NjUxNCwiZXhwIjoxNTU5NTYyNTE0LCJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1haGRpcGF6b29raTIxQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiZHgifQ.kCdXNmh_o28eLCPsHOwIMefYE12ckg2QI0uMkfIsWZw'
         }
     };
-    await fetch(apiUrl, options)
+    var response = await fetch(apiUrl, options)
+    console.log(response)
 }
 
 export async function addProject(data) {
@@ -109,7 +116,7 @@ export async function addProject(data) {
         response = await response.json()
         console.log(response)
     }
-    catch (err){console.log(err)}
+    catch (err) { console.log(err) }
 }
 
 export async function getAllProjects() {
