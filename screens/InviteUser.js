@@ -30,7 +30,7 @@ export default class InviteUser extends React.Component {
             headers: {
                 'accept': '*/*',
                 'Content-Type': 'application/json',
-                'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjI2NDU5MjAsInVzZXJfaWQiOjUsInVzZXJuYW1lIjoiZHgiLCJlbWFpbCI6ImR4QGR4LmR4In0.ZevhpYsYHp1WMSveun9wn8uCtHK0KBlMk-azjEwLRRU'
+                'Authorization': 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImR4IiwiZXhwIjoxNTYzODg4ODE0LCJlbWFpbCI6ImR4QGR4LmR4IiwidXNlcl9pZCI6NX0.1C_goD2Dk6yvCqaKvYCOrtY4HLDMKN_SGoKfBwFUdF0'
             }
 
         }
