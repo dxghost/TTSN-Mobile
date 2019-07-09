@@ -4,17 +4,14 @@ import { FlatList } from 'react-native-gesture-handler'
 import { ListItem, Card, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getAllProjects } from '../../actions/fetcher'
+import {connect} from 'react-redux'
+import { updateAll } from '../../actions/projectsActions'
 
-export default class AllProjects extends React.Component{
-    state = {
-        isLoading: true,
-        data: []
-    }
+class AllProjects extends React.Component{
     navigation = this.props.navigation
     componentWillMount = async () => {
-        await getAllProjects().then((f) => {
-            this.setState({data:f, isLoading:false})
-        })
+        getAllProjects().then((f) => this.props.all_update(f))
+
     }
     keyExtractor = (item, index) => index.toString()
     renderItem = ({item}) => (
@@ -45,12 +42,12 @@ export default class AllProjects extends React.Component{
 
     render(){
         return(
-            <View style={this.state.isLoading? styles.container:{}}>
+            <View style={!this.props.projects.all? styles.container:{}}>
                 {
-                this.state.isLoading ? <ActivityIndicator size="large" color="#DE94FF" /> :
+                !this.props.projects.all ? <ActivityIndicator size="large" color="#DE94FF" /> :
                 <FlatList
                     keyExtractor={this.keyExtractor}
-                    data={this.state.data}
+                    data={this.props.projects.all}
                     renderItem={this.renderItem}
                 />
                 }
@@ -58,6 +55,23 @@ export default class AllProjects extends React.Component{
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+        projects: state.projects
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        clear_tasks: () => dispatch(clear()),
+        all_update: (data) => dispatch(updateAll({data:data}))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllProjects)
+
 
 const styles = StyleSheet.create({
     container: {
