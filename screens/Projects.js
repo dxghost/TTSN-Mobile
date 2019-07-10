@@ -1,9 +1,11 @@
 import React from 'react'
-import { StyleSheet, View, StatusBar } from 'react-native'
+import { StyleSheet, View, StatusBar, Image } from 'react-native'
 import { TabView, TabBar } from 'react-native-tab-view'
 import AllProjects from '../components/project/AllProjects'
 import UserProjects from '../components/project/UserProjects'
 import { FAB } from 'react-native-paper'
+import goalIMG from '../assets/icons/goal.png'
+
 
 export default class Projects extends React.Component {
   state = {
@@ -79,5 +81,8 @@ const styles = StyleSheet.create({
 
 Projects.navigationOptions = {
   drawerLabel: 'Projects',
+  drawerIcon: () => (
+    <Image source={goalIMG} style={{ width: 30, height: 30 }} />
+  ),
 }
 

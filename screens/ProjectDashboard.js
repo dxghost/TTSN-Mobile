@@ -1,55 +1,161 @@
 import React from 'react'
-import {ScrollView, Text, StyleSheet, View} from 'react-native'
-import {Header, Button} from 'react-native-elements'
+import { ScrollView, Text, StyleSheet, View } from 'react-native'
+import { Header, Button, Icon } from 'react-native-elements'
+import Separator from '../components/profile/Separator'
 
-export default class ProjectDashboard extends React.Component{
-    
-    render(){
+
+export default class ProjectDashboard extends React.Component {
+
+    render() {
         var project = this.props.navigation.getParam("project")
-        return(
+        return (
             <View>
-                <Header 
-                backgroundColor='rgb(73, 14, 97)'
-                centerComponent={{ text: `Project ${project.Name}`, style: { color: 'white' } }}
+                <Header
+                    backgroundColor='rgb(73, 14, 97)'
+                    centerComponent={{ text: `Project ${project.Name}`, style: { color: 'white' } }}
                 />
-                    <View style={{paddingHorizontal:15,alignItems:'center',marginTop:"10%"}}>              
-                        {/* <Button
-                        title='Project Tasks'
-                        buttonStyle={[styles.button, {backgroundColor:'rgb(109,193,140)'}]}
-                        />
-                        <Button
-                        title='Project Bacllogs'
-                        buttonStyle={[styles.button, {backgroundColor:'rgb(113,87,184)'}]}
-                        />
-                        <Button
-                        title='Project Collabs'
-                        buttonStyle={[styles.button, {backgroundColor:'rgb(87,106,164)'}]}
-                        onPress={()=>{        console.log(project)}}
-                        /> */}
-                        <Text>Project Name : {project.Name}</Text>
-                        <Text>Project Creator : {project.Creator}</Text>
-                        <Text>Methodology: {project.Methodology}</Text>
-                        <Text>Creation Date:{project.CreationDate}</Text>
-                        <Text>Start Date:{project.StartDate}</Text>
-                        <Text>End Date:{project.EndDate}</Text>
-                        <Text>Project Type:{project.Type}</Text>
 
+                <ScrollView style={{marginTop:"10%"}}>
+                    <View style={styles.container}>
+                        <View style={styles.iconRow}>
+                            <Icon
+                                name="alpha-t-box"
+                                type="material-community"
+                                underlayColor="transparent"
+                                iconStyle={styles.telIcon}
+                            />
+                        </View>
+                        <View style={styles.telRow}>
+                            <View style={styles.telNumberColumn}>
+                                <Text style={{color: 'gray',fontSize: 20,fontWeight: '200'}}>Project Name : </Text>
+                                <Text style={{fontSize:20}}>{project.Name}</Text>
+                            </View>
+                        </View>
                     </View>
+                    {Separator()}
+                    <View style={styles.container}>
+                        <View style={styles.iconRow}>
+                            <Icon
+                                name="calendar-text"
+                                type="material-community"
+                                underlayColor="transparent"
+                                iconStyle={styles.telIcon}
+                            />
+                        </View>
+                        <View style={styles.telRow}>
+                            <View style={styles.telNumberColumn}>
+                                <Text style={styles.telNameText}>Created On : </Text>
+                                <Text style={styles.telNumberText}>{project.CreationDate}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    {Separator()}
+                    <View style={styles.container}>
+                        <View style={styles.iconRow}>
+                            <Icon
+                                name="account"
+                                type="material-community"
+                                underlayColor="transparent"
+                                iconStyle={styles.telIcon}
+                            />
+                        </View>
+                        <View style={styles.telRow}>
+                            <View style={styles.telNumberColumn}>
+                                <Text style={styles.telNameText}>Project Creator ID: </Text>
+                                <Text style={styles.telNumberText}>{project.Creator}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    {Separator()}
+                    <View style={styles.container}>
+                        <View style={styles.iconRow}>
+                            <Icon
+                                name="blender"
+                                type="material-community"
+                                underlayColor="transparent"
+                                iconStyle={styles.telIcon}
+                            />
+                        </View>
+                        <View style={styles.telRow}>
+                            <View style={styles.telNumberColumn}>
+                                <Text style={styles.telNameText}>Project Methodology : </Text>
+                                <Text style={styles.telNumberText}>{project.Methodology}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    {Separator()}
+                    <View style={styles.container}>
+                        <View style={styles.iconRow}>
+                            <Icon
+                                name="bullhorn"
+                                type="material-community"
+                                underlayColor="transparent"
+                                iconStyle={styles.telIcon}
+                            />
+                        </View>
+                        <View style={styles.telRow}>
+                            <View style={styles.telNumberColumn}>
+                                <Text style={styles.telNameText}>Project Type : </Text>
+                                <Text style={styles.telNumberText}>{project.Type}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    {Separator()}
+
+                </ScrollView>
             </View>
         );
     }
 }
-
+ProjectDashboard.navigationOptions={
+    drawerLabel: () => null
+}
 const styles = StyleSheet.create({
-    button:{
-        backgroundColor:'green',
-        marginTop:8,
-        height:65,
-        borderRadius:20
+
+    container: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginBottom: 25,
     },
-    container:{
-        padding:20,
+    iconRow: {
+        flex: 2,
+        justifyContent: 'center',
     },
-    text:{
-        fontSize:18,
-    }});
+    smsIcon: {
+        color: 'gray',
+        fontSize: 30,
+    },
+    smsRow: {
+        flex: 2,
+        justifyContent: 'flex-start',
+    },
+    telIcon: {
+        color: '#8d42f5',
+        fontSize: 30,
+    },
+    telNameColumn: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+    },
+    telNameText: {
+        color: 'gray',
+        fontSize: 14,
+        fontWeight: '200',
+    },
+    telNumberColumn: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginBottom: 5,
+    },
+    telNumberText: {
+        fontSize: 16,
+    },
+    telRow: {
+        flex: 6,
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
+    text: {
+        fontSize: 18,
+    }
+});
