@@ -3,16 +3,18 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
-  AsyncStorage
+  AsyncStorage,
+  TouchableOpacity
 } from "react-native";
 import { FlatList, State } from "react-native-gesture-handler";
-import { ListItem, Card, Button } from "react-native-elements";
+import { ListItem, Card, Button, Text, Icon, Divider } from "react-native-elements";
 import { connect } from "react-redux";
-import Icon from "react-native-vector-icons/FontAwesome";
 import { updateProject } from "../../actions/projectActions";
 import { updateUser } from "../../actions/projectsActions";
 import { clear } from "../../actions/taskActions";
 import { getUserProjects } from "../../actions/fetcher";
+import Separator from "../profile/Separator";
+
 
 class UserProjects extends React.Component {
   navigation = this.props.navigation;
@@ -23,28 +25,30 @@ class UserProjects extends React.Component {
   keyExtractor = (item, index) => index.toString();
   navigation = this.props.navigation;
   renderItem = ({ item }) => (
-    <Card style={{ paddingHorizontal: 1, flexDirection: "row" }}>
+    <TouchableOpacity
+      onPress={async () => {
+        this.navigation.navigate('ProjectDashboard', { project: item })
+        var projID = item.id.toString();
+        console.log("current item", projID);
+        await AsyncStorage.setItem("currentProjectID", projID);
+        this.props.clear_tasks();
+        await AsyncStorage.setItem("performFetch", "true");
+        this.props.project_update(item);
+      }
+      }>
       <ListItem
-        key={item.id}
-        title={item.Name}
-        titleStyle={{ fontSize: 21, color: "rgb(122,169,220)" }}
+        // leftAvatar={{ source: { uri: l.avatar_url } }}
+        title={<Text style={{ color: "purple" }}>{item.Name}</Text>}
         subtitle={item.StartDate}
-        rightElement={
-          <Button
-            icon={<Icon name="arrow-right" size={15} color="white" />}
-            onPress={async () => {
-              this.navigation.navigate("ProjectDashboard", { project: item });
-              var projID = item.id.toString();
-              console.log("current item", projID);
-              await AsyncStorage.setItem("currentProjectID", projID);
-              this.props.clear_tasks();
-              await AsyncStorage.setItem("performFetch", "true");
-              this.props.project_update(item);
-            }}
-          />
-        }
+        leftElement={<Icon
+          name='clipboard-text'
+          type="material-community"
+          color="purple"
+        />}
+        rightIcon={{ name: 'chevron-right', type: "material-community" }}
       />
-    </Card>
+      <Divider />
+    </TouchableOpacity>
   );
   render() {
     return (
@@ -52,12 +56,13 @@ class UserProjects extends React.Component {
         {!this.props.projects.user ? (
           <ActivityIndicator size="large" color="#DE94FF" />
         ) : (
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            data={this.props.projects.user}
-            renderItem={this.renderItem}
-          />
-        )}
+            <FlatList
+              keyExtractor={this.keyExtractor}
+              data={this.props.projects.user}
+              renderItem={this.renderItem}
+
+            />
+          )}
       </View>
     );
   }
