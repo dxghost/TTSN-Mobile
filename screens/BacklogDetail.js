@@ -3,7 +3,8 @@ import { ScrollView, View, Text, Image, StyleSheet } from 'react-native'
 import BacklogDetailIcon from "../assets/icons/icons8-cashbook-64.png"
 import CalendarIcon from "../assets/icons/icons8-calendar-64.png"
 import TaskList from "../components/backlogs/task_list/TaskList"
-import { ListItem, Divider, Header } from "react-native-elements"
+import { ListItem, Divider, Header, Icon } from "react-native-elements"
+import Separator from "../components/profile/Separator"
 
 
 export default class BacklogDetailScreen extends React.Component {
@@ -29,7 +30,7 @@ export default class BacklogDetailScreen extends React.Component {
   }
 
   componentWillMount = async () => {
-    var result = await this._requestHandler()    
+    var result = await this._requestHandler()
     result = await result.json()
     this.setState({
       data: result,
@@ -42,37 +43,81 @@ export default class BacklogDetailScreen extends React.Component {
     const backlog_data = this.props.navigation.getParam("backlogdata")
     return (
       <View>
-        <Header style={{color:'rgb(150, 13, 255'}}
-          centerComponent={{ text: 'BackLog Details', style: { color: '#fff' } }}
-          />
-      <ScrollView>
-        {/* TODO Header name would be BacklogDetails.name */}
-        {/* <Text>{this.props.backlog_name}</Text> */}
-        <Text style={{ fontSize: 20 }}> {backlog_data.name} </Text>
-        <ListItem
-          title={"Definition of done: "}
-          subtitle={backlog_data.definition_done}
-          titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
+        <Header
+          backgroundColor='rgb(73, 14, 97)'
+          centerComponent={{ text: 'Backlog Details', style: { color: '#fff' } }}
+          containerStyle={{ marginBottom: "10%" }}
         />
-        <ListItem
-          title={"Priority: "}
-          subtitle={(backlog_data.priority).toString()}
-          titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
-        />
-        <ListItem
-          title={"Description : "}
-          subtitle={backlog_data.description}
-          titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
-        />
-        <ListItem
-          title="Tasks:"
-          titleStyle={{ color: "rgb(150, 13, 255)", fontSize: 20 }}
-        />
-        <ScrollView style={styles.backlogDetailsContainer}>
-          {/* <TaskList Tasks={this.props.data} isLoading={this.state.isLoading} /> */}
-          {isLoading ? <Text>Loading</Text> : <TaskList Tasks={data} />}
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.iconRow}>
+              <Icon
+                name="alpha-t-box"
+                type="material-community"
+                underlayColor="transparent"
+                iconStyle={styles.telIcon}
+              />
+            </View>
+            <View style={styles.telRow}>
+              <View style={styles.telNumberColumn}>
+                <Text style={styles.telNameText}>Priority : </Text>
+                <Text style={styles.telNumberText}>{(backlog_data.priority).toString()}</Text>
+              </View>
+            </View>
+          </View>
+          {Separator()}
+          <View style={styles.container}>
+            <View style={styles.iconRow}>
+              <Icon
+                name="calendar-text"
+                type="material-community"
+                underlayColor="transparent"
+                iconStyle={styles.telIcon}
+              />
+            </View>
+            <View style={styles.telRow}>
+              <View style={styles.telNumberColumn}>
+                <Text style={styles.telNameText}>Backlog Subject : </Text>
+                <Text style={styles.telNumberText}>{backlog_data.name}</Text>
+              </View>
+            </View>
+          </View>
+          {Separator()}
+          <View style={styles.container}>
+            <View style={styles.iconRow}>
+              <Icon
+                name="clipboard-text"
+                type="material-community"
+                underlayColor="transparent"
+                iconStyle={styles.telIcon}
+              />
+            </View>
+            <View style={styles.telRow}>
+              <View style={styles.telNumberColumn}>
+                <Text style={styles.telNameText}>Backlog Description : </Text>
+                <Text style={styles.telNumberText}>{backlog_data.description}</Text>
+              </View>
+            </View>
+          </View>
+          {Separator()}
+          <View style={styles.container}>
+            <View style={styles.iconRow}>
+              <Icon
+                name="file-document-box-multiple"
+                type="material-community"
+                underlayColor="transparent"
+                iconStyle={styles.telIcon}
+              />
+            </View>
+            <View style={styles.telRow}>
+              <View style={styles.telNumberColumn}>
+                <Text style={styles.telNameText}>Definition of Done : </Text>
+                <Text style={styles.telNumberText}>{backlog_data.definition_done}</Text>
+              </View>
+            </View>
+          </View>
+          {Separator()}
         </ScrollView>
-      </ScrollView>
       </View>
     )
   }
@@ -89,5 +134,51 @@ const styles = StyleSheet.create({
     // backgroundColor: 'grey',
     // marginTop: "5%",
     padding: "1%",
+  },
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginBottom: 25,
+  },
+  iconRow: {
+    flex: 2,
+    justifyContent: 'center',
+  },
+  smsIcon: {
+    color: 'gray',
+    fontSize: 30,
+  },
+  smsRow: {
+    flex: 2,
+    justifyContent: 'flex-start',
+  },
+  telIcon: {
+    color: '#8d42f5',
+    fontSize: 30,
+  },
+  telNameColumn: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  telNameText: {
+    color: 'gray',
+    fontSize: 14,
+    fontWeight: '200',
+  },
+  telNumberColumn: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginBottom: 5,
+  },
+  telNumberText: {
+    fontSize: 16,
+  },
+  telRow: {
+    flex: 6,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 18,
   }
 })
