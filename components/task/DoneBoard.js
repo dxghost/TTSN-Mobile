@@ -3,7 +3,7 @@ import TaskBoard from './TaskBoard';
 import {ListItem, Button} from 'react-native-elements'
 import { updateDone } from '../../actions/taskActions';
 import {connect} from 'react-redux'
-import {getTasksWithState} from '../../actions/fetcher'
+import {getTasksWithState} from '../../requests/TaskActions'
 
 class DoneBoard extends React.Component{
 

@@ -4,9 +4,9 @@ import {TextField} from 'react-native-material-textfield'
 import {Dropdown} from 'react-native-material-dropdown'
 import {Button, Header} from 'react-native-elements'
 import {connect} from 'react-redux'
-import { getTasksWithState } from '../actions/fetcher';
+import { getTasksWithState, addTask } from '../requests/TaskActions';
 import { updateTodo } from '../actions/taskActions';
-
+import {getProjectBacklogs} from '../requests/BacklogActions'
 
 class AddTask extends React.Component{
     
@@ -21,41 +21,8 @@ class AddTask extends React.Component{
             emptyBackLog: false,
         };
 
-    blRequestHandler = async () => {
-        let apiUrl = `http://mamaly100.pythonanywhere.com/Projects/projects/${this.props.project.id}/Backlogs/`;
-        let formData = new FormData();
-        let options = {
-            method: 'GET',
-            // body: formData,
-            headers: {
-                Accept: '*/*',
-                'Content-Type': 'application/json',
-                // 'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnX2lhdCI6MTU1OTU1NjUxNCwiZXhwIjoxNTU5NTYyNTE0LCJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1haGRpcGF6b29raTIxQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiZHgifQ.kCdXNmh_o28eLCPsHOwIMefYE12ckg2QI0uMkfIsWZw'
-            }
-        };
-        return fetch(apiUrl, options)
-    }
-
-    addTaskRequestHandler = async () => {
-        let apiUrl = 'http://mamaly100.pythonanywhere.com/Task/';
-        let formData = new FormData();
-        formData.append("TaskState", "TO_DO")
-        formData.append("BackLogID", this.state.backlogId)
-        formData.append("title", this.state.taskName)
-        formData.append("ProjectID", this.props.project.id)
-        formData.append("description", this.state.taskDsr)
-        let options = {
-            method: 'POST',
-            body: formData,
-            headers: {
-                Accept: '*/*',
-                'Content-Type': 'multipart/form-data',
-                // 'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmlnX2lhdCI6MTU1OTU1NjUxNCwiZXhwIjoxNTU5NTYyNTE0LCJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1haGRpcGF6b29raTIxQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiZHgifQ.kCdXNmh_o28eLCPsHOwIMefYE12ckg2QI0uMkfIsWZw'
-            }
-        };
-        // console.log(formData)
-        response = await fetch(apiUrl, options)
-        //res_data = await JSON.parse(response._bodyText)
+    addTask = async () => {
+        response = await addTask(this.state.taskName, this.state.taskDsr, this.state.backlogId, this.props.project.id)
         res_body = response._bodyText
         if (response.ok == true) { 
         
@@ -89,11 +56,9 @@ class AddTask extends React.Component{
     }
 
     componentWillMount = async () => {
-        var f = await this.blRequestHandler()
-        f = await f.json()
-        //console.log(f)
+        data = await getProjectBacklogs(this.props.project.id) 
         this.setState({
-            backlogData: f,
+            backlogData: data,
             fetchingBacklogs: false
         })
     }
@@ -156,7 +121,7 @@ class AddTask extends React.Component{
                     console.log(`taskName : ${this.state.taskName}\ntask dsr : ${this.state.taskDsr}\n backlogId : ${this.state.backlogId}`)
                     if(this.clientSideCheck()){
                         //implement backend request and came back to tasks
-                        this.addTaskRequestHandler()
+                        this.addTask()
                     }
                     
                 }}

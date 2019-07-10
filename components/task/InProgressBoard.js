@@ -4,7 +4,7 @@ import {Alert} from 'react-native'
 import {ListItem, Button} from 'react-native-elements'
 import { updateDone, updateInProgress } from '../../actions/taskActions';
 import {connect} from 'react-redux'
-import {getTasksWithState} from '../../actions/fetcher'
+import {getTasksWithState} from '../../requests/TaskActions'
 
 class InProgressBoard extends React.Component{
 
