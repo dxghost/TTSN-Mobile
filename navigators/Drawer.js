@@ -18,14 +18,14 @@ import InviteUser from '../screens/InviteUser'
 
 const MainDrawer = createDrawerNavigator(
   {
-    SignOut: {
-      screen: LogOut
-    },
     Projects: {
       screen: Projects
     },
     Profile: {
       screen: Profile
+    },
+    SignOut: {
+      screen: LogOut
     },
   },
 {
@@ -51,15 +51,15 @@ const ProjectDrawer = createDrawerNavigator(
     TaskList: {
       screen: Tasks,
     },
-    SignOut: {
-      screen: LogOut
-    },
     ProjectDashboard: {
       screen: ProjectDashboard
     },
     InviteUser: {
       screen: InviteUser
-    }
+    },
+    SignOut: {
+      screen: LogOut
+    },
   },
   {
     initialRouteName: 'ProjectDashboard',
