@@ -2,13 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Profile from './Profile'
 import AvatarBG from '../../assets/profile/bg.jpg'
-import {AsyncStorage, View, ActivityIndicator} from 'react-native'
+import { AsyncStorage, View, ActivityIndicator,Image } from 'react-native'
+import ProfileIMG from '../../assets/icons/profile.png'
 
 
 class ProfileScreen extends React.Component {
   state = {
-    data : {},
-    isLoading : true
+    data: {},
+    isLoading: true
   }
   componentWillMount = async () => {
     var UserName = await AsyncStorage.getItem("userName")
@@ -16,33 +17,37 @@ class ProfileScreen extends React.Component {
     var Prof_Pic = await AsyncStorage.getItem("pro_pic")
     var Bio = await AsyncStorage.getItem("bio")
     data = {
-      "name": UserName? UserName:'noname',
+      "name": UserName ? UserName : 'noname',
       "avatar": Prof_Pic,
       "avatarBackground":
         AvatarBG,
       "bio": [
-        {"description": Bio? Bio : 'Using Project Assistant App.' }
+        { "description": Bio ? Bio : 'Using Project Assistant App.' }
       ],
       "emails": [
-        { "id": 1, "name": "Personal", "email": Email?Email:'no email' }
+        { "id": 1, "name": "Personal", "email": Email ? Email : 'no email' }
       ],
     }
     console.log(data)
-    this.setState({data:data, isLoading:false})
+    this.setState({ data: data, isLoading: false })
   }
   render() {
     return (
-      this.state.isLoading? <View style={{ justifyContent: 'center',marginTop:"50%"}}>
-      <ActivityIndicator size="large" color="#DE94FF" />
-      </View>  :
-      <Profile {...this.state.data} />
-  
+      this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: "50%" }}>
+        <ActivityIndicator size="large" color="#DE94FF" />
+      </View> :
+        <Profile {...this.state.data} />
+
     )
   }
 }
 
 ProfileScreen.navigationOptions = () => ({
   header: null,
+  drawerLabel: 'Profile',
+  drawerIcon: () => (
+    <Image source={ProfileIMG} style={{ width: 30, height: 30 }} />
+  ),
 })
 
 ProfileScreen.propTypes = {
