@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, Text, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity,AsyncStorage,Alert } from 'react-native'
+import { ScrollView, View, Text, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, AsyncStorage, Alert } from 'react-native'
 import { Button, Icon, Header, CheckBox, Card, ButtonGroup } from 'react-native-elements';
 import { FAB } from 'react-native-paper'
 import DatePicker from 'react-native-datepicker'
@@ -40,9 +40,9 @@ export default class InviteUser extends React.Component {
         console.log(response)
         console.log(response.status)
         Alert.alert(
-            response.ok?'Done!':'Failed!',
-            response.ok?'User Invited Successfully':'An Error Occurred'
-          );
+            response.ok ? 'Done!' : 'Failed!',
+            response.ok ? 'User Invited Successfully' : 'An Error Occurred'
+        );
 
     }
     render() {
@@ -61,12 +61,7 @@ export default class InviteUser extends React.Component {
                             value={this.state.userEmail}
                             onChangeText={(username) => this.setState({ userEmail: username })}
                         />
-                        <View style={{alignItems:'center'}}>
-                        <Button
-                            title="Invite"
-                            containerStyle={{width:"40%",marginTop:"5%"}}
-                            onPress={() => this._inviteUser() }
-                        />
+                        <View style={{ alignItems: 'center' }}>
                         </View>
                     </View>
 
@@ -77,7 +72,7 @@ export default class InviteUser extends React.Component {
                     icon="check"
                     color='white'
 
-                    onPress={() => this._inviteUser() }
+                    onPress={() => this._inviteUser()}
                 />
             </View>
         )
@@ -89,7 +84,7 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width * (1),
         // use Dimensions cuase '100%' doesnt work properly
         // padding: 30,"
-        alignContent:'center'
+        alignContent: 'center'
     },
     screen: {
         width: "100%",
