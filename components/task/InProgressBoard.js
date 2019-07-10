@@ -23,6 +23,7 @@ class InProgressBoard extends React.Component{
             rightElement={
                 <Button 
                 title = {'Done'} 
+                buttonStyle={{backgroundColor:'#8f2883'}}
                 onPress={() => {
                     doneTaskRequestHandler(item)
                 }}/>

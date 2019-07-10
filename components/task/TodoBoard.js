@@ -24,6 +24,7 @@ class TodoBoard extends React.Component{
             rightElement={
                 <Button 
                 title = {'Pick'} 
+                buttonStyle={{backgroundColor:'#8f2883'}}
                 onPress={async () => {
                     user_id = await AsyncStorage.getItem("userID")
                     response = await pickTask(item.id, user_id)
@@ -65,6 +66,7 @@ class TodoBoard extends React.Component{
             style={styles.fab}
             small={false}
             icon="add"
+            color="white"
             onPress={() => {
                 navigation.navigate('AddTask')
             }}
@@ -100,5 +102,6 @@ const styles = StyleSheet.create({
         margin: 16,
         right: 0,
         bottom: 0,
+        backgroundColor:'rgb(87, 42, 112)'
       },
   });

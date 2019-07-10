@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, Text, Image, StyleSheet, AsyncStorage,Alert } from 'react-native'
+import { ScrollView, View, Text, Image, StyleSheet, AsyncStorage, Alert } from 'react-native'
 import { ListItem, Button, Divider, Header } from "react-native-elements"
 import Icon from 'react-native-vector-icons/FontAwesome'
 import CreateNew from '../assets/icons/icons8-add-property-96.png'
@@ -43,14 +43,14 @@ class CreateBacklog extends React.Component {
             this.props.navigation.state.params.onGoBack();
         }
         Alert.alert(
-            response.ok?'Done!':'Failed!',
-            response.ok?'Backlog Added Successfully':'An Error Occurred',
+            response.ok ? 'Done!' : 'Failed!',
+            response.ok ? 'Backlog Added Successfully' : 'An Error Occurred',
             [
-              response.ok? {text: 'See On BacklogList Board', onPress: () => this.props.navigation.goBack()}:null,
-              {text: 'OK'},
+                response.ok ? { text: 'See On BacklogList Board', onPress: () => this.props.navigation.goBack() } : null,
+                { text: 'OK' },
             ],
-            {cancelable: false},
-          );
+            { cancelable: false },
+        );
     }
     _doNavigation = () => {
         const { navigate } = this.props.navigation;
@@ -70,8 +70,10 @@ class CreateBacklog extends React.Component {
         let { name, description, definition_of_done, success, log } = this.state;
         return (
             <View>
-                <Header style={{color:'rgb(150, 13, 255'}}
-                centerComponent={{ text: 'New BackLog', style: { color: '#fff' } }}
+                <Header
+                    backgroundColor='rgb(73, 14, 97)'
+                    centerComponent={{ text: 'New Backlog', style: { color: '#fff' } }}
+                    containerStyle={{ marginBottom: "10%" }}
                 />
                 <View style={styles.formContainer}>
                     <TextField
@@ -104,6 +106,7 @@ class CreateBacklog extends React.Component {
                                     color="white"
                                 />
                             }
+                            buttonStyle={{backgroundColor:'#8f2883'}}
                             iconRight
                             title={success ? "Saved SuccessFully " : "Save "}
                             onPress={this._requestHandler}
@@ -132,7 +135,7 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps,null)(CreateBacklog)
+export default connect(mapStateToProps, null)(CreateBacklog)
 
 CreateBacklog.navigationOptions = {
     drawerLabel: 'Create a new Backlog',
