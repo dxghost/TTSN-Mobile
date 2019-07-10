@@ -72,7 +72,7 @@ class CreateBacklog extends React.Component {
             <View>
                 <Header
                     backgroundColor='rgb(73, 14, 97)'
-                    centerComponent={{ text: 'Backlog Details', style: { color: '#fff' } }}
+                    centerComponent={{ text: 'New Backlog', style: { color: '#fff' } }}
                     containerStyle={{ marginBottom: "10%" }}
                 />
                 <View style={styles.formContainer}>
